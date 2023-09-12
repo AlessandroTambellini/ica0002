@@ -1,0 +1,2 @@
+- TEST SSH ACCESS: ssh -p<my_port_number> ubuntu@193.40.156.67 uptime
+- RUN PLAYBOOK: ansible-playbook <name>.yaml (not always are .yaml)
