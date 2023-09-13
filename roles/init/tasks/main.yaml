@@ -17,7 +17,7 @@
   
 - name: Set authorized keys taken from url
   ansible.posix.authorized_key:
-    user: juri
+    user: roman
     state: present
     key: https://github.com/romankuchin.keys
 
