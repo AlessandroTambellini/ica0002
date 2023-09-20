@@ -1,3 +1,16 @@
 - name: Install nginx
   ansible.builtin.apt:
     name: nginx
+
+- name: Copy Nginx configuration as uWSGI frontend
+  ansible.builtin.copy:
+    src: ../files/default
+    dest: /etc/nginx/sites-enabled/default
+    owner: agama
+    mode: '0644'
+
+- name: ensure Nginx service is running
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: true

@@ -1,0 +1,14 @@
+- name: Add the user 'agama'
+  ansible.builtin.user:
+    name: agama
+
+- name: set directory ownership to 'agama'
+  ansible.builtin.file:
+    path: /opt/agama
+    owner: agama
+    state: directory
+  
+- name: Download agama webapp
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/hudolejev/agama/master/agama.py
+    dest: /opt/agama/

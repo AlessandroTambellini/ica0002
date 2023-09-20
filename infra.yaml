@@ -7,4 +7,6 @@
   - name: Web server
     hosts: web_servers
     roles:
+      - agama
+      - uwsgi
       - nginx

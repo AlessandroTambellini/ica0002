@@ -1,0 +1,10 @@
+1) every service should have the config task and only after the task to ensure the service is started
+
+2) my PC is the controller node, Ansible acts on the host
+
+3) agama logs are in /var/log/uwsgi/app/agama.log
+
+4) Every time you setup a new service verify it with the protocol explained here: 
+    https://github.com/romankuchin/ica0002-2023/tree/main/03-web-server#task-4-manage-uwsgi-service
+
+5) localhost port used: 5000

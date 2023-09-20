@@ -1,26 +1,31 @@
 #- name: Ansible ping module
 #  ansible.builtin.ping:
 
-- name: Add the user 'juri'
-  ansible.builtin.user:
-    name: juri
+#- name: Add the user 'juri'
+#  ansible.builtin.user:
+#    name: juri
   
-- name: Add the user 'roman'
-  ansible.builtin.user:
-    name: roman
+#- name: Add the user 'roman'
+#  ansible.builtin.user:
+#    name: roman
 
-- name: Set authorized keys taken from url
-  ansible.posix.authorized_key:
-    user: juri
-    state: present
-    key: https://github.com/hudolejev.keys
+#- name: Set authorized SSH keys taken from url
+#  ansible.posix.authorized_key:
+#    user: juri
+#    state: present
+#    key: https://github.com/hudolejev.keys
   
-- name: Set authorized keys taken from url
-  ansible.posix.authorized_key:
-    user: roman
-    state: present
-    key: https://github.com/romankuchin.keys
+#- name: Set authorized SSH keys taken from url
+#  ansible.posix.authorized_key:
+#    user: roman
+#    state: present
+#    key: https://github.com/romankuchin.keys
 
+# apparently this solution is wrong. It should be:
+#
+# name: Update APT cache
+# ansible.builtin.apt:
+#   cache_valid_time: 86400
 - name: Update APT cache
   ansible.builtin.apt:
     cache_valid_time: 86400
