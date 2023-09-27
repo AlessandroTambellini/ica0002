@@ -4,8 +4,8 @@
 
 - name: Copy Nginx configuration as uWSGI frontend
   ansible.builtin.copy:
-    src: ../files/default
-    dest: /etc/nginx/sites-enabled/default
+    src: ../files/default # local
+    dest: /etc/nginx/sites-enabled/default # remote
     owner: agama
     mode: '0644'
 

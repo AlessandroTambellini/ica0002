@@ -1,4 +1,4 @@
-1) every service should have the config task and only after the task to ensure the service is started
+1) order for service tasks: installation -> configuration -> run
 
 2) my PC is the controller node, Ansible acts on the host
 
@@ -8,3 +8,7 @@
     https://github.com/romankuchin/ica0002-2023/tree/main/03-web-server#task-4-manage-uwsgi-service
 
 5) localhost port used: 5000
+
+6) check the AGAMA app at this URL: http://193.40.156.67:<SERVER_PORT>/
+
+7) template instead of copy to handle variables
