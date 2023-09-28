@@ -1,0 +1,23 @@
+- name: Install MySQL
+  ansible.builtin.apt:
+    name: mysql-server
+
+- name: ensure MySQL service is started
+  ansible.builtin.service:
+    name: mysql
+    state: started
+    enabled: true
+
+# mysql db is after the mysql server is started because you cannot create a db if the server is down
+- name: MySQL database
+  community.mysql.mysql_db:
+    name: "{{ mysql_database }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  
+- name: MySQL user
+  community.mysql.mysql_user:
+    name: "{{ mysql_user }}"
+    password: "{{ mysql_password }}"
+    host: "%" # you can access from any host
+    priv: "{{ mysql_database }}.*:ALL" # the user has access only to its own database
+    login_unix_socket: /var/run/mysqld/mysqld.sock

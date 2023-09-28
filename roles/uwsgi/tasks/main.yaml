@@ -1,20 +1,27 @@
-- name: Install uwsgi package
-  ansible.builtin.apt:
-      name: uwsgi
+#- name: Install uwsgi package
+#  ansible.builtin.apt:
+#      name: uwsgi
+#
+#- name: Install uwsgi-plugin-python3 package
+#  ansible.builtin.apt:
+#      name: uwsgi-plugin-python3
 
-- name: Install uwsgi-plugin-python3 package
+- name: Install the packages "uwsgi" and "uwsgi-plugin-python3"
   ansible.builtin.apt:
-      name: uwsgi-plugin-python3
+    name:
+      - uwsgi
+      - uwsgi-plugin-python3
 
 - name: Copy uwsgi configuration for agama
-  ansible.builtin.copy:
-    src: ../files/agama.ini # TODO: check this path is right
+  ansible.builtin.template:
+    src: ../templates/agama.ini.j2
     dest: /etc/uwsgi/apps-enabled/agama.ini
     owner: agama
-    mode: '0644'
+    mode: '0600'
+  no_log: true # the changes may contain the password, and it should not be logged
   
 # this task has always to be after the one that manages service configuration
-- name: ensure uWSGI service is running
+- name: ensure uWSGI service is started
   ansible.builtin.service:
     name: uwsgi
     state: started

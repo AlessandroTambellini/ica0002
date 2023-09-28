@@ -9,7 +9,7 @@
     owner: agama
     mode: '0644'
 
-- name: ensure Nginx service is running
+- name: ensure Nginx service is started
   ansible.builtin.service:
     name: nginx
     state: started

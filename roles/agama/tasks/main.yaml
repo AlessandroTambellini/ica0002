@@ -7,7 +7,13 @@
     path: /opt/agama
     owner: agama
     state: directory
-  
+
+- name: Install the packages "python3-flask-sqlalchemy" and "python3-pymysql"
+  ansible.builtin.apt:
+    name:
+      - python3-flask-sqlalchemy
+      - python3-pymysql
+
 - name: Download agama webapp
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/hudolejev/agama/master/agama.py
