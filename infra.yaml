@@ -4,6 +4,7 @@
     roles:
       - init
 
+  # the web server has to connectt with the db, so first you build the db, then the web server
   - name: Database server
     hosts: db_servers
     roles:

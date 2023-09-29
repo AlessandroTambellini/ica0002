@@ -13,16 +13,12 @@
 
 7) template instead of copy to handle variables
 
-8) why the db play has to be set before the server one?
-
-9) why is it better to write in override.conf instead of overriding the actual mysqld.conf
-
 10) you (and Ansible) connect to the public IP (193.40.156.67) of the managed host
     other hosts in the same network connect to internal IP
 
 11) sudo mysql -e "SHOW TABLES" agama: if the database exists there's no output
 
-12)
+12) EXAMPLE
 - name: Copy uwsgi configuration for agama
   ansible.builtin.template:
     src: ../templates/agama.ini.j2

@@ -1,6 +1,11 @@
-- name: Install MySQL
+- name: Install MySQL server
   ansible.builtin.apt:
     name: mysql-server
+
+- name: Install "python3-pymysql" package
+  ansible.builtin.apt:
+    name: python3-pymysql
+
 
 - name: ensure MySQL service is started
   ansible.builtin.service:
@@ -21,3 +26,18 @@
     host: "%" # you can access from any host
     priv: "{{ mysql_database }}.*:ALL" # the user has access only to its own database
     login_unix_socket: /var/run/mysqld/mysqld.sock
+
+- name: Copy MySQL configuration
+  ansible.builtin.copy:
+    src: ../files/bind_address.cnf
+    dest: /etc/mysql/mysql.conf.d/override.cnf
+
+# TESTING
+- name: Get stats of override.cnf
+  ansible.builtin.stat:
+    path: /etc/mysql/mysql.conf.d/override.cnf
+  register: st
+
+- name: Display the captured result of override.cnf
+  debug:
+    var: st.stat.gr_name

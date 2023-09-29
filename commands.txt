@@ -1,3 +1,5 @@
 - TEST SSH ACCESS: ssh -p<my_port_number> ubuntu@193.40.156.67 uptime
 - RUN PLAYBOOK: ansible-playbook <name>.yaml (not necessarily are .yaml files)
 - OPEN UBUNTU VM: ssh -p<port_number> ubuntu@193.40.156.67
+- TROUBLESHOOT WEB SERVER: tail /var/log/uwsgi/app/agama.log
+- TEST AGAMA DB: sudo mysql -e "SELECT * FROM agama.item" agama
