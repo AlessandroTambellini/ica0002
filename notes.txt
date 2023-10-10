@@ -1,15 +1,9 @@
 1) order for service tasks: installation -> configuration -> run
 
-2) my PC is the controller node, Ansible acts on the host
-
 3) agama logs are in /var/log/uwsgi/app/agama.log
 
 4) Every time you setup a new service verify it with the protocol explained here: 
     https://github.com/romankuchin/ica0002-2023/tree/main/03-web-server#task-4-manage-uwsgi-service
-
-5) localhost port used: 5000
-
-6) check the AGAMA app at this URL: http://193.40.156.67:<SERVER_PORT>/
 
 7) template instead of copy to handle variables
 
@@ -28,3 +22,5 @@
   no_log: true
 
 name, ansible and no_log are parameters, while src, dest, owner and mode are modules
+
+13) check github ssh keys: https://github.com/AlessandroTambellini.keys

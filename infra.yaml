@@ -1,18 +1,21 @@
 ---
-  - name: Initial setup
-    hosts: all
-    roles:
-      - init
+- name: Initial setup
+  hosts: all
+  roles:
+    - init
 
-  # the web server has to connectt with the db, so first you build the db, then the web server
-  - name: Database server
-    hosts: db_servers
-    roles:
-      - mysql
+# the web server has to connect with the db, so first you build the db, then the web server
+- name: Database server
+  hosts: db_servers
+  roles:
+    - mysql
 
-  - name: Web server
-    hosts: web_servers
-    roles:
-      - agama
-      - uwsgi
-      - nginx
+# here there was something called 'Resolved' if I'm not wrong
+
+- name: Web server
+  hosts: web_servers
+  # here there was a yes -> become: 'yes'
+  roles:
+    - agama
+    - uwsgi
+    - nginx
