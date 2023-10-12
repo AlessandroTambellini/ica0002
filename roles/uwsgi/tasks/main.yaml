@@ -12,7 +12,6 @@
     mode: "0600"
   no_log: true # the changes may contain the password, and it should not be logged
 
-# this task has always to be after the one that manages service configuration
 - name: ensure uWSGI service is started
   ansible.builtin.service:
     name: uwsgi

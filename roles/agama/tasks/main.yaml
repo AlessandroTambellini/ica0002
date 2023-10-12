@@ -2,7 +2,7 @@
   ansible.builtin.user:
     name: agama
 
-- name: set directory ownership to 'agama'
+- name: Set directory ownership to 'agama'
   ansible.builtin.file:
     path: /opt/agama
     owner: agama

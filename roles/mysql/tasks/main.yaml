@@ -6,7 +6,6 @@
   ansible.builtin.apt:
     name: python3-pymysql
 
-
 - name: ensure MySQL service is started
   ansible.builtin.service:
     name: mysql
@@ -18,7 +17,7 @@
   community.mysql.mysql_db:
     name: "{{ mysql_database }}"
     login_unix_socket: /var/run/mysqld/mysqld.sock
-  
+
 - name: MySQL user
   community.mysql.mysql_user:
     name: "{{ mysql_user }}"
@@ -31,13 +30,3 @@
   ansible.builtin.copy:
     src: ../files/bind_address.cnf
     dest: /etc/mysql/mysql.conf.d/override.cnf
-
-# TESTING
-- name: Get stats of override.cnf
-  ansible.builtin.stat:
-    path: /etc/mysql/mysql.conf.d/override.cnf
-  register: st
-
-- name: Display the captured result of override.cnf
-  debug:
-    var: st.stat.gr_name

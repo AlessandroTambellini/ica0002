@@ -1,0 +1,17 @@
+- name: Install "bind9" package # install Bind9 on VM 2
+  ansible.builtin.apt:
+    name: bind9
+
+#- name: Copy bind9 configuration
+#  ansible.builtin.template:
+#    src: ../templates/bind9_config.j2
+#    dest: /etc/bind/named.conf.options
+#    owner: agama
+#    mode: "0644"
+#  no_log: true
+
+- name: Ensure bind9 service is started
+  ansible.builtin.service:
+    name: bind9
+    state: started
+    enabled: true

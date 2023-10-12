@@ -4,18 +4,20 @@
   roles:
     - init
 
+- name: DNS servers
+  hosts: dns_server
+  roles:
+    - bind
+
 # the web server has to connect with the db, so first you build the db, then the web server
 - name: Database server
   hosts: db_servers
   roles:
     - mysql
 
-# here there was something called 'Resolved' if I'm not wrong
-
 - name: Web server
   hosts: web_servers
-  # here there was a yes -> become: 'yes'
   roles:
     - agama
-    - uwsgi
+    - uwsgi # uwsgi is before nginx ==> you can first retrieve the mysql_host address to which nginx has to connect
     - nginx
