@@ -1,5 +1,22 @@
-- TEST SSH ACCESS: ssh -p<my_port_number> ubuntu@193.40.156.67 uptime
-- RUN PLAYBOOK: ansible-playbook <name>.yaml (not necessarily are .yaml files)
-- OPEN UBUNTU VM: ssh -p<port_number> ubuntu@193.40.156.67
-- TROUBLESHOOT WEB SERVER: tail /var/log/uwsgi/app/agama.log
-- TEST AGAMA DB: sudo mysql -e "SELECT * FROM agama.item" agama
+- ansible-playbook infra.yaml
+- ssh -p<port_number> ubuntu@193.40.156.67
+- ssh -p<my_port_number> ubuntu@193.40.156.67 uptime
+
+
+// check the dns zone is syntattically configured correctly. If the output is OK, the syntax is correct
+- named-checkzone rabix.io /var/lib/bind/db.rabix.io
+
+
+- check Jinja2 templates: https://j2live.ttl255.com/
+
+
+- sudo tail /var/log/uwsgi/app/agama.log
+- sudo tail /var/log/nginx/access.log
+- cat /var/log/syslog
+
+
+- service bind9 status
+- named-checkconf /etc/bind/named.conf.options // If no output, the syntax is correct
+
+
+- sudo mysql -e "SELECT * FROM agama.item" agama

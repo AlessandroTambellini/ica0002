@@ -6,7 +6,7 @@
   ansible.builtin.apt:
     name: python3-pymysql
 
-- name: ensure MySQL service is started
+- name: Ensure MySQL service is started
   ansible.builtin.service:
     name: mysql
     state: started
@@ -30,3 +30,6 @@
   ansible.builtin.copy:
     src: ../files/bind_address.cnf
     dest: /etc/mysql/mysql.conf.d/override.cnf
+    owner: root
+    mode: "0644"
+  notify: Restart MySQL

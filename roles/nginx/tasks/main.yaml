@@ -2,14 +2,15 @@
   ansible.builtin.apt:
     name: nginx
 
-- name: Copy Nginx configuration as uWSGI frontend
+- name: Copy nginx configuration as uWSGI frontend
   ansible.builtin.copy:
     src: ../files/default # local
     dest: /etc/nginx/sites-enabled/default # remote
-    owner: agama
-    mode: '0644'
+    owner: root
+    mode: "0644"
+  notify: Restart nginx
 
-- name: ensure Nginx service is started
+- name: Ensure nginx service is started
   ansible.builtin.service:
     name: nginx
     state: started

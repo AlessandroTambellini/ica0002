@@ -21,3 +21,22 @@
 - name: Update APT cache
   ansible.builtin.apt:
     cache_valid_time: 86400
+#- name: Collect all ansible data
+#  ansible.builtin.setup:
+#
+#- name: Display all variables/facts known for a host
+#  ansible.builtin.debug:
+#    var: hostvars[inventory_hostname]['ansible_all_ipv4_addresses']
+
+# it's necessary to stop systemd-resolved before updating the DNS settings
+- name: Stop service systemd-resolved, if started
+  ansible.builtin.service:
+    name: systemd-resolved
+    state: stopped
+
+- name: Update VM DNS settings
+  ansible.builtin.template:
+    src: ../templates/DNS_settings.j2
+    dest: /etc/resolv.conf
+    owner: root
+    mode: "0644"
