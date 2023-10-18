@@ -1,4 +1,4 @@
-mysql_host: AlessandroTambellini-2 # vm2 TODO: find a way to set up the host automatically
+mysql_host: AlessandroTambellini-2 # vm2
 mysql_database: agama
 mysql_user: agama
 mysql_password: !vault |
@@ -10,7 +10,7 @@ mysql_password: !vault |
   31306433326561306562666531653765663066376163303838633164393463646466
 
 dns_forwarders:
-  - 192.168.42.180 # vm1, where the webapp resides. I guess it is correct?
+  - 192.168.43.60 # vm1, where the webapp resides. TODO: setup with a script
 
 allowed_queries:
   - 192.168.42.0/23 # can I put any digit I want in the place of 2 in 42?
@@ -19,11 +19,13 @@ allowed_queries:
 hostvars:
   AlessandroTambellini-1:
     ansible_default_ipv4:
-      address: 192.168.42.180
+      address: 192.168.43.60 # TODO: setup with a script
       vm_name: AlessandroTambellini-1
   AlessandroTambellini-2:
     ansible_default_ipv4:
-      address: 192.168.42.67
+      address: 192.168.43.177 # TODO: setup with a script
       vm_name: AlessandroTambellini-2
 
 startup_name: rabix.io
+
+node_exporter_v: 1.6.1

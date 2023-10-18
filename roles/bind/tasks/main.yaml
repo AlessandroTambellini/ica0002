@@ -16,10 +16,7 @@
     dest: /var/lib/bind/db.rabix.io
     owner: root
     mode: "0644"
-# notify: Restart bind9 # I do not need to restart the service because is not a config file
-# Instead, to update the DNS settings I need to run the below command
-- name: Run "rndc reload" to update primary(master) zone file
-  ansible.builtin.command: rndc reload
+  notify: Run rndc reload # command to update the DNS settings
 
 - name: Ensure bind9 service is started
   ansible.builtin.service:

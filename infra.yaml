@@ -9,6 +9,17 @@
   roles:
     - bind
 
+- name: Resolvers
+  hosts: all
+  roles:
+    - resolvers
+
+# TODO: is this the right position for prometheus?
+- name: Prometheus
+  hosts: prometheus_server
+  roles:
+    - prometheus
+
 # the web server has to connect with the db, so first you build the db, then the web server
 - name: Database server
   hosts: db_servers
