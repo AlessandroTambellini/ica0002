@@ -84,16 +84,30 @@ zilla.rk.	IN	NS	vm1
 vm1	IN	A	192.168.42.166
 vm2	IN	A	192.168.42.170
 
-zone "rabix.io" in { 
-        type master;
-        file "/var/lib/bind/db.rabix.io";
-        masters { {{ hostvars['AlessandroTambellini-1']['ansible_default_ipv4']['address'] }}; };
-};
+Configure Prometheus:
+- job "linux" with static_configs. 
+- Include all your VMs there, even future ones, 
+- don't delete job "prometheus" which comes with default config
+- NOTE: It's not allowed to use IP addresses in Prometheus config, only names are allowed
+- HINT: use Ansible variable "groups['all']".
+
+
+GRAFANA SETUP
+[security]
+admin_password = {{ grafana_admin_password }}
+
+[server]
+root_url= {{ public_url }}/grafana/
+serve_from_sub_path = true
+END GRAFANA SETUP
+
 
 NOTES:
-  - A Caching-only Name Server
 
 TODO:
-  - Once lab 5 is finished, write the first letter of a TASK name in upper case
   - buone prassi sui nomi delle tasks
+  - 
 
+QUESTIONS TO PROFESSOR:
+  - why should we use a global file for all the variables?
+  - src: prometheus.yaml.j2: why here I don't have to specify the relative path?

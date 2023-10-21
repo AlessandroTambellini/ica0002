@@ -1,4 +1,5 @@
 - ansible-playbook infra.yaml
+- ansible-galaxy init roles/node-exporter --> create the skeleton of a role 
 - ssh -p<port_number> ubuntu@193.40.156.67
 - ssh -p<my_port_number> ubuntu@193.40.156.67 uptime
 
@@ -14,9 +15,13 @@
 - sudo tail /var/log/nginx/access.log
 - cat /var/log/syslog
 
+- less /etc/resolv.conf // nameserver config
 
 - service bind9 status
 - named-checkconf /etc/bind/named.conf.options // If no output, the syntax is correct
 
 
 - sudo mysql -e "SELECT * FROM agama.item" agama
+
+- if I have problems with the dns, just set /etc/resolv.conf nameserver to 8.8.8.8 to at least download
+the stuff you need 

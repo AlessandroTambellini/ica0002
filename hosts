@@ -1,14 +1,18 @@
-AlessandroTambellini-1 ansible_host=193.40.156.67 ansible_port=31622 ansible_user=ubuntu
-AlessandroTambellini-2 ansible_host=193.40.156.67 ansible_port=43322 ansible_user=ubuntu
+AlessandroTambellini-1 ansible_host=193.40.156.67 ansible_port=1622 ansible_user=ubuntu
+AlessandroTambellini-2 ansible_host=193.40.156.67 ansible_port=16322 ansible_user=ubuntu
 
 [dns_server]
+AlessandroTambellini-2
+
+[nginx_reverse_proxy_server]
+AlessandroTambellini-2
+
+[prometheus_server]
 AlessandroTambellini-2
 
 [db_servers]
 AlessandroTambellini-2
 
-[prometheus_server]
-AlessandroTambellini-2
 
 [web_servers]
 AlessandroTambellini-1

@@ -1,0 +1,26 @@
+- name: Install Prometheus
+  ansible.builtin.apt:
+    name: prometheus
+
+- name: Prometheus args
+  ansible.builtin.template:
+    src: ../templates/prometheus.j2
+    dest: /etc/default/prometheus
+    mode: 0644
+    owner: root
+  notify: restart_prometheus
+
+- name: Configure Prometheus
+  ansible.builtin.template:
+    src: prometheus.yaml.j2
+    dest: "/etc/prometheus/prometheus.yaml"
+    mode: 0755
+    owner: prometheus
+    group: prometheus
+  notify: reload_prometheus
+
+- name: Ensure Prometheus service is started
+  ansible.builtin.systemd:
+    name: prometheus # this name has to be the same you specify in handlers to restart the service
+    state: started
+    enabled: yes

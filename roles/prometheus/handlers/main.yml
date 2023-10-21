@@ -1,0 +1,13 @@
+- name: restart_prometheus
+  ansible.builtin.systemd:
+    name: prometheus
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
+
+- name: reload_prometheus
+  ansible.builtin.uri:
+    url: http://localhost:9090/-/reload
+    method: POST
+    status_code: 200
+# TODO: I think I need to realod also for job_name: linux

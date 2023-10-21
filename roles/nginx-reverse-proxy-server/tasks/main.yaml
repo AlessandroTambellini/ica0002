@@ -1,0 +1,17 @@
+- name: Install nginx
+  ansible.builtin.apt:
+    name: nginx
+
+- name: Copy nginx configuration as reverse proxy
+  ansible.builtin.copy:
+    src: ../files/default # local
+    dest: /etc/nginx/sites-enabled/default # remote
+    owner: root
+    mode: "0644"
+  notify: Restart nginx
+
+- name: Ensure nginx service is started
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: true

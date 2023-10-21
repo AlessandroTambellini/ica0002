@@ -28,36 +28,36 @@
 #  ansible.builtin.debug:
 #    var: hostvars[inventory_hostname]['ansible_all_ipv4_addresses']
 
-- name: Download node_exporter
-  ansible.builtin.get_url: # TODO: setup a script to get the version of node exporter
-    url: https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_v }}/node_exporter-{{ node_exporter_v }}.linux-amd64.tar.gz
-    dest: /tmp
-    mode: "0440"
-
-- name: Unarchive node_exporter-{{ node_exporter_v }}.linux-amd64.tar.gz
-  ansible.builtin.unarchive:
-    src: /tmp/node_exporter-{{ node_exporter_v }}.linux-amd64.tar.gz
-    dest: /tmp
-    remote_src: yes
-
-- name: Move node_exporter to /usr/local/bin
-  ansible.builtin.copy:
-    src: /tmp/node_exporter-{{ node_exporter_v }}.linux-amd64/node_exporter
-    remote_src: yes
-    dest: /usr/local/bin/node_exporter
-    owner: root
-    mode: "0755"
-
-- name: Install unit file to systemd
-  ansible.builtin.template:
-    src: ../templates/node_exporter.service.j2
-    dest: /etc/systemd/system/node_exporter.service
-    owner: root
-    mode: "0600"
-
-- name: Configure systemd to use node_exporter.service
-  ansible.builtin.systemd:
-    name: node_exporter.service
-    state: started
-    daemon_reload: true
-    enabled: true
+#- name: Download node_exporter
+#  ansible.builtin.get_url: # TODO: setup a script to get the version of node exporter
+#    url: https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_v }}/node_exporter-{{ node_exporter_v }}.linux-amd64.tar.gz
+#    dest: /tmp
+#    mode: "0440"
+#
+#- name: Unarchive node_exporter-{{ node_exporter_v }}.linux-amd64.tar.gz
+#  ansible.builtin.unarchive:
+#    src: /tmp/node_exporter-{{ node_exporter_v }}.linux-amd64.tar.gz
+#    dest: /tmp
+#    remote_src: yes
+#
+#- name: Move node_exporter to /usr/local/bin
+#  ansible.builtin.copy:
+#    src: /tmp/node_exporter-{{ node_exporter_v }}.linux-amd64/node_exporter
+#    remote_src: yes
+#    dest: /usr/local/bin/node_exporter
+#    owner: root
+#    mode: "0755"
+#
+#- name: Install unit file to systemd
+#  ansible.builtin.template:
+#    src: ../templates/node_exporter.service.j2
+#    dest: /etc/systemd/system/node_exporter.service
+#    owner: root
+#    mode: "0600"
+#
+#- name: Configure systemd to use node_exporter.service
+#  ansible.builtin.systemd:
+#    name: node_exporter.service
+#    state: started
+#    daemon_reload: true
+#    enabled: true

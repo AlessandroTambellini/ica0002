@@ -14,13 +14,25 @@
   roles:
     - resolvers
 
-# TODO: is this the right position for prometheus?
-- name: Prometheus
+- name: Install monitoring stack
   hosts: prometheus_server
+  become: yes
   roles:
     - prometheus
+#    - grafana
 
-# the web server has to connect with the db, so first you build the db, then the web server
+# I think it needs to run after prometheus
+- name: Reverse Proxy
+  hosts: nginx_reverse_proxy_server
+  roles:
+    - nginx-reverse-proxy-server
+
+- name: Install node-exporter
+  hosts: all
+  become: yes #  allows you to ‘become’ another user, different from the user that logged into the machine (remote user)
+  roles:
+    - node-exporter
+
 - name: Database server
   hosts: db_servers
   roles:
@@ -30,5 +42,5 @@
   hosts: web_servers
   roles:
     - agama
-    - uwsgi # uwsgi is before nginx ==> you can first retrieve the mysql_host address to which nginx has to connect
+    - uwsgi
     - nginx
