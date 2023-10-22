@@ -22,7 +22,7 @@
 - named-checkconf /etc/bind/named.conf.options // If no output, the syntax is correct
 
 
-- sudo mysql -e "SELECT * FROM agama.item" agama
+- sudo mysql -e "SELECT * FROM agama.item" agama ---> if the database exists there's no output
 
 - if I have problems with the dns, just set /etc/resolv.conf nameserver to 8.8.8.8 to at least download
 the stuff you need 

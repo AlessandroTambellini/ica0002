@@ -1,16 +1,7 @@
 1) order for service tasks: installation -> configuration -> run
 
-3) agama logs are in /var/log/uwsgi/app/agama.log
-
 4) Every time you setup a new service verify it with the protocol explained here: 
     https://github.com/romankuchin/ica0002-2023/tree/main/03-web-server#task-4-manage-uwsgi-service
-
-7) template instead of copy to handle variables
-
-10) you (and Ansible) connect to the public IP (193.40.156.67) of the managed host
-    other hosts in the same network connect to internal IP
-
-11) sudo mysql -e "SHOW TABLES" agama: if the database exists there's no output
 
 12) EXAMPLE
 - name: Copy uwsgi configuration for agama
@@ -23,90 +14,19 @@
 
 name, ansible and no_log are parameters, while src, dest, owner and mode are modules
 
-14) reference:
-THINGHS SET: forwarders, allow-query, listen-on, and zone directives:
-options { 
-        listen-on { any; }; 
-        listen-on-v6 { any; }; 
-        directory "/var/named"; 
-        dump-file "/var/named/data/cache_dump.db"; 
-        statistics-file "/var/named/data/named_stats.txt"; 
-        memstatistics-file "/var/named/data/named_mem_stats.txt"; 
-        secroots-file "/var/named/data/named.secroots"; 
-        recursing-file "/var/named/data/named.recursing"; 
-        allow-query { 10.0.0.0/8; 127.0.0.1; 2000::/3; }; 
-        forwarders { 1.1.1.1; 9.9.9.9; }; 
-        /* - If you are building an AUTHORITATIVE DNS server, do NOT enable recursion. - 
-        If you are building a RECURSIVE (caching) DNS server, you need to enable recursion. - 
-        If your recursive DNS server has a public IP address, 
-        you MUST enable access control to limit queries to your legitimate users.
-        Failing to do so will cause your server to become part of large scale DNS amplification attacks. 
-        Implementing BCP38 within your network would greatly reduce such attack surface */ 
-        recursion yes; 
-        dnssec-enable yes; 
-        dnssec-validation yes; 
-        managed-keys-directory "/var/named/dynamic"; 
-        pid-file "/run/named/named.pid"; 
-        session-keyfile "/run/named/session.key"; 
-        /* https://fedoraproject.org/wiki/Changes/CryptoPolicy */ 
-        include "/etc/crypto-policies/back-ends/bind.config"; 
-};
-
-// We are the primary server for example.com
-zone "example.com" {
-type primary;
-file "example.com.db";
-// IP addresses of secondary servers allowed to
-// transfer example.com
-allow-transfer {
-192.168.4.14;
-192.168.5.53;
-};
-};
-// We are a secondary server for eng.example.com
-zone "eng.example.com" {
-type secondary;
-file "eng.example.com.bk";
-// IP address of eng.example.com primary server
-masters { 192.168.4.12; };
-};
-
-// ZONE FILE
-$TTL	604800
-zilla.rk.	IN	SOA	vm1.zilla.rk. roman.zilla.rk. (
-			      2		; Serial
-			 604800		; Refresh
-			  86400		; Retry
-			2419200		; Expire
-			 604800 )	; Negative Cache TTL
-;
-zilla.rk.	IN	NS	vm1
-vm1	IN	A	192.168.42.166
-vm2	IN	A	192.168.42.170
-
-Configure Prometheus:
-- job "linux" with static_configs. 
-- Include all your VMs there, even future ones, 
-- don't delete job "prometheus" which comes with default config
-- NOTE: It's not allowed to use IP addresses in Prometheus config, only names are allowed
-- HINT: use Ansible variable "groups['all']".
-
-
-GRAFANA SETUP
+### GRAFANA SETUP ###
 [security]
 admin_password = {{ grafana_admin_password }}
 
 [server]
 root_url= {{ public_url }}/grafana/
 serve_from_sub_path = true
-END GRAFANA SETUP
-
+### END GRAFANA SETUP ###
 
 NOTES:
 
 TODO:
   - buone prassi sui nomi delle tasks
-  - 
 
 QUESTIONS TO PROFESSOR:
   - why should we use a global file for all the variables?
