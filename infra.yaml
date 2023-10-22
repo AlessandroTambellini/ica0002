@@ -19,12 +19,7 @@
   become: yes
   roles:
     - prometheus
-#    - grafana
-
-# I think it needs to run after prometheus
-- name: Reverse Proxy
-  hosts: nginx_reverse_proxy_server
-  roles:
+    #    - grafana
     - nginx-reverse-proxy-server
 
 - name: Install node-exporter

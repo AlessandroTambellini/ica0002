@@ -39,7 +39,7 @@ $(cat hosts | grep -v '^AlessandroTambellini-[0-9 ]*ansible')
 EOF
 )
 
-echo "$hosts" > hosts
+echo "$hosts" > hosts.backup
 
 echo "Done." >&2
 git diff -- hosts

@@ -1,19 +1,17 @@
 global:
   scrape_interval: 15s
-  external_labels:
-    monitor: "codelab-monitor"
+  evaluation_interval: 15s
+
 scrape_configs:
-  - job_name: "prometheus"
-    scrape_interval: 5s
+  - job_name: 'prometheus'
     static_configs:
       - targets: ["localhost:9090"]
-    metrics_path: /prometheus/metrics
-{% if prometheus_node_exporter_group %}
+    metrics_path: '/prometheus/metrics'
+
   - job_name: 'linux'
-    scrape_interval: 15s
     static_configs:
     - targets:
-{% for server in groups[prometheus_node_exporter_group] %}
+{% for server in groups['all'] %}
       - {{ server }}:9100
 {% endfor %}
-{% endif %}
+    metrics_path: '/metrics'

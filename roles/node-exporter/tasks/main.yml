@@ -1,13 +1,12 @@
-#- name: check if node_exporter exist
-#  ansible.builtin.stat:
-#    path: "/usr/local/bin/node_exporter"
-#  register: __check_node_exporter_present
+- name: Ensure group "node-exporter" exists
+  ansible.builtin.group:
+    name: node-exporter
+    state: present
 
 - name: Create node_exporter user
   ansible.builtin.user:
     name: "node-exporter"
-    append: true # add the user to the groups specified in groups
-    groups: "node-exporter"
+    group: "node-exporter"
     shell: /usr/sbin/nologin
     system: true
     create_home: false
@@ -18,12 +17,6 @@
     state: directory
     owner: "node-exporter"
     group: "node-exporter"
-
-#- name: if node_exporter exist get version
-#  shell: "cat /etc/systemd/system/node_exporter.service | grep Version | sed s/'.*Version '//g"
-#  when: __check_node_exporter_present.stat.exists == true
-#  changed_when: false
-#  register: __get_node_exporter_version
 
 - name: Download and unzip node_exporter
   ansible.builtin.unarchive:
@@ -40,13 +33,6 @@
     group: "node-exporter"
     mode: 0755
     remote_src: yes
-#  when: __check_node_exporter_present.stat.exists == false or not __get_node_exporter_version.stdout == node_exporter_version
-
-# once the service is installed you can delete the binary
-#- name: clean
-#  ansible.builtin.file:
-#    path: /tmp/node_exporter-{{ node_exporter_version }}.linux-amd64/
-#    state: absent
 
 - name: Configure node_exporter service
   ansible.builtin.template:

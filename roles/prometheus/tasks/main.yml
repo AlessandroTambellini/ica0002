@@ -4,7 +4,7 @@
 
 - name: Prometheus args
   ansible.builtin.template:
-    src: ../templates/prometheus.j2
+    src: ../templates/prometheus.service.j2
     dest: /etc/default/prometheus
     mode: 0644
     owner: root
@@ -17,7 +17,7 @@
     mode: 0755
     owner: prometheus
     group: prometheus
-  notify: reload_prometheus
+  notify: restart_prometheus
 
 - name: Ensure Prometheus service is started
   ansible.builtin.systemd:

@@ -2,6 +2,7 @@
 - ansible-galaxy init roles/node-exporter --> create the skeleton of a role 
 - ssh -p<port_number> ubuntu@193.40.156.67
 - ssh -p<my_port_number> ubuntu@193.40.156.67 uptime
+- ssh-keygen -R [<ip>]:<port> -f /home/<your_user>/.ssh/known_hosts --> when I have problems with a key
 
 
 // check the dns zone is syntattically configured correctly. If the output is OK, the syntax is correct

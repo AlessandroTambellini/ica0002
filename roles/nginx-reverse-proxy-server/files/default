@@ -1,9 +1,8 @@
 server {
-    listen 80;
-    listen [::]:80;
-    server_name AlessandroTambellini-2;
+    listen 80 default_server;
+    server_name _;
 
     location /prometheus {
-        proxy_pass http://localhost:9090/;
+        proxy_pass http://localhost:9090;
     }
 }

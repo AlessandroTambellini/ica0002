@@ -12,7 +12,7 @@ mysql_password: !vault |
 
 # DNS
 dns_forwarders:
-  - 192.168.42.16 # vm1, where the webapp resides. TODO: setup with a script
+  - 192.168.43.160 # vm1, where the webapp resides. TODO: setup with a script
 
 allowed_queries:
   - 192.168.42.0/23 # can I put any digit I want in the place of 2 in 42?
@@ -21,11 +21,11 @@ allowed_queries:
 hostvars:
   AlessandroTambellini-1:
     ansible_default_ipv4:
-      address: 192.168.42.16 # TODO: setup with a script
+      address: 192.168.43.160 # TODO: setup with a script
       vm_name: AlessandroTambellini-1
   AlessandroTambellini-2:
     ansible_default_ipv4:
-      address: 192.168.42.163 # TODO: setup with a script
+      address: 192.168.43.177 # TODO: setup with a script
       vm_name: AlessandroTambellini-2
 
 startup_name: rabix.io
@@ -33,5 +33,3 @@ startup_name: rabix.io
 # Prometheus
 node_exporter_version: 1.6.1
 prometheus_version: v2.40.1
-prometheus_node_exporter_group: "all"
-prometheus_retention_time: "365d"
