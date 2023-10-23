@@ -11,13 +11,6 @@
     system: true
     create_home: false
 
-- name: Create node_exporter config dir
-  file:
-    path: "/etc/node_exporter"
-    state: directory
-    owner: "node-exporter"
-    group: "node-exporter"
-
 - name: Download and unzip node_exporter
   ansible.builtin.unarchive:
     src: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
