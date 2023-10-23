@@ -13,5 +13,5 @@
 - name: Ensure nginx service is started
   ansible.builtin.service:
     name: nginx
-    state: started
-    enabled: true
+    state: started # it's just a check
+    enabled: true # it's to start the process

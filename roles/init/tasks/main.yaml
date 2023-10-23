@@ -61,3 +61,43 @@
 #    state: started
 #    daemon_reload: true
 #    enabled: true
+
+- name: Download and unarchive node_exporter
+  ansible.builtin.unarchive:
+    src: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
+    dest: /tmp/
+    remote_src: yes
+    mode: 0755
+
+- name: Move binary to the final destination
+  ansible.builtin.copy:
+    src: "/tmp/node_exporter-{{ node_exporter_version }}.linux-amd64/node_exporter"
+    dest: "/usr/local/bin/node_exporter"
+    owner: "node-exporter"
+    mode: 0755
+    remote_src: yes
+
+- name: Create node_exporter user.
+  user:
+    name: node_exporter
+    shell: /sbin/nologin
+    state: present
+
+- name: Copy the node_exporter systemd unit file.
+  template:
+    src: node_exporter.service.j2
+    dest: /etc/systemd/system/node_exporter.service
+    mode: 0644
+  register: node_exporter_service
+
+- name: Reload systemd daemon if unit file is changed.
+  systemd:
+    daemon_reload: true
+  notify: restart node_exporter
+  when: node_exporter_service is changed
+
+- name: Ensure node_exporter service is started
+  ansible.builtin.systemd:
+    name: node_exporter
+    state: started
+    enabled: yes

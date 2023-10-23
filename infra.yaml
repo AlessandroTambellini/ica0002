@@ -22,12 +22,6 @@
     #    - grafana
     - nginx-reverse-proxy-server
 
-- name: Install node-exporter
-  hosts: all
-  become: yes #  allows you to ‘become’ another user, different from the user that logged into the machine (remote user)
-  roles:
-    - node-exporter
-
 - name: Database server
   hosts: db_servers
   roles:

@@ -26,3 +26,9 @@
 
 - if I have problems with the dns, just set /etc/resolv.conf nameserver to 8.8.8.8 to at least download
 the stuff you need 
+
+
+
+    ss -ntlp | grep <port>
+    dpkg command
+    awk command

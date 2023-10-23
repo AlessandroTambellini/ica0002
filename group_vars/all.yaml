@@ -32,4 +32,8 @@ startup_name: rabix.io
 
 # Prometheus
 node_exporter_version: 1.6.1
+node_exporter_host: "" # Set node_exporter_host to localhost if you wish to expose node_exporter on localhost only.
+node_exporter_port: 9100
+node_exporter_options: ""
+
 prometheus_version: v2.40.1

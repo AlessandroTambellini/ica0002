@@ -1,5 +1,8 @@
 1) order for service tasks: installation -> configuration -> run
 
+2) The tasks in handler are executed in the order they're written in the file, even if you call them
+with a different order
+
 4) Every time you setup a new service verify it with the protocol explained here: 
     https://github.com/romankuchin/ica0002-2023/tree/main/03-web-server#task-4-manage-uwsgi-service
 
@@ -26,7 +29,9 @@ serve_from_sub_path = true
 NOTES:
 
 TODO:
-  - buone prassi sui nomi delle tasks
+  - tags
+  - influx db is the last to be executed in infra.yaml
+  - check the 2 new commands in commands.txt
 
 QUESTIONS TO PROFESSOR:
   - why should we use a global file for all the variables?
