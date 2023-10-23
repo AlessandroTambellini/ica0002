@@ -27,8 +27,9 @@
 - if I have problems with the dns, just set /etc/resolv.conf nameserver to 8.8.8.8 to at least download
 the stuff you need 
 
+- you could have conflicting services runnning on the same port. So you need to first manually stop these
+services
+useful command: ss -ntl ==> to check the port usage
 
-
-    ss -ntlp | grep <port>
     dpkg command
     awk command
