@@ -1,0 +1,17 @@
+server {
+listen 80 default_server;
+server_name _;
+
+{% if 'web_servers' in group_names %}
+location / {
+uwsgi_pass localhost:5000;
+include uwsgi_params;
+}
+{% endif %}
+
+{% if 'prometheus_server' in group_names %}
+location /prometheus {
+proxy_pass http://localhost:9090;
+}
+{% endif %}
+}
