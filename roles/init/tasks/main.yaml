@@ -26,7 +26,10 @@
 #
 #- name: Display all variables/facts known for a host
 #  ansible.builtin.debug:
-#    var: hostvars[inventory_hostname]['ansible_all_ipv4_addresses']
+#    var: hostvars[inventory_hostname]
+#- name: Print groups['all']
+#  debug:
+#    var: groups['dns_server']
 
 - name: Install prometheus-node-exporter
   ansible.builtin.apt:
@@ -35,7 +38,7 @@
 - name: Copy prometheus-node-exporter configuration
   ansible.builtin.template:
     src: prometheus_node_exporter.service.j2
-    dest: /etc/systemd/system/prometheus_node_exporter.service # TODO: I don't know if I need to change this file name
+    dest: /etc/systemd/system/prometheus_node_exporter.service
     mode: 0644
   notify: restart prometheus-node-exporter
 
@@ -44,3 +47,7 @@
     name: prometheus-node-exporter
     state: started
     enabled: yes
+
+- name: Install ca-certificates
+  ansible.builtin.apt:
+    name: ca-certificates

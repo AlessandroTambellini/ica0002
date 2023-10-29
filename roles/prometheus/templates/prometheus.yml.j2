@@ -15,3 +15,11 @@ scrape_configs:
       - {{ server }}:9100
 {% endfor %}
     metrics_path: '/metrics'
+
+  - job_name: 'bind9'
+    static_configs:
+    - targets:
+{% for server in groups['dns_server'] %}
+      - {{ server }}:9119
+{% endfor %}
+    metrics_path: '/metrics'

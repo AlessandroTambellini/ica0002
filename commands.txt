@@ -4,6 +4,11 @@
 - ssh -p<my_port_number> ubuntu@193.40.156.67 uptime
 - ssh-keygen -R [<ip>]:<port> -f /home/<your_user>/.ssh/known_hosts --> when I have problems with a key
 
+- ansible-vault encrypt_string <password> --> encrypt passoword with ansible_vault
+
+// find exact package name
+1) https://packages.ubuntu.com/
+2) then set the distribution to focal
 
 // check the dns zone is syntattically configured correctly. If the output is OK, the syntax is correct
 - named-checkzone rabix.io /var/lib/bind/db.rabix.io
@@ -15,6 +20,7 @@
 - sudo tail /var/log/uwsgi/app/agama.log
 - sudo tail /var/log/nginx/access.log
 - cat /var/log/syslog
+- journalctl -u prometheus-nginx-exporter.service --no-pager
 
 - less /etc/resolv.conf // nameserver config
 
@@ -31,5 +37,9 @@ the stuff you need
 services
 useful command: ss -ntl ==> to check the port usage
 
-    dpkg command
-    awk command
+TO TEST
+- dpkg command
+- awk command
+- ps ax | grep bind
+- ss -ntlp | grep bind
+- ansible-playbook infra.yaml -tb

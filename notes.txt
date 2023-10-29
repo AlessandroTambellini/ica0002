@@ -29,9 +29,10 @@ serve_from_sub_path = true
 NOTES:
 
 TODO:
+  - change startup_name with domain_name
+  - structure bind9 template files differently
   - tags
   - influx db is the last to be executed in infra.yaml
-  - check the 2 new commands in commands.txt
 
 QUESTIONS TO PROFESSOR:
   - why should we use a global file for all the variables?

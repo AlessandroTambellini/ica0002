@@ -37,7 +37,7 @@ vm2_new_IP=$(curl "http://193.40.156.67/students/AlessandroTambellini.csv" | cut
 sed -e "s/$vm1_old_IP/$vm1_new_IP/" \
     -e "s/$vm2_old_IP/$vm2_new_IP/" \
     -e "s/vm1_port: \w*/vm1_port: $vm1_port/1" \
-    -e "s/vm2_port: \w*/vm1_port: $vm2_port/1" \
+    -e "s/vm2_port: \w*/vm2_port: $vm2_port/1" \
     -i ./group_vars/all.yaml
 
 # save the new IPs in vms_IP.txt

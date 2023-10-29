@@ -12,7 +12,7 @@ mysql_password: !vault |
 
 # DNS
 dns_forwarders:
-  - 192.168.42.45 # vm1, where the webapp resides.
+  - 192.168.42.90 # vm1, where the webapp resides.
 
 allowed_queries:
   - 192.168.42.0/23 # can I put any digit I want in the place of 2 in 42?
@@ -21,19 +21,28 @@ allowed_queries:
 hostvars:
   AlessandroTambellini-1:
     ansible_default_ipv4:
-      address: 192.168.42.45
+      address: 192.168.42.90
       vm_name: AlessandroTambellini-1
   AlessandroTambellini-2:
     ansible_default_ipv4:
-      address: 192.168.42.174
+      address: 192.168.42.84
       vm_name: AlessandroTambellini-2
 
-startup_name: rabix.io
+vm1_port: 9022
+vm2_port: 8422
 
-# Prometheus
-node_exporter_version: 1.6.1
+domain_name: rabix.io
+
+# Exporters
 node_exporter_host: "" # Set node_exporter_host to localhost if you wish to expose node_exporter on localhost only.
 node_exporter_port: 9100
 node_exporter_options: ""
 
-prometheus_version: v2.40.1
+mysql_exporter_user: exporter
+mysql_exporter_password: !vault |
+  $ANSIBLE_VAULT;1.1;AES256
+  62303436646564316639376464326162663833613364373535363264623632306266373764316665
+  3739376133643434626365646231636238366663633133370a363031393139613038376435343037
+  63323161623731323864386338633030616430303466663738323664626364333537666133303237
+  3363616130656635360a336535386462646539366136653462333563316462626137306638396464
+  38303437303233643434333830656531353231633062343261396464323431303137

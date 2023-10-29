@@ -19,8 +19,8 @@
   become: yes
   roles:
     - prometheus
-    #    - grafana
-    - nginx-reverse-proxy-server
+    #- grafana
+    - nginx
 
 - name: Database server
   hosts: db_servers
@@ -33,3 +33,4 @@
     - agama
     - uwsgi
     - nginx
+# I could add some tag here just to run specific plays
