@@ -8,7 +8,7 @@
     owner: agama
     state: directory
 
-- name: Install the packages "python3-flask-sqlalchemy" and "python3-pymysql"
+- name: Install required packages
   ansible.builtin.apt:
     name:
       - python3-flask-sqlalchemy
@@ -18,3 +18,4 @@
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/hudolejev/agama/master/agama.py
     dest: /opt/agama/
+# TODO: I may need to set some permissions/ownership --> watch video lesson

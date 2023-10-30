@@ -12,6 +12,15 @@ include uwsgi_params;
 {% if 'prometheus_server' in group_names %}
 location /prometheus {
 proxy_pass http://localhost:9090;
+
 }
 {% endif %}
+}
+
+server {
+listen 8080 default_server; {# 8080 is commonly used for web server communications #}
+
+location = /stub_status {
+stub_status;
+}
 }

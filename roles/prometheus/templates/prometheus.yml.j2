@@ -23,3 +23,19 @@ scrape_configs:
       - {{ server }}:9119
 {% endfor %}
     metrics_path: '/metrics'
+
+  - job_name: 'nginx'
+    static_configs:
+    - targets:
+{% for server in groups['all'] %}
+      - {{ server }}:9113
+{% endfor %}
+    metrics_path: '/metrics'
+
+  - job_name: 'mysql'
+    static_configs:
+    - targets:
+{% for server in groups['db_servers'] %}
+      - {{ server }}:9104
+{% endfor %}
+    metrics_path: '/metrics'

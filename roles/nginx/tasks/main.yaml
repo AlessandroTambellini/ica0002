@@ -2,7 +2,7 @@
   ansible.builtin.apt:
     name:
       - nginx
-#      - prometheus-nginx-exporter
+      - prometheus-nginx-exporter
 
 - name: Copy nginx configuration as uWSGI frontend
   ansible.builtin.template:
@@ -16,6 +16,7 @@
   ansible.builtin.service:
     name: "{{ item }}"
     state: started # it's just a check
+    enabled: true
   loop:
     - nginx
-#    - prometheus-nginx-exporter
+    - prometheus-nginx-exporter

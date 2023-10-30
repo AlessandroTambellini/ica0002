@@ -3,16 +3,19 @@
   hosts: all
   roles:
     - init
+  tags: init
 
 - name: DNS servers
   hosts: dns_server
   roles:
     - bind
+  tags: dns
 
 - name: Resolvers
   hosts: all
   roles:
     - resolvers
+  tags: dns
 
 - name: Install monitoring stack
   hosts: prometheus_server
@@ -21,16 +24,18 @@
     - prometheus
     #- grafana
     - nginx
+  tags: p
 
 - name: Database server
   hosts: db_servers
   roles:
     - mysql
+  tags: db
 
-- name: Web server
+- name: Web servers
   hosts: web_servers
   roles:
     - agama
     - uwsgi
     - nginx
-# I could add some tag here just to run specific plays
+  tags: ws

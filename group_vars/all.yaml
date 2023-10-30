@@ -12,7 +12,7 @@ mysql_password: !vault |
 
 # DNS
 dns_forwarders:
-  - 192.168.42.90 # vm1, where the webapp resides.
+  - 192.168.43.147 # vm1, where the webapp resides.
 
 allowed_queries:
   - 192.168.42.0/23 # can I put any digit I want in the place of 2 in 42?
@@ -21,15 +21,15 @@ allowed_queries:
 hostvars:
   AlessandroTambellini-1:
     ansible_default_ipv4:
-      address: 192.168.42.90
+      address: 192.168.43.147
       vm_name: AlessandroTambellini-1
   AlessandroTambellini-2:
     ansible_default_ipv4:
-      address: 192.168.42.84
+      address: 192.168.43.165
       vm_name: AlessandroTambellini-2
 
-vm1_port: 9022
-vm2_port: 8422
+vm1_port: 40322
+vm2_port: 42122
 
 domain_name: rabix.io
 
