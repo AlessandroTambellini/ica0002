@@ -26,14 +26,9 @@ root_url= {{ public_url }}/grafana/
 serve_from_sub_path = true
 ### END GRAFANA SETUP ###
 
-NOTES:
-
-TODO:
-  - change startup_name with domain_name
-  - structure bind9 template files differently
-  - tags
-  - influx db is the last to be executed in infra.yaml
+default grafana user - passoword: admin - admin
 
 QUESTIONS TO PROFESSOR:
   - why should we use a global file for all the variables?
   - src: prometheus.yaml.j2: why here I don't have to specify the relative path?
+  - I have to restart the grafana-server manually

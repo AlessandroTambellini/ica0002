@@ -22,7 +22,7 @@
   become: yes
   roles:
     - prometheus
-    #- grafana
+    - grafana
     - nginx
   tags: p
 

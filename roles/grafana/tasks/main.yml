@@ -1,36 +1,64 @@
 - name: Install prerequisite packages
   ansible.builtin.apt:
     name:
+      - wget
       - apt-transport-https
       - software-properties-common
-      - wget
 
-- name: Create a directory if it does not exist
-  ansible.builtin.file:
-    path: /etc/apt/keyrings/
-    state: directory
-    mode: "0755"
+- name: Add key from file
+  ansible.builtin.apt_key:
+    url: https://apt.grafana.com/gpg.key
+    state: present
 
-- name: Get GPG key
-  ansible.builtin.shell: wget -q -O - https://apt.grafana.com/gpg.key | gpg --dearmor | sudo tee /etc/apt/keyrings/grafana.gpg > /dev/null
-
+# when you use apt the cache is updated automatically,
+# so no need to update the cache after running this command
 - name: Add stable repository
   ansible.builtin.apt_repository:
-    repo: deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stable main
-    filename: /etc/apt/sources.list.d/grafana.list
-
-- name: Add beta repository
-  ansible.builtin.apt_repository:
-    repo: deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com beta main
-    filename: /etc/apt/sources.list.d/grafana.list
+    repo: deb https://apt.grafana.com stable main
+    state: present
 
 - name: Install Grafana
   ansible.builtin.apt:
     name: grafana
-#- name: Copy Grafana configuration
-#  ansible.builtin.template:
-#    src: ../templates/server.domain.j2
-#    dest: /etc/nginx/sites-enabled/default
-#    owner: root
-#    mode: "0644"
-#  notify: Restart nginx
+
+- name: Copy Grafana configuration
+  ansible.builtin.template:
+    src: ../templates/grafana.ini.j2
+    dest: /etc/grafana/grafana.ini
+    owner: root
+    mode: 0644
+  notify: Restart grafana-server
+
+#- name: Push datasources
+#  ansible.builtin.copy:
+#    src: ../files/datasources.yaml
+#    dest: /etc/grafana/provisioning/datasources/sample.yaml
+#    mode: 0644
+#  notify: Restart grafana-server
+#
+#- name: Copy dashboards config
+#  ansible.builtin.copy:
+#    src: ../files/sample.yaml
+#    dest: /etc/grafana/provisioning/dashboards/sample.yaml
+#    mode: 0644
+#  notify: Restart grafana-server
+#
+#- name: Copy Main dashboard JSON
+#  ansible.builtin.copy:
+#    src: ../files/Main.json
+#    dest: /var/lib/grafana/dashboards/Main.json
+#    mode: 0644
+#  notify: Restart grafana-server
+
+- name: Ensure grafana-server service is started
+  ansible.builtin.service:
+    name: grafana-server
+    state: started
+    enabled: true
+# TODO: create user and password for grafana
+#- name: Create/Update a dashboard
+#  grafana.grafana.dashboard:
+#    dashboard: "{{ lookup('ansible.builtin.file', 'dashboard.json') }}"
+#    grafana_url: "{{ grafana_url }}"
+#    grafana_api_key: "{{ grafana_api_key }}"
+#    state: present

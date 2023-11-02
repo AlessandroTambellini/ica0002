@@ -18,9 +18,9 @@
 #    state: present
 #    key: https://github.com/romankuchin.keys
 
-- name: Update APT cache
-  ansible.builtin.apt:
-    cache_valid_time: 86400
+#- name: Update APT cache
+#  ansible.builtin.apt:
+#    cache_valid_time: 86400
 #- name: Collect all ansible data
 #  ansible.builtin.setup:
 #
@@ -31,9 +31,12 @@
 #  debug:
 #    var: groups['dns_server']
 
-- name: Install prometheus-node-exporter
+- name: Install required packages and set caching time
   ansible.builtin.apt:
-    name: prometheus-node-exporter
+    name:
+      - ca-certificates=20230311ubuntu0.20.04.1
+      - prometheus-node-exporter
+    cache_valid_time: 86400
 
 - name: Copy prometheus-node-exporter configuration
   ansible.builtin.template:
@@ -47,7 +50,3 @@
     name: prometheus-node-exporter
     state: started
     enabled: yes
-
-- name: Install ca-certificates
-  ansible.builtin.apt:
-    name: ca-certificates

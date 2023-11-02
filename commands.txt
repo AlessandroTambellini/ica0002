@@ -1,48 +1,47 @@
+// SSH
 - ssh -p<port_number> ubuntu@193.40.156.67
 - ssh -p<my_port_number> ubuntu@193.40.156.67 uptime
 - ssh-keygen -R [<ip>]:<port> -f /home/<your_user>/.ssh/known_hosts --> when I have problems with a key
 
+// ANSIBLE COMMANDS
 - ansible-playbook infra.yaml
 - ansible-galaxy init roles/node-exporter --> create the skeleton of a role 
 - ansible-vault encrypt_string <password> --> encrypt passoword with ansible_vault
 - ansible-playbook infra.yaml -tmonitoring
 
-1) https://packages.ubuntu.com/
-2) then set the distribution to focal
+// PACKAGES
+- 1) https://packages.ubuntu.com/
+  2) then set the distribution to focal
+- dpkg -l --> packages list
 
+// DNS
 // check the dns zone is syntattically configured correctly. If the output is OK, the syntax is correct
 - named-checkzone rabix.io /var/lib/bind/db.rabix.io
 - named-checkconf /etc/bind/named.conf.options // If no output, the syntax is correct
-
-
-- check Jinja2 templates: https://j2live.ttl255.com/
-
-
-- sudo tail /var/log/uwsgi/app/agama.log
-- sudo tail /var/log/nginx/access.log
-- cat /var/log/syslog
-- journalctl -u prometheus-nginx-exporter.service --no-pager
 - less /etc/resolv.conf // nameserver config
-- service bind9 status
-
-
-- ps axu | grep mysql --> check user that started a process
-- /lib/systemd/system/prometheus-mysqld-exporter.service --> or you can find the user in the config file
-- cat /etc/passwd --> find out the directory of each user
-
-- sudo mysql -e "SELECT * FROM agama.item" agama ---> if the database exists there's no output
-
 - if I have problems with the dns, just set /etc/resolv.conf nameserver to 8.8.8.8 to at least download
 the stuff you need 
 - you could have conflicting services runnning on the same port. So you need to first manually stop these
 services
 
-useful command: ss -ntl ==> to check the port usage
+// JINJA
+- check Jinja2 templates: https://j2live.ttl255.com/
 
-TO TEST
-- dpkg command
-- awk command
-- ps ax | grep bind
-- ss -ntlp | grep bind
-- ansible-playbook infra.yaml -tb
-- curl localhost:9113 | grep -v ^#
+// TROUBLESHOOTING
+- sudo tail /var/log/uwsgi/app/agama.log
+- sudo tail /var/log/nginx/access.log
+- cat /var/log/syslog
+- journalctl -u prometheus-nginx-exporter.service --no-pager
+- service bind9 status
+- systemctl status bind9
+- ps ax --> running processes
+- cat /etc/passwd --> find out the directory of each user
+- sudo mysql -e "SELECT * FROM agama.item" agama ---> if the database exists there's no output
+
+// SEARCHING/FILTERING
+- cat <x> | wc -l --> count the lines
+- > <path_to_file>/file --> empty the file
+
+// NETWORKING
+- ss -ntlp ==> to check the port usage by service name or service ID
+- curl localhost:9113 | grep -v ^# ==> view page content without the comments

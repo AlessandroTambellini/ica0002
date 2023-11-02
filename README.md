@@ -10,3 +10,7 @@ At this point of the development the built parts are:
 - Web Server
 - Database Server
 - Monitoring Stack
+
+### Current Infrastructure
+
+![Alt text](current_infrastructure.png)
