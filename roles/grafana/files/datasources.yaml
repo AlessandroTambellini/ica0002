@@ -4,10 +4,10 @@ apiVersion: 1
 # List of data sources to insert/update depending on what's
 # available in the database.
 datasources:
-  - name: Prometheus
-    type: Prometheus
+  - name: Prometheus-1
+    type: prometheus
     access: proxy
     orgId: 1
-    url: http://alessandrotambellini-2:9090 # TODO: make it dynamic. This is hard coded
+    url: http://alessandrotambellini-2:9090/prometheus # TODO: make it dynamic. This is hard coded
     version: 1
-    editable: false
+    editable: true

@@ -12,7 +12,7 @@
 
 - name: Configure Prometheus
   ansible.builtin.template:
-    src: prometheus.yml.j2
+    src: ../templates/prometheus.yml.j2
     dest: "/etc/prometheus/prometheus.yml"
     mode: 0755
     owner: prometheus

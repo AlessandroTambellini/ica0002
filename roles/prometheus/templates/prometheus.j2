@@ -1,1 +1,1 @@
-ARGS="--web.external-url=http://193.40.156.67:{{ vm2_port }}/prometheus"
+ARGS="--web.external-url={{ vms['vm2']['public_URL'] }}/prometheus"

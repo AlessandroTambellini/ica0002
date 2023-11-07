@@ -1,0 +1,30 @@
+# here is missing something
+
+- name: Add key from file
+  ansible.builtin.apt_key:
+    url: https://repos.influxdata.com/influxdata-archive_compat.key
+    state: present
+
+# when you use apt the cache is updated automatically,
+# so no need to update the cache after running this command
+- name: Add stable repository
+  ansible.builtin.apt_repository:
+    repo: deb https://repos.influxdata.com/debian stable main
+    state: present
+
+- name: Install pkgs
+  ansible.builtin.apt:
+    name:
+      - influxdb2
+      - telegraf
+#- name: Copy Telegraf configurations
+#  ansible.builtin.template:
+#    src: ../templates/telegraf.conf.j2
+#    dest: /etc/telegraf/telegraf.conf
+#  notify: Restart Telegraf
+#
+#- name: Copy InfluxDB configurations
+#  ansible.builtin.template:
+#    src: ../templates/influxdb.conf.j2
+#    dest: /etc/influxdb/influxdb.conf
+#  notify: Restart InfluxDB

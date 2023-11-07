@@ -8,6 +8,7 @@
 - ansible-galaxy init roles/node-exporter --> create the skeleton of a role 
 - ansible-vault encrypt_string <password> --> encrypt passoword with ansible_vault
 - ansible-playbook infra.yaml -tmonitoring
+- ansible-playbook infra.yaml -t "i, dns" --> more tags at once
 
 // PACKAGES
 - 1) https://packages.ubuntu.com/
@@ -37,6 +38,7 @@ services
 - ps ax --> running processes
 - cat /etc/passwd --> find out the directory of each user
 - sudo mysql -e "SELECT * FROM agama.item" agama ---> if the database exists there's no output
+- less /etc/apt/sources.list.d/<something>.list --> to check keys
 
 // SEARCHING/FILTERING
 - cat <x> | wc -l --> count the lines

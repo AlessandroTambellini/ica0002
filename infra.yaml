@@ -17,14 +17,20 @@
     - resolvers
   tags: dns
 
-- name: Install monitoring stack
+- name: Prometheus server
   hosts: prometheus_server
   become: yes
   roles:
     - prometheus
-    - grafana
     - nginx
   tags: p
+
+- name: Grafana server
+  hosts: grafana_server
+  become: yes
+  roles:
+    - grafana
+  tags: g
 
 - name: Database server
   hosts: db_servers
@@ -39,3 +45,9 @@
     - uwsgi
     - nginx
   tags: ws
+
+- name: InfluxDB
+  hosts: influxdb
+  roles:
+  #    - influxdb
+  tags: i

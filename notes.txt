@@ -1,7 +1,7 @@
 1) order for service tasks: installation -> configuration -> run
 
 2) The tasks in handler are executed in the order they're written in the file, even if you call them
-with a different order
+in a different order
 
 4) Every time you setup a new service verify it with the protocol explained here: 
     https://github.com/romankuchin/ica0002-2023/tree/main/03-web-server#task-4-manage-uwsgi-service
@@ -17,18 +17,10 @@ with a different order
 
 name, ansible and no_log are parameters, while src, dest, owner and mode are modules
 
-### GRAFANA SETUP ###
-[security]
-admin_password = {{ grafana_admin_password }}
-
-[server]
-root_url= {{ public_url }}/grafana/
-serve_from_sub_path = true
-### END GRAFANA SETUP ###
-
 default grafana user - passoword: admin - admin
 
 QUESTIONS TO PROFESSOR:
-  - why should we use a global file for all the variables?
-  - src: prometheus.yaml.j2: why here I don't have to specify the relative path?
+  - prometheus-nginx-exporter is green at the third run
   - I have to restart the grafana-server manually
+  - should grafana and prometheus run on a different server?
+  - do I need to create the dashboard manually to then export the JSON file?
