@@ -34,6 +34,7 @@
 
 - name: Database server
   hosts: db_servers
+  become: yes
   roles:
     - mysql
   tags: db
@@ -48,6 +49,7 @@
 
 - name: InfluxDB
   hosts: influxdb
+  become: yes # execute as root user
   roles:
-  #    - influxdb
+    - influxdb
   tags: i

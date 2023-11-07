@@ -24,3 +24,4 @@ QUESTIONS TO PROFESSOR:
   - I have to restart the grafana-server manually
   - should grafana and prometheus run on a different server?
   - do I need to create the dashboard manually to then export the JSON file?
+  - What is GH username in lab 7?

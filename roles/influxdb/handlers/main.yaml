@@ -3,7 +3,12 @@
     name: influxdb
     state: restarted
 
-- name: Restart Telegraf
-  ansible.builtin.service:
-    name: telegraf
+- name: Restart pinger
+  ansible.builtin.systemd:
+    name: pinger
     state: restarted
+#
+#- name: Restart Telegraf
+#  ansible.builtin.service:
+#    name: telegraf
+#    state: restarted

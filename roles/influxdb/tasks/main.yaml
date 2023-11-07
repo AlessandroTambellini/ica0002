@@ -1,22 +1,33 @@
-# here is missing something
+- name: Install prerequisite packages
+  ansible.builtin.apt:
+    name:
+      - wget
 
-- name: Add key from file
+- name: Download InfluxDB
+  ansible.builtin.get_url:
+    url: https://dl.influxdata.com/influxdb/releases/influxdb_1.8.10_amd64.deb
+    dest: /tmp/influxdb_1.8.10_amd64.deb
+
+- name: Install InfluxDB
+  ansible.builtin.apt:
+    deb: /tmp/influxdb_1.8.10_amd64.deb
+    state: present
+
+- name: Add GPG key
   ansible.builtin.apt_key:
     url: https://repos.influxdata.com/influxdata-archive_compat.key
     state: present
 
-# when you use apt the cache is updated automatically,
-# so no need to update the cache after running this command
 - name: Add stable repository
   ansible.builtin.apt_repository:
-    repo: deb https://repos.influxdata.com/debian stable main
+    repo: deb https://repos.influxdata.com/debian buster stable
     state: present
 
-- name: Install pkgs
+- name: Install telegraf
   ansible.builtin.apt:
-    name:
-      - influxdb2
-      - telegraf
+    name: telegraf=1.28.2-1
+    state: present
+
 #- name: Copy Telegraf configurations
 #  ansible.builtin.template:
 #    src: ../templates/telegraf.conf.j2
@@ -28,3 +39,46 @@
 #    src: ../templates/influxdb.conf.j2
 #    dest: /etc/influxdb/influxdb.conf
 #  notify: Restart InfluxDB
+
+- name: Add the user 'pinger'
+  ansible.builtin.user:
+    name: pinger
+
+- name: Create pinger dir
+  ansible.builtin.file:
+    path: /etc/pinger
+    state: directory
+    mode: 0644
+
+- name: Copy pinger config
+  ansible.builtin.copy:
+    src: ../templates/pinger.conf.j2
+    dest: /etc/pinger/pinger.conf
+  notify: Restart pinger
+
+- name: Copy pinger script
+  ansible.builtin.copy:
+    src: ../files/pinger.sh
+    dest: /usr/local/bin/pinger
+    mode: 0755
+    owner: root
+  notify: Restart pinger
+
+- name: ping service config
+  ansible.builtin.template:
+    src: ../templates/pinger.service.j2
+    dest: /etc/systemd/system/pinger.service
+    owner: root
+    mode: 0644
+  notify: Restart pinger
+
+- name: Ensure services are running
+  ansible.builtin.systemd:
+    daemon_reload: true # if tomorrow doesn't work, try writing this module on a separate task
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  loop:
+    - influxdb
+    - pinger
+  tags: cc

@@ -29,6 +29,17 @@
     mode: 0644
   notify: Restart grafana-server
 
+- name: Create a Grafana User
+  community.grafana.grafana_user:
+    url: "{{ vms['vm2']['public_URL'] }}/grafana/"
+    name: Grafana User
+    login: "{{ grafana_user }}"
+    password: "{{ grafana_password }}"
+    email: altamb@taltech.ee
+    is_admin: true
+    state: present
+  notify: Restart grafana-server
+
 - name: Add datasources
   ansible.builtin.copy:
     src: ../files/datasources.yaml
@@ -51,8 +62,8 @@
 
 - name: Copy Main dashboard JSON
   ansible.builtin.copy:
-    src: ../files/Main.json
-    dest: /var/lib/grafana/dashboards/Main.json # TODO: change Test.json to Main.json after the test
+    src: ../files/main.json
+    dest: /var/lib/grafana/dashboards/Main.json
     mode: 0644
   notify: Restart grafana-server
 

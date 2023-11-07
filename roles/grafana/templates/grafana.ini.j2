@@ -1,6 +1,7 @@
-#[security]
-#admin_password = {{ grafana_password }}
-#
+[security]
+admin_user = {{ grafana_user }}
+admin_password = {{ grafana_password }}
+
 [server]
 root_url= {{ vms['vm2']['public_URL'] }}/grafana/
 serve_from_sub_path = true
