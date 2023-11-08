@@ -4,20 +4,16 @@
       - bind9
       - prometheus-bind-exporter
 
-- name: Copy bind9 configuration
+- name: bind9 configuration
   ansible.builtin.template:
     src: ../templates/named.conf.options.j2
     dest: /etc/bind/named.conf.options
-    owner: root
-    mode: 0644
   notify: Restart bind9
 
-- name: Copy master-zone configuration
+- name: master-zone configuration
   ansible.builtin.template:
     src: ../templates/db.rabix.io.j2
     dest: "/var/lib/bind/db.{{ domain_name }}"
-    owner: root
-    mode: "0644"
   notify: Run rndc reload # command to update the DNS settings
 
 - name: Ensure services are started

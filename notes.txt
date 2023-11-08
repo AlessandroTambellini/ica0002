@@ -1,4 +1,4 @@
-1) order for service tasks: installation -> configuration -> run
+1) order for service tasks: installation -> configuration -> run, but there are some tricky situations
 
 2) The tasks in handler are executed in the order they're written in the file, even if you call them
 in a different order
@@ -7,7 +7,7 @@ in a different order
     https://github.com/romankuchin/ica0002-2023/tree/main/03-web-server#task-4-manage-uwsgi-service
 
 12) EXAMPLE
-- name: Copy uwsgi configuration for agama
+- name: uwsgi configuration for agama
   ansible.builtin.template:
     src: ../templates/agama.ini.j2
     dest: /etc/uwsgi/apps-enabled/agama.ini
@@ -15,13 +15,20 @@ in a different order
     mode: '0600'
   no_log: true
 
+13) default mode in ubuntu is 0644, so no need to specify it
+
 name, ansible and no_log are parameters, while src, dest, owner and mode are modules
 
 default grafana user - passoword: admin - admin
 
+grep -R "src:.*\.\."
+
 QUESTIONS TO PROFESSOR:
-  - prometheus-nginx-exporter is green at the third run
-  - I have to restart the grafana-server manually
-  - should grafana and prometheus run on a different server?
   - do I need to create the dashboard manually to then export the JSON file?
   - What is GH username in lab 7?
+  - grafana failed here:
+    - name: Add key from file
+    ansible.builtin.apt_key:
+      url: https://apt.grafana.com/gpg.key
+      state: present
+    at first try

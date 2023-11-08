@@ -28,13 +28,13 @@
     name: telegraf=1.28.2-1
     state: present
 
-#- name: Copy Telegraf configurations
+#- name: Telegraf configurations
 #  ansible.builtin.template:
 #    src: ../templates/telegraf.conf.j2
 #    dest: /etc/telegraf/telegraf.conf
 #  notify: Restart Telegraf
 #
-#- name: Copy InfluxDB configurations
+#- name: InfluxDB configurations
 #  ansible.builtin.template:
 #    src: ../templates/influxdb.conf.j2
 #    dest: /etc/influxdb/influxdb.conf
@@ -48,28 +48,25 @@
   ansible.builtin.file:
     path: /etc/pinger
     state: directory
-    mode: 0644
 
-- name: Copy pinger config
+- name: pinger config
   ansible.builtin.copy:
     src: ../templates/pinger.conf.j2
     dest: /etc/pinger/pinger.conf
   notify: Restart pinger
 
-- name: Copy pinger script
+- name: pinger script
   ansible.builtin.copy:
     src: ../files/pinger.sh
     dest: /usr/local/bin/pinger
     mode: 0755
-    owner: root
+
   notify: Restart pinger
 
 - name: ping service config
   ansible.builtin.template:
     src: ../templates/pinger.service.j2
     dest: /etc/systemd/system/pinger.service
-    owner: root
-    mode: 0644
   notify: Restart pinger
 
 - name: Ensure services are running

@@ -1,4 +1,4 @@
-- name: Copy mysql exporter user configuration
+- name: prometheus-mysqld-exporter user configuration
   ansible.builtin.template:
     src: ../templates/.my.cnf.j2
     dest: /var/lib/prometheus/.my.cnf
@@ -45,10 +45,9 @@
     login_unix_socket: /var/run/mysqld/mysqld.sock
   no_log: true
 
-- name: Copy MySQL configuration
+- name: MySQL configuration
   ansible.builtin.copy:
     src: ../files/bind_address.cnf
     dest: /etc/mysql/mysql.conf.d/override.cnf
-    owner: root
-    mode: "0644"
+
   notify: Restart MySQL

@@ -21,37 +21,24 @@
   ansible.builtin.apt:
     name: grafana
 
-- name: Copy configurations
+- name: Grafana configuration
   ansible.builtin.template:
     src: ../templates/grafana.ini.j2
     dest: /etc/grafana/grafana.ini
-    owner: root
-    mode: 0644
-  notify: Restart grafana-server
-
-- name: Create a Grafana User
-  community.grafana.grafana_user:
-    url: "{{ vms['vm2']['public_URL'] }}/grafana/"
-    name: Grafana User
-    login: "{{ grafana_user }}"
-    password: "{{ grafana_password }}"
-    email: altamb@taltech.ee
-    is_admin: true
-    state: present
   notify: Restart grafana-server
 
 - name: Add datasources
   ansible.builtin.copy:
     src: ../files/datasources.yaml
     dest: /etc/grafana/provisioning/datasources/sample.yaml
-    mode: 0644
+
   notify: Restart grafana-server
 
-- name: Copy dashboards config
+- name: dashboards config
   ansible.builtin.copy:
     src: ../files/sample.yaml
     dest: /etc/grafana/provisioning/dashboards/sample.yaml
-    mode: 0644
+
   notify: Restart grafana-server
 
 - name: Ensure dashboards dir exists
@@ -60,11 +47,11 @@
     state: directory
     mode: "0755"
 
-- name: Copy Main dashboard JSON
+- name: Main dashboard JSON
   ansible.builtin.copy:
     src: ../files/main.json
     dest: /var/lib/grafana/dashboards/Main.json
-    mode: 0644
+
   notify: Restart grafana-server
 
 - name: Ensure grafana-server service is started

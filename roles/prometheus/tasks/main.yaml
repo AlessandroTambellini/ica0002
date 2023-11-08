@@ -6,8 +6,6 @@
   ansible.builtin.template:
     src: ../templates/prometheus.j2
     dest: /etc/default/prometheus
-    mode: 0644
-    owner: root
   notify: restart_prometheus
 
 - name: Configure Prometheus
