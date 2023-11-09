@@ -49,3 +49,13 @@
     name: prometheus-node-exporter
     state: started
     enabled: yes
+
+- name: rsyslog config for Telegraf
+  ansible.builtin.copy:
+    src: ../files/50-telegraf.conf
+    dest: /etc/rsyslog.d/50-telegraf.conf
+
+- name: rsyslog config for Syslog
+  ansible.builtin.copy:
+    src: ../files/rsyslog.conf
+    dest: /etc/rsyslog.d/rsyslog.conf

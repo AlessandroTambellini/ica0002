@@ -18,7 +18,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 1,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -87,7 +86,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b210da4d-bc4d-41bd-8224-3f544ce8d362"
+            "uid": "PF8CB2B50324B125B"
           },
           "editorMode": "code",
           "expr": "bind_up",
@@ -103,7 +102,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b210da4d-bc4d-41bd-8224-3f544ce8d362"
+        "uid": "PF8CB2B50324B125B"
       },
       "fieldConfig": {
         "defaults": {
@@ -165,7 +164,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b210da4d-bc4d-41bd-8224-3f544ce8d362"
+            "uid": "PF8CB2B50324B125B"
           },
           "editorMode": "code",
           "expr": "mysql_up",
@@ -181,7 +180,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b210da4d-bc4d-41bd-8224-3f544ce8d362"
+        "uid": "PF8CB2B50324B125B"
       },
       "fieldConfig": {
         "defaults": {
@@ -243,7 +242,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b210da4d-bc4d-41bd-8224-3f544ce8d362"
+            "uid": "PF8CB2B50324B125B"
           },
           "editorMode": "code",
           "expr": "nginx_up",

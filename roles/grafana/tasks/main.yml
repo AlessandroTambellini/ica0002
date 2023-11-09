@@ -23,7 +23,7 @@
 
 - name: Grafana configuration
   ansible.builtin.template:
-    src: ../templates/grafana.ini.j2
+    src: grafana.ini.j2
     dest: /etc/grafana/grafana.ini
   notify: Restart grafana-server
 
@@ -31,14 +31,12 @@
   ansible.builtin.copy:
     src: ../files/datasources.yaml
     dest: /etc/grafana/provisioning/datasources/sample.yaml
-
   notify: Restart grafana-server
 
 - name: dashboards config
   ansible.builtin.copy:
     src: ../files/sample.yaml
     dest: /etc/grafana/provisioning/dashboards/sample.yaml
-
   notify: Restart grafana-server
 
 - name: Ensure dashboards dir exists
@@ -49,9 +47,8 @@
 
 - name: Main dashboard JSON
   ansible.builtin.copy:
-    src: ../files/main.json
+    src: ../files/main2.json
     dest: /var/lib/grafana/dashboards/Main.json
-
   notify: Restart grafana-server
 
 - name: Ensure grafana-server service is started

@@ -53,3 +53,10 @@
   roles:
     - influxdb
   tags: i
+
+- name: pinger
+  hosts: pinger
+  become: yes
+  roles:
+    - pinger
+  tags: pg

@@ -32,11 +32,11 @@ allowed_queries:
 # At least for now, these fields are updated manually
 vms:
   vm1:
-    public_SSH_port: 43222
-    public_URL: http://193.40.156.67:43280
+    public_SSH_port: 16822
+    public_URL: http://193.40.156.67:16880
   vm2:
-    public_SSH_port: 35822
-    public_URL: http://193.40.156.67:35880
+    public_SSH_port: 3422
+    public_URL: http://193.40.156.67:3480
 
 domain_name: rabix.io
 

@@ -13,6 +13,18 @@
     deb: /tmp/influxdb_1.8.10_amd64.deb
     state: present
 
+#- name: InfluxDB configurations
+#  ansible.builtin.template:
+#    src: ../templates/influxdb.conf.j2
+#    dest: /etc/influxdb/influxdb.conf
+#  notify: Restart InfluxDB
+
+- name: Ensure influxdb is running
+  ansible.builtin.service:
+    name: influxdb
+    state: started
+    enabled: true
+
 - name: Add GPG key
   ansible.builtin.apt_key:
     url: https://repos.influxdata.com/influxdata-archive_compat.key
@@ -28,54 +40,13 @@
     name: telegraf=1.28.2-1
     state: present
 
-#- name: Telegraf configurations
-#  ansible.builtin.template:
-#    src: ../templates/telegraf.conf.j2
-#    dest: /etc/telegraf/telegraf.conf
-#  notify: Restart Telegraf
-#
-#- name: InfluxDB configurations
-#  ansible.builtin.template:
-#    src: ../templates/influxdb.conf.j2
-#    dest: /etc/influxdb/influxdb.conf
-#  notify: Restart InfluxDB
-
-- name: Add the user 'pinger'
-  ansible.builtin.user:
-    name: pinger
-
-- name: Create pinger dir
-  ansible.builtin.file:
-    path: /etc/pinger
-    state: directory
-
-- name: pinger config
-  ansible.builtin.copy:
-    src: ../templates/pinger.conf.j2
-    dest: /etc/pinger/pinger.conf
-  notify: Restart pinger
-
-- name: pinger script
-  ansible.builtin.copy:
-    src: ../files/pinger.sh
-    dest: /usr/local/bin/pinger
-    mode: 0755
-
-  notify: Restart pinger
-
-- name: ping service config
+- name: Telegraf config
   ansible.builtin.template:
-    src: ../templates/pinger.service.j2
-    dest: /etc/systemd/system/pinger.service
-  notify: Restart pinger
+    src: ../files/telegraf.conf
+    dest: /etc/telegraf/telegraf.conf
 
-- name: Ensure services are running
-  ansible.builtin.systemd:
-    daemon_reload: true # if tomorrow doesn't work, try writing this module on a separate task
-    name: "{{ item }}"
+- name: Ensure Telegraf is running
+  ansible.builtin.service:
+    name: telegraf
     state: started
     enabled: true
-  loop:
-    - influxdb
-    - pinger
-  tags: cc

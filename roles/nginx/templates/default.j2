@@ -13,7 +13,9 @@ include uwsgi_params;
 location /prometheus {
 proxy_pass http://localhost:9090;
 }
+{% endif %}
 
+{% if 'grafana_server' in group_names %}
 location /grafana {
 proxy_set_header Host $http_host;
 proxy_pass http://localhost:3000;

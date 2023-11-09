@@ -7,7 +7,14 @@ datasources:
   - name: Prometheus-1
     type: prometheus
     access: proxy
-    orgId: 1
     url: http://alessandrotambellini-2:9090/prometheus # TODO: make it dynamic. This is hard coded
-    version: 1
-    editable: true
+#  - name: InfluxDB
+#    type: influxdb
+#    url: http://influxdb:8086
+#  - name: influxdb:latency
+#    type: influxdb
+#    url:
+#    database: latency
+#  - name: influxdb:telegraf
+#    type: telegraf
+#    database: telegraf
