@@ -8,13 +8,14 @@ datasources:
     type: prometheus
     access: proxy
     url: http://alessandrotambellini-2:9090/prometheus # TODO: make it dynamic. This is hard coded
-#  - name: InfluxDB
-#    type: influxdb
-#    url: http://influxdb:8086
-#  - name: influxdb:latency
-#    type: influxdb
-#    url:
-#    database: latency
-#  - name: influxdb:telegraf
-#    type: telegraf
-#    database: telegraf
+  - name: influxdb:latency
+    type: influxdb
+    access: proxy
+    url: http://alessandrotambellini-2.rabix.io:8086
+    database: latency
+  - name: influxdb:telegraf
+    type: influxdb
+    access: proxy
+    url: http://alessandrotambellini-2:8086
+    database: logging
+#    dashboard: 12433

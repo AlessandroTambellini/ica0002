@@ -15,20 +15,23 @@ in a different order
     mode: '0600'
   no_log: true
 
-13) default mode in ubuntu is 0644, so no need to specify it
-
 name, ansible and no_log are parameters, while src, dest, owner and mode are modules
 
-default grafana user - passoword: admin - admin
+13) default mode in ubuntu is 0644, so no need to specify it
 
 grep -R "src:.*\.\."
 
 QUESTIONS TO PROFESSOR:
   - do I need to create the dashboard manually to then export the JSON file?
   - What is GH username in lab 7?
-  - grafana failed here:
-    - name: Add key from file
-    ansible.builtin.apt_key:
-      url: https://apt.grafana.com/gpg.key
-      state: present
-    at first try
+
+
+rsyslog is installed in ubuntu by default, so no need to install it.
+
+logs -> rsyslog (collects and send over UDP) --> telegraf (nice format and send) --> influxdb (store) --> grafana (show nicely)
+
+by default telegraf behaves like an exporter and collects the data specified in the default config file,
+and, also by default, it send the data to influxdb
+
+DUBBI:
+  - pinger.conf

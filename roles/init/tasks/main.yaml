@@ -23,10 +23,11 @@
 #    cache_valid_time: 86400
 #- name: Collect all ansible data
 #  ansible.builtin.setup:
-#
+
 #- name: Display all variables/facts known for a host
 #  ansible.builtin.debug:
 #    var: hostvars[inventory_hostname]
+#
 #- name: Print groups['all']
 #  debug:
 #    var: groups['dns_server']
@@ -38,24 +39,26 @@
       - prometheus-node-exporter
     cache_valid_time: 86400
 
-- name: Copy prometheus-node-exporter configuration
+- name: prometheus-node-exporter configuration
   ansible.builtin.template:
     src: prometheus_node_exporter.service.j2
     dest: /etc/systemd/system/prometheus_node_exporter.service
   notify: restart prometheus-node-exporter
 
-- name: Ensure prometheus-node-exporter service is started
+- name: Ensure prometheus-node-exporter is running
   ansible.builtin.service:
     name: prometheus-node-exporter
     state: started
     enabled: yes
 
 - name: rsyslog config for Telegraf
-  ansible.builtin.copy:
-    src: ../files/50-telegraf.conf
-    dest: /etc/rsyslog.d/50-telegraf.conf
+  ansible.builtin.template:
+    src: 15-telegraf.conf.j2
+    dest: /etc/rsyslog.d/15-telegraf.conf
+  notify: restart rsyslog
 
-- name: rsyslog config for Syslog
-  ansible.builtin.copy:
-    src: ../files/rsyslog.conf
-    dest: /etc/rsyslog.d/rsyslog.conf
+- name: Ensure rsyslog is running
+  ansible.builtin.service:
+    name: rsyslog
+    state: started
+    enabled: yes

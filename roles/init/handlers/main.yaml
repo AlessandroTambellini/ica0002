@@ -2,3 +2,8 @@
   ansible.builtin.service:
     name: prometheus-node-exporter
     state: restarted
+
+- name: restart rsyslog
+  ansible.builtin.service:
+    name: rsyslog
+    state: restarted

@@ -13,12 +13,6 @@
     deb: /tmp/influxdb_1.8.10_amd64.deb
     state: present
 
-#- name: InfluxDB configurations
-#  ansible.builtin.template:
-#    src: ../templates/influxdb.conf.j2
-#    dest: /etc/influxdb/influxdb.conf
-#  notify: Restart InfluxDB
-
 - name: Ensure influxdb is running
   ansible.builtin.service:
     name: influxdb
@@ -41,9 +35,10 @@
     state: present
 
 - name: Telegraf config
-  ansible.builtin.template:
+  ansible.builtin.copy:
     src: ../files/telegraf.conf
     dest: /etc/telegraf/telegraf.conf
+  notify: Restart Telegraf
 
 - name: Ensure Telegraf is running
   ansible.builtin.service:

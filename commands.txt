@@ -45,7 +45,9 @@ services
 // SEARCHING/FILTERING
 - cat <x> | wc -l --> count the lines
 - > <path_to_file>/file --> empty the file
+- telegraf config | grep -v "^#\|^$\|^  #" --> check default telegraf config (nicely)
 
 // NETWORKING
-- ss -ntlp ==> to check the port usage by service name or service ID
+- ss -ntlp ==> info about TCP sockets, to check the port usage by service name or service ID
+- ss -nul ==> info about UDP sockets, " " "
 - curl localhost:9113 | grep -v ^# ==> view page content without the comments

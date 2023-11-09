@@ -7,4 +7,5 @@ $ActionQueueSaveOnShutdown on # save in-memory data if rsyslog shuts down
 #*.* @@(o)127.0.0.1:6514;RSYSLOG_SyslogProtocol23Format
 
 # uncomment to use udp according to RFC 5424
-*.* @127.0.0.1:6514;RSYSLOG_SyslogProtocol23Format
+# send to influxdb ==> specify the influxdb server
+*.* @{{ hostvars[inventory_hostname]['groups']['influxdb'][0] }}:6514;RSYSLOG_SyslogProtocol23Format
