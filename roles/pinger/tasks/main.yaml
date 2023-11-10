@@ -1,3 +1,7 @@
+- name: Install prerequisite pkgs
+  ansible.builtin.apt:
+    name: fping
+
 - name: Add the user 'pinger'
   ansible.builtin.user:
     name: pinger
@@ -28,7 +32,7 @@
 
 - name: Ensure pinger is running
   ansible.builtin.systemd:
-    daemon_reload: true # if tomorrow doesn't work, try writing this module on a separate task
+    daemon_reload: true
     name: pinger
     state: started
     enabled: true

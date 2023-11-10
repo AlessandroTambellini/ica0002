@@ -45,3 +45,23 @@
     name: telegraf
     state: started
     enabled: true
+
+- name: Download Influxdb stats Exporter
+  ansible.builtin.get_url:
+    url: https://github.com/carlpett/influxdb_stats_exporter/releases/download/v0.1.1/influx_stats_exporter_linux_386
+    dest: /usr/local/bin/
+    mode: 0755
+  tags: cc
+
+- name: Exporter service config
+  ansible.builtin.copy:
+    src: ../files/prometheus-influxdb-stats-exporter.service
+    dest: /etc/systemd/system/prometheus-influxdb-stats-exporter.service
+  notify: Restart prometheus-influxdb-stats-exporter
+
+- name: Ensure prometheus-influxdb-stats-exporter is running
+  ansible.builtin.systemd:
+    daemon_reload: true
+    name: prometheus-influxdb-stats-exporter
+    state: started
+    enabled: true

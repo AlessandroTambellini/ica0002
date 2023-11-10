@@ -39,3 +39,11 @@ scrape_configs:
       - {{ server }}:9104
 {% endfor %}
     metrics_path: '/metrics'
+
+  - job_name: 'influxdb'
+    static_configs:
+    - targets:
+{% for server in groups['influxdb'] %}
+      - {{ server }}:9424
+{% endfor %}
+    metrics_path: '/metrics'

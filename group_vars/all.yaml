@@ -27,17 +27,17 @@ allowed_queries:
 # At least for now, these fields are updated manually
 vms:
   vm1:
-    public_SSH_port: "16822"
-    public_URL: "http://193.40.156.67:16880"
+    public_SSH_port: "32722"
+    public_URL: "http://193.40.156.67:32780"
   vm2:
-    public_SSH_port: "3422"
-    public_URL: http://193.40.156.67:3480
+    public_SSH_port: "37522"
+    public_URL: http://193.40.156.67:37580
 domain_name: rabix.io
 # Exporters
 node_exporter_host: "" # Set node_exporter_host to localhost if you wish to expose node_exporter on localhost only.
 node_exporter_port: 9100
 node_exporter_options: ""
-mysql_exporter_user: exporter
+mysql_exporter_user: prometheus
 mysql_exporter_password: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   62303436646564316639376464326162663833613364373535363264623632306266373764316665

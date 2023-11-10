@@ -41,6 +41,7 @@ services
 - sudo mysql -e "SELECT * FROM agama.item" agama ---> if the database exists there's no output
 - less /etc/apt/sources.list.d/<something>.list --> to check keys
 - ansible-playbook infra.yaml -tg > stdout.txt 2> stderr.txt --> put stdout and stderr in a separate file
+- git diff file --> diff from last commit
 
 // SEARCHING/FILTERING
 - cat <x> | wc -l --> count the lines
