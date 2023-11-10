@@ -13,6 +13,12 @@
     deb: /tmp/influxdb_1.8.10_amd64.deb
     state: present
 
+- name: InfluxDB config
+  ansible.builtin.copy:
+    src: ../files/influxdb.conf
+    dest: /etc/influxdb/influx.conf
+  notify: Restart InfluxDB
+
 - name: Ensure influxdb is running
   ansible.builtin.service:
     name: influxdb
