@@ -29,13 +29,13 @@
 
 - name: datasources config
   ansible.builtin.copy:
-    src: ../files/datasources.config.yaml
+    src: datasources.config.yaml
     dest: /etc/grafana/provisioning/dashboards/datasources.config.yaml
   notify: Restart grafana-server
 
 - name: Add datasources
   ansible.builtin.copy:
-    src: ../files/datasources.yaml
+    src: datasources.yaml
     dest: /etc/grafana/provisioning/datasources/datasources.yaml
   notify: Restart grafana-server
 
@@ -47,13 +47,13 @@
 
 - name: Main dashboard JSON
   ansible.builtin.copy:
-    src: ../files/main.json
+    src: main.json
     dest: /var/lib/grafana/dashboards/Main.json
   notify: Restart grafana-server
 
 - name: syslog dashboard JSON
   ansible.builtin.copy:
-    src: ../files/syslog.json
+    src: syslog.json
     dest: /var/lib/grafana/dashboards/syslog.json
   notify: Restart grafana-server
 

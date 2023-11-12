@@ -1,7 +1,7 @@
 // SSH
 - ssh -p<port_number> ubuntu@193.40.156.67
 - ssh -p<my_port_number> ubuntu@193.40.156.67 uptime
-- ssh-keygen -R [<ip>]:<port> -f /home/<your_user>/.ssh/known_hosts --> when I have problems with a key
+- ssh-keygen -R [<public_ip>]:<port> -f /home/<your_user>/.ssh/known_hosts --> when I have problems with a key
 
 // ANSIBLE COMMANDS
 - ansible-playbook infra.yaml
@@ -52,3 +52,4 @@ services
 - ss -ntlp ==> info about TCP sockets, to check the port usage by service name or service ID
 - ss -nul ==> info about UDP sockets, " " "
 - curl localhost:9113 | grep -v ^# ==> view page content without the comments
+- dig google.com --> dns info about google.com

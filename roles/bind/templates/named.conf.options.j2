@@ -2,15 +2,15 @@ options {
 directory "/var/cache/bind";
 
 forwarders {
-{% for forwarder in dns_forwarders %}
+{%- for forwarder in dns_forwarders %}
 {{ forwarder }};
-{% endfor %}
+{%- endfor %}
 };
 
 allow-query {
-{% for query in allowed_queries %}
+{%- for query in allowed_queries %}
 {{ query }};
-{% endfor %}
+{%- endfor %}
 };
 
 dnssec-validation auto;

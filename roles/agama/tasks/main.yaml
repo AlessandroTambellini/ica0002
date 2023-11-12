@@ -18,4 +18,3 @@
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/hudolejev/agama/master/agama.py
     dest: /opt/agama/
-# TODO: I may need to set some permissions/ownership --> watch video lesson

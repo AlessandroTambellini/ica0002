@@ -15,7 +15,7 @@
 
 - name: InfluxDB config
   ansible.builtin.copy:
-    src: ../files/influxdb.conf
+    src: influxdb.conf
     dest: /etc/influxdb/influx.conf
   notify: Restart InfluxDB
 
@@ -42,7 +42,7 @@
 
 - name: Telegraf config
   ansible.builtin.copy:
-    src: ../files/telegraf.conf
+    src: telegraf.conf
     dest: /etc/telegraf/telegraf.conf
   notify: Restart Telegraf
 
@@ -61,7 +61,7 @@
 
 - name: Exporter service config
   ansible.builtin.copy:
-    src: ../files/prometheus-influxdb-stats-exporter.service
+    src: prometheus-influxdb-stats-exporter.service
     dest: /etc/systemd/system/prometheus-influxdb-stats-exporter.service
   notify: Restart prometheus-influxdb-stats-exporter
 

@@ -1,5 +1,5 @@
 # MySQL
-mysql_host: AlessandroTambellini-2 # vm2
+mysql_host: "{{ groups['db_servers'] }}" # check if this works
 mysql_database: agama
 mysql_user: agama
 mysql_password: !vault |
@@ -24,14 +24,16 @@ dns_forwarders:
 allowed_queries:
   - 192.168.42.0/23
   - 127.0.0.0/8
+
+backup_server_IP: 192.168.42.132
 # At least for now, these fields are updated manually
 vms:
   vm1:
-    public_SSH_port: "32722"
-    public_URL: "http://193.40.156.67:32780"
+    public_SSH_port: "17422"
+    public_URL: "http://193.40.156.67:17480"
   vm2:
-    public_SSH_port: "37522"
-    public_URL: http://193.40.156.67:37580
+    public_SSH_port: "10322"
+    public_URL: http://193.40.156.67:10380
 domain_name: rabix.io
 # Exporters
 node_exporter_host: "" # Set node_exporter_host to localhost if you wish to expose node_exporter on localhost only.

@@ -6,17 +6,6 @@ in a different order
 3) Every time you setup a new service verify it with the protocol explained here: 
     https://github.com/romankuchin/ica0002-2023/tree/main/03-web-server#task-4-manage-uwsgi-service
 
-4) EXAMPLE
-- name: uwsgi configuration for agama
-  ansible.builtin.template:
-    src: ../templates/agama.ini.j2
-    dest: /etc/uwsgi/apps-enabled/agama.ini
-    owner: agama
-    mode: '0600'
-  no_log: true
-
-name, ansible and no_log are parameters, while src, dest, owner and mode are modules
-
 5) default mode in ubuntu is 0644, so no need to specify it
 
 6) rsyslog is installed in ubuntu by default, so no need to install it.
@@ -26,7 +15,25 @@ name, ansible and no_log are parameters, while src, dest, owner and mode are mod
 8) by default telegraf behaves like an exporter and collects the data specified in the default config file,
 and, also by default, it send the data to influxdb
 
+9) 
+  Init is a prerequisite to install and configure Bind -->
+  Bind is prerequisite to install and configure resolver -->
+  Resolver is prerequisite for any further actions with your setup.
+
+
+WSGI stands for "Web Server Gateway Interface".
+It is used to forward requests from a web server (such as Apache or NGINX) 
+to a backend Python web application or framework
+==> client --> NGINX --> uwsgi --> python app
+
 QUESTIONS TO PROFESSOR:
   - What is GH username in lab 7?
   - Should I be logged in automatically in grafana when entering the URL?
   - Should all exporter be run by user prometheus? Should I create a general exporter_user=prometheus in all.yaml?
+  - TASK [grafana : Add key from file] sometimes fails at first run
+  - how can I use a variable instead of hard-coding alessandrotambellini-2 here:
+    datasources:
+    - name: Prometheus-1
+      type: prometheus
+      access: proxy
+      url: http://alessandrotambellini-2:9090/prometheus

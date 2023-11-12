@@ -21,16 +21,23 @@
 #- name: Update APT cache
 #  ansible.builtin.apt:
 #    cache_valid_time: 86400
-#- name: Collect all ansible data
-#  ansible.builtin.setup:
 
-#- name: Display all variables/facts known for a host
-#  ansible.builtin.debug:
-#    var: hostvars[inventory_hostname]
-#
-#- name: Print groups['all']
-#  debug:
-#    var: groups['dns_server']
+# check if an ansible variable exists and, in case, its content
+#- debug:
+#    var: hostvars
+
+- name: Add the user 'backup'
+  ansible.builtin.user:
+    name: backup
+    home: /home/backup
+    generate_ssh_key: true
+    ssh_key_file: .ssh/id_rsa.pub # it's relative to user home dir
+    force: true
+
+- name: Set SSH key for user 'backup'
+  ansible.posix.authorized_key:
+    user: backup
+    key: https://github.com/romankuchin.keys
 
 - name: Install required packages and set caching time
   ansible.builtin.apt:

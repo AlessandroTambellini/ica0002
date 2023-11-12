@@ -6,5 +6,5 @@
 
 - name: Update VM DNS settings
   ansible.builtin.template:
-    src: ../templates/DNS_settings.j2
+    src: DNS_settings.j2
     dest: /etc/resolv.conf

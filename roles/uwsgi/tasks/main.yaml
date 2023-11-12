@@ -6,7 +6,7 @@
 
 - name: uWSGI configuration for agama
   ansible.builtin.template:
-    src: ../templates/agama.ini.j2
+    src: agama.ini.j2
     dest: /etc/uwsgi/apps-enabled/agama.ini
     owner: agama
   no_log: true # the changes may contain the password, and it should not be logged

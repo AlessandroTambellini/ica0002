@@ -6,13 +6,13 @@
 
 - name: bind9 configuration
   ansible.builtin.template:
-    src: ../templates/named.conf.options.j2
+    src: named.conf.options.j2
     dest: /etc/bind/named.conf.options
   notify: Restart bind9
 
 - name: master-zone configuration
   ansible.builtin.template:
-    src: ../templates/db.rabix.io.j2
+    src: db.rabix.io.j2
     dest: "/var/lib/bind/db.{{ domain_name }}"
   notify: Run rndc reload # command to update the DNS settings
 

@@ -19,7 +19,7 @@
 
 - name: pinger script
   ansible.builtin.copy:
-    src: ../files/pinger.sh
+    src: pinger.sh
     dest: /usr/local/bin/pinger
     mode: 0755
   notify: Restart pinger

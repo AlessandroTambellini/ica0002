@@ -1,6 +1,6 @@
 - name: prometheus-mysqld-exporter user configuration
   ansible.builtin.template:
-    src: ../templates/.my.cnf.j2
+    src: .my.cnf.j2
     dest: /var/lib/prometheus/.my.cnf
     mode: 0400
     owner: prometheus
@@ -47,7 +47,7 @@
 
 - name: MySQL configuration
   ansible.builtin.copy:
-    src: ../files/bind_address.cnf
+    src: bind_address.cnf
     dest: /etc/mysql/mysql.conf.d/override.cnf
 
   notify: Restart MySQL
