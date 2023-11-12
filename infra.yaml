@@ -6,7 +6,7 @@
   tags: init
 
 - name: DNS servers
-  hosts: dns_server
+  hosts: dns_servers
   roles:
     - bind
   tags: dns
@@ -18,23 +18,20 @@
   tags: dns
 
 - name: Prometheus server
-  hosts: prometheus_server
-  become: yes
+  hosts: prometheus_servers
   roles:
     - prometheus
     - nginx
   tags: p
 
 - name: Grafana server
-  hosts: grafana_server
-  become: yes
+  hosts: grafana_servers
   roles:
     - grafana
   tags: g
 
 - name: Database server
   hosts: db_servers
-  become: yes
   roles:
     - mysql
   tags: db
@@ -48,15 +45,13 @@
   tags: ws
 
 - name: InfluxDB
-  hosts: influxdb
-  become: yes # execute as root user
+  hosts: influxdb_servers # execute as root user
   roles:
     - influxdb
   tags: i
 
 - name: pinger
-  hosts: pinger
-  become: yes
+  hosts: pinger_servers
   roles:
     - pinger
   tags: pg
