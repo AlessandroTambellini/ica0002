@@ -1,28 +1,28 @@
 options {
-directory "/var/cache/bind";
+    directory "/var/cache/bind";
 
-forwarders {
-{%- for forwarder in dns_forwarders %}
-{{ forwarder }};
-{%- endfor %}
-};
+    forwarders {
+        {%- for forwarder in dns_forwarders %}
+        {{ forwarder }};
+        {%- endfor %}
+    };
 
-allow-query {
-{%- for query in allowed_queries %}
-{{ query }};
-{%- endfor %}
-};
+    allow-query {
+        {%- for query in allowed_queries %}
+        {{ query }};
+        {%- endfor %}
+    };
 
-dnssec-validation auto;
+    dnssec-validation auto;
 
-listen-on-v6 { any; };
+    listen-on-v6 { any; };
 };
 
 zone "{{ domain_name }}" in {
-type master;
-file "/var/lib/bind/db.{{ domain_name }}";
+    type master;
+    file "/var/lib/bind/db.{{ domain_name }}";
 };
 
 statistics-channels {
-inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
+    inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
 };

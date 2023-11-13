@@ -33,7 +33,7 @@ services
 - sudo tail /var/log/uwsgi/app/agama.log
 - sudo tail /var/log/nginx/access.log
 - cat /var/log/syslog
-- journalctl -u prometheus-nginx-exporter.service --no-pager
+- journalctl -fus prometheus-nginx-exporter.service --no-pager
 - service bind9 status
 - systemctl status bind9
 - ps ax --> running processes
@@ -53,3 +53,8 @@ services
 - ss -nul ==> info about UDP sockets, " " "
 - curl localhost:9113 | grep -v ^# ==> view page content without the comments
 - dig google.com --> dns info about google.com
+- ping 1.1.1.1 --> test the network is reachable
+
+// STILL TO TRY
+- nginx -t named-checkconf
+- nginx -t named-checkzone

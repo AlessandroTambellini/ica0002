@@ -11,39 +11,39 @@ scrape_configs:
   - job_name: 'linux'
     static_configs:
     - targets:
-{%- for server in groups['all'] %}
+{% for server in groups['all'] %}
       - {{ server }}:9100
-{%- endfor %}
+{% endfor %}
     metrics_path: '/metrics'
 
   - job_name: 'bind9'
     static_configs:
     - targets:
-{%- for server in groups['dns_servers'] %}
+{% for server in groups['dns_servers'] %}
       - {{ server }}:9119
-{%- endfor %}
+{% endfor %}
     metrics_path: '/metrics'
 
   - job_name: 'nginx'
     static_configs:
     - targets:
-{%- for server in groups['all'] %}
+{% for server in groups['all'] %}
       - {{ server }}:9113
-{%- endfor %}
+{% endfor %}
     metrics_path: '/metrics'
 
   - job_name: 'mysql'
     static_configs:
     - targets:
-{%- for server in groups['db_servers'] %}
+{% for server in groups['db_servers'] %}
       - {{ server }}:9104
-{%- endfor %}
+{% endfor %}
     metrics_path: '/metrics'
 
   - job_name: 'influxdb'
     static_configs:
     - targets:
-{%- for server in groups['influxdb_servers'] %}
+{% for server in groups['influxdb_servers'] %}
       - {{ server }}:9424
-{%- endfor %}
+{% endfor %}
     metrics_path: '/metrics'

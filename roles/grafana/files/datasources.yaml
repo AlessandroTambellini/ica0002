@@ -18,4 +18,3 @@ datasources:
     access: proxy
     url: http://alessandrotambellini-2:8086
     database: logging
-#    dashboard: 12433

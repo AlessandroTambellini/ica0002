@@ -24,20 +24,22 @@
 
 # check if an ansible variable exists and, in case, its content
 #- debug:
-#    var: hostvars
+#    var: hostvars['AlessandroTambellini-1']
+#  tags: ct
 
 - name: Add the user 'backup'
   ansible.builtin.user:
     name: backup
     home: /home/backup
     generate_ssh_key: true
-    ssh_key_file: .ssh/id_rsa.pub # it's relative to user home dir
-    force: true
 
-- name: Set SSH key for user 'backup'
-  ansible.posix.authorized_key:
-    user: backup
-    key: https://github.com/romankuchin.keys
+- name: Add SSH key
+  ansible.builtin.template:
+    src: known_hosts.j2
+    dest: /home/backup/.ssh/known_hosts
+    owner: backup
+    group: backup
+    mode: 0644
 
 - name: Install required packages and set caching time
   ansible.builtin.apt:
