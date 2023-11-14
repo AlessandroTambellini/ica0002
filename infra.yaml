@@ -22,7 +22,7 @@
 
 - name: Prometheus server
   hosts: prometheus_servers
-  #become: yes
+  become: yes
   roles:
     - prometheus
     - nginx

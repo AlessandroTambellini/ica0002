@@ -29,8 +29,8 @@
 
 - name: datasources config
   ansible.builtin.copy:
-    src: datasources.config.yaml
-    dest: /etc/grafana/provisioning/dashboards/datasources.config.yaml
+    src: datasources.conf.yaml
+    dest: /etc/grafana/provisioning/dashboards/datasources.conf.yaml
   notify: Restart grafana-server
 
 - name: Add datasources

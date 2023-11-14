@@ -24,17 +24,16 @@ dns_forwarders:
 allowed_queries:
   - 192.168.42.0/23
   - 127.0.0.0/8
-
 backup_server_ip: 192.168.42.132
 backup_server_ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
 # At least for now, these fields are updated manually
 vms:
   vm1:
-    public_SSH_port: "14422"
-    public_URL: "http://193.40.156.67:14480"
+    public_SSH_port: "45222"
+    public_URL: "http://193.40.156.67:45280"
   vm2:
-    public_SSH_port: "5922"
-    public_URL: http://193.40.156.67:5980
+    public_SSH_port: "40122"
+    public_URL: http://193.40.156.67:40180
 domain_name: rabix.io
 # Exporters
 node_exporter_host: "" # Set node_exporter_host to localhost if you wish to expose node_exporter on localhost only.

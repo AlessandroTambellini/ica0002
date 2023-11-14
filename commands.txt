@@ -10,6 +10,7 @@
 - ansible-playbook infra.yaml -tmonitoring
 - ansible-playbook infra.yaml -t "i, dns" --> more tags at once
 - ansible-playbook infra.yaml -vvv --> see full traceback
+- ansible-doc "module"
 
 // PACKAGES
 - 1) https://packages.ubuntu.com/
@@ -30,9 +31,7 @@ services
 - check Jinja2 templates: https://j2live.ttl255.com/
 
 // TROUBLESHOOTING
-- sudo tail /var/log/uwsgi/app/agama.log
-- sudo tail /var/log/nginx/access.log
-- cat /var/log/syslog
+- /var/log/"service"
 - journalctl -fus prometheus-nginx-exporter.service --no-pager
 - service bind9 status
 - systemctl status bind9
@@ -54,7 +53,16 @@ services
 - curl localhost:9113 | grep -v ^# ==> view page content without the comments
 - dig google.com --> dns info about google.com
 - ping 1.1.1.1 --> test the network is reachable
+- nc -vz "ip/DNS"-2 8080 --> check if service is listening on remote machine
 
 // STILL TO TRY
-- nginx -t named-checkconf
-- nginx -t named-checkzone
+// CONFIG SYNTAX
+
+// in my project I use template, not copy. Therefore I have jinja syntax, so
+// it's gonna always give me error because is not correct config syntax
+- nginx -t 
+- named-checkconf
+- apache2ctl -t
+- nginx -t 
+- named-checkzone
+- visudo -cf /etc/sudoers.d/my-user <-- this is not used in this course

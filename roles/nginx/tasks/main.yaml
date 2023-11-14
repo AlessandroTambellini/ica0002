@@ -8,6 +8,7 @@
   ansible.builtin.template:
     src: default.j2
     dest: /etc/nginx/sites-enabled/default
+    #validate: /usr/sbin/nginx -t -c %s
   notify: Restart nginx
 
 - meta: flush_handlers
