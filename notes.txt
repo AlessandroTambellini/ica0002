@@ -30,10 +30,20 @@ QUESTIONS TO PROFESSOR:
   - What is GH username in lab 7?
   - Should I be logged in automatically in grafana when entering the URL?
   - Should all exporter be run by user prometheus? Should I create a general exporter_user=prometheus in all.yaml?
-  - validate doesn't work
-  - how can I use a variable instead of hard-coding alessandrotambellini-2 here:
-    datasources:
-    - name: Prometheus-1
-      type: prometheus
-      access: proxy
-      url: http://alessandrotambellini-2:9090/prometheus
+
+BACKUP COMMANDS
+23 14 15 11 *  backup  mysqldump agama > /home/backup/mysql/agama.sql
+0 0 * * 0  backup  duplicity --no-encryption full /home/backup/mysql/ rsync://AlessandroTambellini@backup.{{ domain_name }}/mysql
+0 0 * * 1-6  backup  duplicity --no-encryption incremental /home/backup/mysql/ rsync://AlessandroTambellini@backup.{{ domain_name }}/mysql
+
+duplicity --no-encryption restore /home/backup/mysql/ rsync://AlessandroTambellini@backup.rabix.io/mysql
+duplicity --no-encryption restore rsync://AlessandroTambellini@backup.rabix.io/mysql /home/backup/restore/mysql
+
+// create the mysql dump inside agama.sql
+mysqldump agama > /home/backup/mysql/agama.sql
+
+// restore the backed up data inside mysql
+mysql agama < /home/backup/mysql/agama.sql
+
+sudo -u backup influxd backup -portable /tmp; echo $?
+

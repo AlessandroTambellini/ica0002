@@ -71,3 +71,17 @@
     name: rsyslog
     state: started
     enabled: yes
+
+#
+# backup
+#
+
+- name: create backup dir
+  ansible.builtin.file:
+    path: /home/backup/restore
+    owner: backup
+    state: directory
+
+- name: Install Duplicity
+  ansible.builtin.apt:
+    name: duplicity

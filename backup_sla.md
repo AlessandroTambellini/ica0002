@@ -12,14 +12,18 @@ The backup services covers the following services:
 
 ## RPO
 
-- MySQL: 24 hours
-- InfluxDB: 24 hours
+- MySQL:
+  - incremental: automatically everyday from monday to saturday at 22:00 UTC time
+  - full: automatically every week on sunday at 22:00 UTC time
+- InfluxDB:
+  - incremental: automatically everyday from monday to saturday at 22:00 UTC time
+  - full: automatically every week on sunday at 22:00 UTC time
 
+**explanation**:
 Two types of backup can be produced: full and incremental.
 Full backup contains the whole backed up data and can be solely used to restore require data or service.
 Incremental backup stores only the difference in the data relative to the last incremental backup produced.
-
-**time**: automatically everyday at 22:00 UTC time
+As for the time was choosen 22:00 UTC because backups must be completed before 01:00 UTC when the virtual machines are destroyed
 
 ## Versioning and retention
 

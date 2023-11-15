@@ -14,3 +14,11 @@ At this point of the development the built parts are:
 ### Current Infrastructure
 
 ![Alt text](current_infrastructure.png)
+
+<!--
+if you want to automatically connect the vms follow the following process:
+#/home/alessandro/.ssh/config
+#Host vm1 vm2
+#StrictHostKeyChecking no
+#User ubuntu
+-->

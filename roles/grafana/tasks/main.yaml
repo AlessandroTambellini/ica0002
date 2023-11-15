@@ -34,7 +34,7 @@
   notify: Restart grafana-server
 
 - name: Add datasources
-  ansible.builtin.copy:
+  ansible.builtin.template:
     src: datasources.yaml
     dest: /etc/grafana/provisioning/datasources/datasources.yaml
   notify: Restart grafana-server

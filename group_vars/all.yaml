@@ -1,6 +1,6 @@
 # MySQL
 mysql_host: "{{ groups['db_servers'][0] }}" # check if this works
-mysql_database: agama
+agama_db: agama
 mysql_user: agama
 mysql_password: !vault |
   $ANSIBLE_VAULT;1.1;AES256
@@ -17,6 +17,13 @@ grafana_password: !vault |
   31333361646466666637353834356662356139393231396363666139363061646439663666326632
   3836386265383733660a303439666334383166643837346463613139663433323262303461643431
   65333164663530393965303635373838323733303261326161623262373131383134
+backup_password: !vault |
+  $ANSIBLE_VAULT;1.1;AES256
+  64623866306534303037383937633361333136626262333363373663376365363161373934353135
+  6138373263643632623139366464366466383136346362340a633936366535646461393436326230
+  62316231393036656263653562633738613361343737383261303630613236323738346231656435
+  6434316330633030330a353866623031326565303034323566343136373433663736616335313964
+  6462
 pinger_user: pinger
 # DNS
 dns_forwarders:
@@ -29,11 +36,11 @@ backup_server_ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGE
 # At least for now, these fields are updated manually
 vms:
   vm1:
-    public_SSH_port: "45222"
-    public_URL: "http://193.40.156.67:45280"
+    public_SSH_port: "2622"
+    public_URL: "http://193.40.156.67:2680"
   vm2:
-    public_SSH_port: "40122"
-    public_URL: http://193.40.156.67:40180
+    public_SSH_port: "15322"
+    public_URL: http://193.40.156.67:15380
 domain_name: rabix.io
 # Exporters
 node_exporter_host: "" # Set node_exporter_host to localhost if you wish to expose node_exporter on localhost only.

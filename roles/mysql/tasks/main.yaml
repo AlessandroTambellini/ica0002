@@ -33,7 +33,7 @@
 # mysql db is after the mysql server is started because you cannot create a db if the server is down
 - name: MySQL database
   community.mysql.mysql_db:
-    name: "{{ mysql_database }}"
+    name: "{{ agama_db }}"
     login_unix_socket: /var/run/mysqld/mysqld.sock
 
 - name: MySQL {{ mysql_user }} user
@@ -41,7 +41,7 @@
     name: "{{ mysql_user }}"
     password: "{{ mysql_password }}"
     host: "%"
-    priv: "{{ mysql_database }}.*:ALL" # the user has access only to its own database
+    priv: "{{ agama_db }}.*:ALL"
     login_unix_socket: /var/run/mysqld/mysqld.sock
   no_log: true
 
@@ -49,5 +49,35 @@
   ansible.builtin.copy:
     src: bind_address.cnf
     dest: /etc/mysql/mysql.conf.d/override.cnf
-
   notify: Restart MySQL
+
+#
+# backup
+#
+
+- name: create backup dir
+  ansible.builtin.file:
+    path: /home/backup/mysql
+    owner: backup
+    state: directory
+
+- name: backup user
+  community.mysql.mysql_user:
+    name: backup
+    password: "{{ backup_password }}"
+    priv: "{{ agama_db }}.*:LOCK TABLES,SELECT"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  no_log: true
+
+- name: Client config
+  ansible.builtin.template:
+    src: .backup.cnf.j2
+    dest: /home/backup/.my.cnf
+    owner: backup
+    mode: 0400
+  no_log: true
+
+- name: Cron config
+  ansible.builtin.template:
+    src: mysql-backup.j2
+    dest: /etc/cron.d/mysql-backup
