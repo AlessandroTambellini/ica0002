@@ -4,8 +4,9 @@
 
 - Restore MySQL data from the backup:
 
-  sudo -u backup duplicity restore rsync://AlessandroTambellini@backup.rabix.io/mysql /home/backup/restore/mysql
-  mysql agama < /home/backup/restore/mysql/agama.sql
+  1. `sudo -u backup duplicity restore rsync://AlessandroTambellini@backup.rabix.io/mysql /home/backup/restore/mysql`
+  2. enter privileged mode: `sudo su -`
+  3. `mysql agama < /home/backup/restore/mysql/agama.sql`
 
   To make sure the result of the backup restore is correct follow the following instructions:
 
@@ -22,7 +23,7 @@
 
 - Restore InfluxDB data from the backup:
 
-  To restore the backup you will need to delete existing telegraf database first. It also makes sense to stop the Telegraf service so that it doesn't recreate the database before you could restore it:
+  To restore the backup you will need to delete existing telegraf database first. It also makes sense to stop the Telegraf service so that it doesn't recreate the database before you could restore it. So, execute the following commands:
 
   ```bash
   service telegraf stop
@@ -37,10 +38,10 @@
   restore: DB metadata not changed. database may already exist
   ```
 
-  It's a known issue with InfluxDB restore, you can ignore these
+  It's a known issue with InfluxDB restore, you can ignore these.
 
-  sudo -u backup duplicity restore <args>
-  <another-command>
-  <yet-another-command>
+  Now, exec these other commands:
 
-<add a few words here how the result of backup restore can be checked>
+  1. `sudo -u backup duplicity restore rsync://AlessandroTambellini@backup.rabix.io/mysql /home/backup/restore/infludb`
+  2. enter privileged mode: `sudo su -`
+  3. something else, I don't know what to restore into influxdb

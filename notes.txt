@@ -21,7 +21,7 @@ and, also by default, it send the data to influxdb
   Resolver is prerequisite for any further actions with your setup.
 
 
-WSGI stands for "Web Server Gateway Interface".
+10) WSGI stands for "Web Server Gateway Interface".
 It is used to forward requests from a web server (such as Apache or NGINX) 
 to a backend Python web application or framework
 ==> client --> NGINX --> uwsgi --> python app
@@ -36,14 +36,14 @@ BACKUP COMMANDS
 0 0 * * 0  backup  duplicity --no-encryption full /home/backup/mysql/ rsync://AlessandroTambellini@backup.{{ domain_name }}/mysql
 0 0 * * 1-6  backup  duplicity --no-encryption incremental /home/backup/mysql/ rsync://AlessandroTambellini@backup.{{ domain_name }}/mysql
 
-duplicity --no-encryption restore /home/backup/mysql/ rsync://AlessandroTambellini@backup.rabix.io/mysql
-duplicity --no-encryption restore rsync://AlessandroTambellini@backup.rabix.io/mysql /home/backup/restore/mysql
+sudo -u backup duplicity --no-encryption restore rsync://AlessandroTambellini@backup.rabix.io/mysql /home/backup/restore/mysql
+sudo su -
+// restore the backed up data inside mysql
+mysql agama < /home/backup/restore/mysql/agama.sql
 
 // create the mysql dump inside agama.sql
 mysqldump agama > /home/backup/mysql/agama.sql
 
-// restore the backed up data inside mysql
-mysql agama < /home/backup/mysql/agama.sql
 
 sudo -u backup influxd backup -portable /tmp; echo $?
 
