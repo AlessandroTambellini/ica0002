@@ -44,6 +44,9 @@ mysql agama < /home/backup/restore/mysql/agama.sql
 // create the mysql dump inside agama.sql
 mysqldump agama > /home/backup/mysql/agama.sql
 
-
+// create influxdb dumps
 sudo -u backup influxd backup -portable /tmp; echo $?
 
+sudo -u backup rm -rf /home/backup/influxdb/*; influxd backup -portable -database telegraf /home/backup/influxdb
+
+sudo -u backup duplicity --no-encryption full /home/backup/influxdb/ rsync://AlessandroTambellini@backup.rabix.io/influxdb

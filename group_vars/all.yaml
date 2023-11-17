@@ -32,7 +32,7 @@ backup_password: !vault |
 pinger_user: pinger
 # DNS
 dns_forwarders:
-  - 192.168.43.92 # vm1, where the webapp resides
+  - 192.168.42.80 # vm1, where the webapp resides
 allowed_queries:
   - 192.168.42.0/23
   - 127.0.0.0/8
@@ -40,11 +40,11 @@ backup_server_ip: 192.168.42.132 # it's hard-coded, never updated automatically
 backup_server_ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
 vms:
   vm1:
-    public_SSH_port: "34822"
-    public_URL: "http://193.40.156.67:34880"
+    public_SSH_port: "8022"
+    public_URL: "http://193.40.156.67:8080"
   vm2:
-    public_SSH_port: "42722"
-    public_URL: http://193.40.156.67:42780
+    public_SSH_port: "2222"
+    public_URL: http://193.40.156.67:2280
 domain_name: rabix.io
 # Exporters
 node_exporter_host: ""

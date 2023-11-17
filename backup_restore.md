@@ -1,5 +1,7 @@
 - Install and configure infrastructure with Ansible:
 
+  <!-- I think I need to describe how to setup ansible in another machine and build all the infrastrucure -->
+
   ansible-playbook infra.yaml
 
 - Restore MySQL data from the backup:
@@ -23,7 +25,10 @@
 
 - Restore InfluxDB data from the backup:
 
-  To restore the backup you will need to delete existing telegraf database first. It also makes sense to stop the Telegraf service so that it doesn't recreate the database before you could restore it. So, execute the following commands:
+  First, download the data from backup server to vm:
+  `sudo -u backup duplicity restore rsync://AlessandroTambellini@backup.rabix.io/influxdb /home/backup/restore/influxdb`
+
+  Then, To restore the backup you will need to delete existing telegraf database first. It also makes sense to stop the Telegraf service so that it doesn't recreate the database before you could restore it. So, execute the following commands:
 
   ```bash
   service telegraf stop
@@ -40,8 +45,9 @@
 
   It's a known issue with InfluxDB restore, you can ignore these.
 
-  Now, exec these other commands:
+  The data should now be restored. To check it type:
 
-  1. `sudo -u backup duplicity restore rsync://AlessandroTambellini@backup.rabix.io/mysql /home/backup/restore/infludb`
-  2. enter privileged mode: `sudo su -`
-  3. something else, I don't know what to restore into influxdb
+  1. `influx`
+  2. `show databases`
+     and telegraf should be in the list
+  3. `show measurements` and check syslog is there

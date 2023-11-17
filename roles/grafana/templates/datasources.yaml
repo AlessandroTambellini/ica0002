@@ -17,4 +17,4 @@ datasources:
     type: influxdb
     access: proxy
     url: "http://{{ groups['influxdb_servers'][0] }}:8086"
-    database: logging
+    database: telegraf

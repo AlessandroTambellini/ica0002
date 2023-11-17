@@ -31,6 +31,7 @@
     name:
       - ca-certificates=20230311ubuntu0.20.04.1
       - prometheus-node-exporter
+      - duplicity # backup tool
     cache_valid_time: 86400
 
 - name: prometheus-node-exporter configuration
@@ -39,23 +40,20 @@
     dest: /etc/systemd/system/prometheus_node_exporter.service
   notify: restart prometheus-node-exporter
 
-- name: Ensure prometheus-node-exporter is running
-  ansible.builtin.service:
-    name: prometheus-node-exporter
-    state: started
-    enabled: yes
-
 - name: rsyslog config for Telegraf
   ansible.builtin.template:
     src: 15-telegraf.conf.j2
     dest: /etc/rsyslog.d/15-telegraf.conf
   notify: restart rsyslog
 
-- name: Ensure rsyslog is running
+- name: Ensure services are running
   ansible.builtin.service:
-    name: rsyslog
+    name: "{{ item }}"
     state: started
     enabled: yes
+  loop:
+    - prometheus-node-exporter
+    - rsyslog
 
 #
 # backup
@@ -80,7 +78,3 @@
     path: /home/backup/restore
     owner: backup
     state: directory
-
-- name: Install Duplicity
-  ansible.builtin.apt:
-    name: duplicity
