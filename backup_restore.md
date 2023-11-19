@@ -6,7 +6,7 @@
 
 - Restore MySQL data from the backup:
 
-  1. `sudo -u backup duplicity restore rsync://AlessandroTambellini@backup.rabix.io/mysql /home/backup/restore/mysql`
+  1. `sudo -u backup duplicity --no-encryption restore rsync://AlessandroTambellini@backup.rabix.io/mysql /home/backup/restore/mysql`
   2. enter privileged mode: `sudo su -`
   3. `mysql agama < /home/backup/restore/mysql/agama.sql`
 
@@ -26,7 +26,7 @@
 - Restore InfluxDB data from the backup:
 
   First, download the data from backup server to vm:
-  `sudo -u backup duplicity restore rsync://AlessandroTambellini@backup.rabix.io/influxdb /home/backup/restore/influxdb`
+  `sudo -u backup duplicity --no-encryption restore rsync://AlessandroTambellini@backup.rabix.io/influxdb /home/backup/restore/influxdb`
 
   Then, To restore the backup you will need to delete existing telegraf database first. It also makes sense to stop the Telegraf service so that it doesn't recreate the database before you could restore it. So, execute the following commands:
 

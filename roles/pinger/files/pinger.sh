@@ -17,10 +17,12 @@ db_url=$(grep "^database_url=" /etc/pinger/pinger.conf | sed 's/^.*=//')
 db_name=$(grep "^database_name=" /etc/pinger/pinger.conf | sed 's/^.*=//')
 targets=$(grep "^targets=" /etc/pinger/pinger.conf | sed 's/^.*=//' | sed 's/\(,\|;\)/ /g')
 
+# issue 1
 curl -i -XPOST "${db_url}/query" --data-urlencode "q=CREATE DATABASE $db_name" 1>/dev/null 2>/dev/null
 
 while true; do
   result=$(fping -C1 -q $targets 2>&1 | awk '{print "rtt,dst="$1" rtt="$3}')
+  # issue 2
   curl -i -XPOST "${db_url}/write?db=$db_name" --data-binary "$result" 1>/dev/null 2>/dev/null
  sleep 1
 done

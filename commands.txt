@@ -68,3 +68,7 @@ services
 - named-checkzone
 - visudo -cf /etc/sudoers.d/my-user <-- this is not used in this course
 
+mysql -u replication -p --> enter mysql with user replication
+
+
+show replica status\G;

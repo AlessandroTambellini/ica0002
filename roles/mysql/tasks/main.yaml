@@ -1,10 +1,16 @@
 - name: prometheus-mysqld-exporter user configuration
   ansible.builtin.template:
-    src: .my.cnf.j2
+    src: .exporter.cnf.j2
     dest: /var/lib/prometheus/.my.cnf
     mode: 0400
     owner: prometheus
   no_log: true
+
+- name: prometheus-mysqld-exporter args
+  ansible.builtin.copy:
+    src: prometheus-mysqld-exporter
+    dest: /etc/default/prometheus-mysqld-exporter
+  notify: Restart prometheus-mysqld-exporter
 
 - name: Install required packages
   ansible.builtin.apt:
@@ -35,6 +41,9 @@
   community.mysql.mysql_db:
     name: "{{ agama_db }}"
     login_unix_socket: /var/run/mysqld/mysqld.sock
+  notify:
+    - Reset MySQL source
+    - Reset MySQL replica
 
 - name: MySQL {{ mysql_user }} user
   community.mysql.mysql_user:
@@ -46,8 +55,8 @@
   no_log: true
 
 - name: MySQL configuration
-  ansible.builtin.copy:
-    src: bind_address.cnf
+  ansible.builtin.template:
+    src: override.cnf.j2
     dest: /etc/mysql/mysql.conf.d/override.cnf
   notify: Restart MySQL
 
@@ -81,3 +90,27 @@
   ansible.builtin.template:
     src: mysql-backup.j2
     dest: /etc/cron.d/mysql-backup
+
+#
+#
+# replication
+#
+
+- name: MySQL replication user
+  community.mysql.mysql_user:
+    name: replication
+    password: "{{ replication_password }}"
+    host: "%"
+    priv: "*.*:REPLICATION SLAVE"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  no_log: true
+
+- name: set read-only mode to db
+  community.mysql.mysql_variables:
+    variable: read_only
+    value: "{{ 'OFF' if inventory_hostname == mysql_host else 'ON' }}"
+    mode: persist
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  notify:
+    - Reset MySQL source
+    - Reset MySQL replica

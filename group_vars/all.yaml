@@ -5,6 +5,7 @@
 
 # MySQL
 mysql_host: "{{ groups['db_servers'][0] }}"
+mysql_backup_host: "{{ groups['db_servers'] | reject('eq', mysql_host) | first | default(mysql_host) }}"
 agama_db: agama
 mysql_user: agama
 mysql_password: !vault |
@@ -30,23 +31,29 @@ backup_password: !vault |
   6434316330633030330a353866623031326565303034323566343136373433663736616335313964
   6462
 pinger_user: pinger
+#
+#
 # DNS
+#
 dns_forwarders:
-  - 192.168.42.80 # vm1, where the webapp resides
+  - "192.168.42.29" # vm1, where the webapp resides
 allowed_queries:
   - 192.168.42.0/23
   - 127.0.0.0/8
-backup_server_ip: 192.168.42.132 # it's hard-coded, never updated automatically
+backup_server_ip: 192.168.42.132 # it's hard-coded
 backup_server_ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
 vms:
   vm1:
-    public_SSH_port: "8022"
-    public_URL: "http://193.40.156.67:8080"
+    public_SSH_port: "2922"
+    public_URL: "http://193.40.156.67:2980"
   vm2:
-    public_SSH_port: "2222"
-    public_URL: http://193.40.156.67:2280
+    public_SSH_port: "8322"
+    public_URL: "http://193.40.156.67:8380"
 domain_name: rabix.io
-# Exporters
+#
+#
+# exporters
+#
 node_exporter_host: ""
 node_exporter_port: 9100
 node_exporter_options: ""
@@ -58,3 +65,13 @@ mysql_exporter_password: !vault |
   63323161623731323864386338633030616430303466663738323664626364333537666133303237
   3363616130656635360a336535386462646539366136653462333563316462626137306638396464
   38303437303233643434333830656531353231633062343261396464323431303137
+
+replication_password: !vault |
+  $ANSIBLE_VAULT;1.1;AES256
+  62613639623963633061666330393832646139376261616539343135346632323136636264373864
+  3933326264653461306262376264326537363632393033630a636435333039653362333663646334
+  62303931663733613063663663313630613438646539663135633136626536313663643431363132
+  3561653063623361650a333636653164633664663532666166623862623535336239363937356234
+  62613837376237353162636432336463326431633031353830636665373631313965
+
+node_id: "{{ (ansible_port / 100) | int }}"

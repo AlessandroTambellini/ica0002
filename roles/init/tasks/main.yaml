@@ -22,9 +22,8 @@
 #  ansible.builtin.apt:
 #    cache_valid_time: 86400
 
-# check if an ansible variable exists and, in case, its content
 #- debug:
-#    var: hostvars['AlessandroTambellini-1']['backup_server_ip']
+#    var: ansible_port
 
 - name: Install required packages and set caching time
   ansible.builtin.apt:
