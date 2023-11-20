@@ -1,3 +1,5 @@
+main
+
 influxdb_write_write_ok
 influxdb_exporter_stats_query_success
 rate(nginx_http_requests_total[5m])
@@ -8,3 +10,14 @@ rate(node_cpu_seconds_total{mode="idle"}[1m])
 rate(mysql_global_status_commands_total[5m])
 rate(bind_resolver_queries_total[5m])
 node_memory_MemTotal_bytes - (node_memory_MemFree_bytes + node_memory_Buffers_bytes + node_memory_Cached_bytes)
+
+
+mysql
+
+mysql_global_variables_server_id
+mysql_up
+mysql_global_variables_read_only
+mysql_slave_status_slave_io_running
+mysql_slave_status_slave_sql_running
+rate(mysql_global_status_commands_total[5m])
+
