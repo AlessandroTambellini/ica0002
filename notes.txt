@@ -25,10 +25,14 @@ Because nginx and python app do not speak a common language
 ==> client --> nginx --> uwsgi --> python app
 
 QUESTIONS TO PROFESSOR:
-  - What is GH username in lab 7?
-  - Should I be logged in automatically in grafana when entering the URL?
   - Should all exporter be run by user prometheus? Should I create a general exporter_user=prometheus in all.yaml?
-
+  ==> prometheus exporters config:
+      - mysql has just user (prometheus)
+      - bind do not have it
+      - nginx do not have it 
+      - init has it without user
+      - influxdb has user (prometheus) without password
+      
 BACKUP COMMANDS
 // test influxdb dumps
 sudo -u backup influxd backup -portable /tmp; echo $?
@@ -45,3 +49,4 @@ statement.setString(1, input);
 ResultSet resultSet = statement.executeQuery();
 
 3) check this page to avoid SQL injections: https://docs.influxdata.com/influxdb/v1/guides/write_data/
+

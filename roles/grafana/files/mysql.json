@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 3,
+  "id": 7,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -256,7 +256,7 @@
           "refId": "A"
         }
       ],
-      "title": "MySQL replica SQL thread",
+      "title": "MySQL server mode",
       "type": "stat"
     },
     {
@@ -302,14 +302,14 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 6,
+        "w": 12,
         "x": 0,
         "y": 6
       },
       "id": 9,
       "options": {
         "colorMode": "value",
-        "graphMode": "none",
+        "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -381,14 +381,14 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 6,
-        "x": 6,
-        "y": 6
+        "w": 12,
+        "x": 0,
+        "y": 12
       },
       "id": 8,
       "options": {
         "colorMode": "value",
-        "graphMode": "none",
+        "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -480,7 +480,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 12
+        "y": 18
       },
       "id": 4,
       "options": {
@@ -520,13 +520,13 @@
     "list": []
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "MySQL",
   "uid": "a2f050a0-f5f5-45b8-9ccd-b7bca74491c1",
-  "version": 3,
+  "version": 1,
   "weekStart": ""
 }

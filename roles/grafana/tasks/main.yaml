@@ -45,22 +45,14 @@
     state: directory
     mode: "0755"
 
-- name: Main dashboard JSON
+- name: Upload dashboards
   ansible.builtin.copy:
-    src: main.json
-    dest: /var/lib/grafana/dashboards/Main.json
-  notify: Restart grafana-server
-
-- name: syslog dashboard JSON
-  ansible.builtin.copy:
-    src: syslog.json
-    dest: /var/lib/grafana/dashboards/syslog.json
-  notify: Restart grafana-server
-
-- name: mysql dashboard JSON
-  ansible.builtin.copy:
-    src: mysql.json
-    dest: /var/lib/grafana/dashboards/mysql.json
+    src: "{{ item }}"
+    dest: "/var/lib/grafana/dashboards/{{ item }}"
+  loop:
+    - main.json
+    - syslog.json
+    - mysql.json
   notify: Restart grafana-server
 
 - name: Ensure grafana-server service is started
