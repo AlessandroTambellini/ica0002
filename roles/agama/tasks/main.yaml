@@ -1,20 +1,28 @@
-- name: Add the user 'agama'
-  ansible.builtin.user:
-    name: agama
-
-- name: Set directory ownership to 'agama'
+- name: Create dir
   ansible.builtin.file:
     path: /opt/agama
-    owner: agama
     state: directory
 
-- name: Install required packages
-  ansible.builtin.apt:
-    name:
-      - python3-flask-sqlalchemy
-      - python3-pymysql
-
-- name: Download agama webapp
+- name: Download agama and Dockerfile
   ansible.builtin.get_url:
-    url: https://raw.githubusercontent.com/hudolejev/agama/master/agama.py
+    url: "{{ item }}"
     dest: /opt/agama/
+  loop:
+    - https://raw.githubusercontent.com/hudolejev/agama/master/agama.py
+    - https://raw.githubusercontent.com/hudolejev/agama/master/Dockerfile
+
+- name: Build image
+  community.docker.docker_image:
+    name: agama
+    source: build
+    build:
+      path: /opt/agama
+
+- name: Grafana Docker container
+  community.docker.docker_container:
+    name: agama
+    image: agama
+    env:
+      AGAMA_DATABASE_URI: "mysql+pymysql://{{ mysql_user }}:{{ mysql_password }}@{{ mysql_host }}/{{ agama_db }}"
+    published_ports: "{{ agama_port }}:8000"
+  no_log: true

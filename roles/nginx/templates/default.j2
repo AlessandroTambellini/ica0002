@@ -4,8 +4,8 @@ server {
 
     {% if 'web_servers' in group_names %}
     location / {
-        uwsgi_pass localhost:5000;
-        include uwsgi_params;
+        proxy_pass http://localhost:{{ agama_port }};
+        proxy_set_header Host $http_host;
     }
     {% endif %}
 
@@ -17,8 +17,8 @@ server {
 
     {% if 'grafana_servers' in group_names %}
     location /grafana {
+        proxy_pass http://localhost:{{ grafana_port }};
         proxy_set_header Host $http_host;
-        proxy_pass http://localhost:3000;
     }
     {% endif %}
 

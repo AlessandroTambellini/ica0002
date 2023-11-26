@@ -25,13 +25,8 @@ Because nginx and python app do not speak a common language
 ==> client --> nginx --> uwsgi --> python app
 
 QUESTIONS TO PROFESSOR:
-  - Should all exporter be run by user prometheus? Should I create a general exporter_user=prometheus in all.yaml?
-  ==> prometheus exporters config:
-      - mysql has just user (prometheus)
-      - bind do not have it
-      - nginx do not have it 
-      - init has it without user
-      - influxdb has user (prometheus) without password
+  - - name: Grafana Docker container: fails at first try
+  - probably I need to change DNS db.rabix.io --> ask to professor
       
 BACKUP COMMANDS
 // test influxdb dumps
@@ -49,4 +44,12 @@ statement.setString(1, input);
 ResultSet resultSet = statement.executeQuery();
 
 3) check this page to avoid SQL injections: https://docs.influxdata.com/influxdb/v1/guides/write_data/
+
+4) chatgpt solution
+  # Assuming db_url, db_name, and result are already defined properly
+  encoded_db_name=$(printf %s "$db_name" | jq -s -R -r @uri)
+  encoded_result=$(printf %s "$result" | jq -s -R -r @uri)
+
+  curl -i -XPOST "${db_url}/write?db=$encoded_db_name" --data-binary "$encoded_result"
+
 

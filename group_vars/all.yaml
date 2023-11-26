@@ -15,7 +15,7 @@ mysql_password: !vault |
   36666537303266316337306339373366396532363434373663356434616462343834323032393837
   6437363365333838360a353331323733663130623936343232653535376666343538303638373162
   31306433326561306562666531653765663066376163303838633164393463646466
-grafana_user: AlessandroTambellini
+grafana_user: alessandrotambellini
 grafana_password: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   31363334656466633233346662376135386662393062346166393363623132346530383464363931
@@ -36,19 +36,20 @@ pinger_user: pinger
 # DNS
 #
 dns_forwarders:
-  - "192.168.43.132" # vm1, where the webapp resides
+  - "192.168.43.129" # vm1, where the webapp resides
 allowed_queries:
   - 192.168.42.0/23
   - 127.0.0.0/8
-backup_server_ip: 192.168.42.132 # it's hard-coded
+  - 172.17.0.0/16 # grafana container
+backup_server_ip: 192.168.42.132 # it's hard-coded because doesn't change
 backup_server_ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
 vms:
   vm1:
-    public_SSH_port: "38822"
-    public_URL: "http://193.40.156.67:38880"
+    public_SSH_port: "38522"
+    public_URL: "http://193.40.156.67:38580"
   vm2:
-    public_SSH_port: "33422"
-    public_URL: "http://193.40.156.67:33480"
+    public_SSH_port: "27522"
+    public_URL: "http://193.40.156.67:27580"
 domain_name: rabix.io
 #
 #
@@ -73,3 +74,5 @@ replication_password: !vault |
   3561653063623361650a333636653164633664663532666166623862623535336239363937356234
   62613837376237353162636432336463326431633031353830636665373631313965
 node_id: "{{ (ansible_port / 100) | int }}"
+grafana_port: 3001
+agama_port: 8001

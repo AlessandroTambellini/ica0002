@@ -7,6 +7,8 @@ $TTL 604800
 604800 ) ; Negative Cache TTL
 ;
 {{ domain_name }}. IN NS AlessandroTambellini-1
-AlessandroTambellini-1 IN A {{ hostvars['AlessandroTambellini-1']['ansible_default_ipv4']['address'] }};
-AlessandroTambellini-2 IN A {{ hostvars['AlessandroTambellini-2']['ansible_default_ipv4']['address'] }};
+{% for vm in groups['all'] %}
+{{ vm }} IN A {{ hostvars[vm]['ansible_default_ipv4']['address'] }};
+{% endfor %}
 backup                 IN A {{ backup_server_ip }};
+

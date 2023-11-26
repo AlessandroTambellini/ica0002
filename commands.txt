@@ -32,16 +32,14 @@ services
 - check Jinja2 templates: https://j2live.ttl255.com/
 
 // TROUBLESHOOTING
-- /var/log/"service"
 - journalctl -fus prometheus-nginx-exporter.service --no-pager
-- service bind9 status
-- systemctl status bind9
 - ps ax --> running processes
 - cat /etc/passwd --> find out the directory of each user
 - sudo mysql -e "SELECT * FROM agama.item" agama ---> if the database exists there's no output
 - less /etc/apt/sources.list.d/<something>.list --> to check keys
 - ansible-playbook infra.yaml -tg > stdout.txt 2> stderr.txt --> put stdout and stderr in a separate file
 - git diff file --> diff from last commit
+- bind errors: /var/log/syslog
 
 // SEARCHING/FILTERING
 - cat <x> | wc -l --> count the lines
@@ -49,26 +47,31 @@ services
 - telegraf config | grep -v "^#\|^$\|^  #" --> check default telegraf config (nicely)
 
 // NETWORKING
-- ss -ntlp ==> info about TCP sockets, to check the port usage by service name or service ID
-- ss -nul ==> info about UDP sockets, " " "
 - curl localhost:9113 | grep -v ^# ==> view page content without the comments
 - dig google.com --> dns info about google.com
 - ping 1.1.1.1 --> test the network is reachable
 - nc -vz "ip/DNS"-2 8080 --> check if service is listening on remote machine
 
-// STILL TO TRY
-// CONFIG SYNTAX
-
 // in my project I use template, not copy. Therefore I have jinja syntax, so
 // it's gonna always give me error because is not correct config syntax
-- nginx -t 
-- named-checkconf
 - apache2ctl -t
 - nginx -t 
-- named-checkzone
 - visudo -cf /etc/sudoers.d/my-user <-- this is not used in this course
 
 mysql -u replication -p --> enter mysql with user replication
 
 
 show replica status\G;
+
+// DOCKER COMMANDS
+- docker exec + normal command you would write in bash
+- container name: docker ps (last column)
+- DNS requests won't work from the container running on the same host as Bind server 
+unless you authorize requests from the container network ==> Bind access rules (lab 5)
+- docker exec <container-name> ip a: network address of the containerz
+
+// DOCKER COMMANDS
+- docker ps
+- docker ps -a
+- docker logs grafana
+- docker exec -it <container_name_or_id> /bin/bash

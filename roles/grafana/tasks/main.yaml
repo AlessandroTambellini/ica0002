@@ -1,62 +1,37 @@
-- name: Install prerequisite packages
-  ansible.builtin.apt:
-    name:
-      - wget
-      - apt-transport-https
-      - software-properties-common
-
-- name: Add key from file
-  ansible.builtin.apt_key:
-    url: https://apt.grafana.com/gpg.key
-    state: present
-
-# when you use apt the cache is updated automatically,
-# so no need to update the cache after running this command
-- name: Add stable repository
-  ansible.builtin.apt_repository:
-    repo: deb https://apt.grafana.com stable main
-    state: present
-
-- name: Install Grafana
-  ansible.builtin.apt:
-    name: grafana
+- name: Grafana directory
+  ansible.builtin.file:
+    name: "/opt/grafana/provisioning/{{ item }}"
+    state: directory
+  loop:
+    - dashboards
+    - datasources
 
 - name: Grafana configuration
   ansible.builtin.template:
     src: grafana.ini.j2
-    dest: /etc/grafana/grafana.ini
-  notify: Restart grafana-server
-
-- name: datasources config
-  ansible.builtin.copy:
-    src: datasources.conf.yaml
-    dest: /etc/grafana/provisioning/dashboards/datasources.conf.yaml
-  notify: Restart grafana-server
+    dest: /opt/grafana/grafana.ini
+  notify: Restart grafana-container
 
 - name: Add datasources
   ansible.builtin.template:
     src: datasources.yaml
-    dest: /etc/grafana/provisioning/datasources/datasources.yaml
-  notify: Restart grafana-server
+    dest: /opt/grafana/provisioning/datasources/datasources.yaml
+  notify: Restart grafana-container
 
-- name: Ensure dashboards dir exists
-  ansible.builtin.file:
-    path: /var/lib/grafana/dashboards
-    state: directory
-    mode: "0755"
-
-- name: Upload dashboards
+- name: dashboards files
   ansible.builtin.copy:
     src: "{{ item }}"
-    dest: "/var/lib/grafana/dashboards/{{ item }}"
+    dest: "/opt/grafana/provisioning/dashboards/{{ item }}"
   loop:
+    - datasources.conf.yaml
     - main.json
-    - syslog.json
     - mysql.json
-  notify: Restart grafana-server
+    - syslog.json
+  notify: Restart grafana-container
 
-- name: Ensure grafana-server service is started
-  ansible.builtin.service:
-    name: grafana-server
-    state: started
-    enabled: true
+- name: Grafana Docker container
+  community.docker.docker_container:
+    name: grafana
+    image: grafana/grafana
+    volumes: /opt/grafana:/etc/grafana
+    published_ports: "{{ grafana_port }}:3000"

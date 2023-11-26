@@ -1,5 +1,5 @@
-AlessandroTambellini-1 ansible_host=193.40.156.67 ansible_port=38822 ansible_user=ubuntu
-AlessandroTambellini-2 ansible_host=193.40.156.67 ansible_port=33422 ansible_user=ubuntu
+AlessandroTambellini-1 ansible_host=193.40.156.67 ansible_port=38522 ansible_user=ubuntu
+AlessandroTambellini-2 ansible_host=193.40.156.67 ansible_port=27522 ansible_user=ubuntu
 
 [dns_servers]
 AlessandroTambellini-2
@@ -22,3 +22,7 @@ AlessandroTambellini-2
 
 [pinger_servers]
 AlessandroTambellini-1
+
+[docker_servers]
+AlessandroTambellini-1
+AlessandroTambellini-2

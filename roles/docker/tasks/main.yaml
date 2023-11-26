@@ -1,0 +1,11 @@
+- name: Install required pkgs
+  ansible.builtin.apt:
+   name:
+    - python3-docker
+    - docker.io
+
+- name: Ensure service is running
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: true
