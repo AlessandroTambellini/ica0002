@@ -29,17 +29,17 @@ example using **uWSGI**
 2. test if Ansible will start uWSGI on system boot
 
    ```shell
+   # (control node)
+   ansible-playbook infra.yaml
+   ```
+
+   ```shell
    # (on VM)
    systemctl disable uwsgi # uwsgi will not start at boot
    reboot
    ```
 
-   once the machine booted verify uwsgi is not running with `systemctl status uwsgi`. Then apply the same process and verify the service is running:
-
-   ```shell
-   # (control node)
-   ansible-playbook infra.yaml
-   ```
+   once the machine booted, verify uWSGI is running
 
    ```shell
    # (on VM)
