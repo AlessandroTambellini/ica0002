@@ -3,54 +3,54 @@
 # the apt.yaml files are for just reference
 
 - name: Install prerequisite packages
-  ansible.builtin.apt:
+  apt:
     name:
       - wget
       - apt-transport-https
       - software-properties-common
 
 - name: Add key from file
-  ansible.builtin.apt_key:
+  apt_key:
     url: https://apt.grafana.com/gpg.key
     state: present
 
 # when you use apt the cache is updated automatically,
 # so no need to update the cache after running this command
 - name: Add stable repository
-  ansible.builtin.apt_repository:
+  apt_repository:
     repo: deb https://apt.grafana.com stable main
     state: present
 
 - name: Install Grafana
-  ansible.builtin.apt:
+  apt:
     name: grafana
 
 - name: Grafana configuration
-  ansible.builtin.template:
+  template:
     src: grafana.ini.j2
     dest: /etc/grafana/grafana.ini
   notify: Restart grafana-server
 
 - name: datasources config
-  ansible.builtin.copy:
+  copy:
     src: datasources.conf.yaml
     dest: /etc/grafana/provisioning/dashboards/datasources.conf.yaml
   notify: Restart grafana-server
 
 - name: Add datasources
-  ansible.builtin.template:
+  template:
     src: datasources.yaml
     dest: /etc/grafana/provisioning/datasources/datasources.yaml
   notify: Restart grafana-server
 
 - name: Ensure dashboards dir exists
-  ansible.builtin.file:
+  file:
     path: /var/lib/grafana/dashboards
     state: directory
     mode: "0755"
 
 - name: Upload dashboards
-  ansible.builtin.copy:
+  copy:
     src: "{{ item }}"
     dest: "/var/lib/grafana/dashboards/{{ item }}"
   loop:
@@ -60,7 +60,7 @@
   notify: Restart grafana-server
 
 - name: Ensure grafana-server service is started
-  ansible.builtin.service:
+  service:
     name: grafana-server
     state: started
     enabled: true

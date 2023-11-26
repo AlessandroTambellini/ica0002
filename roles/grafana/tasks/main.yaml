@@ -1,5 +1,5 @@
 - name: Grafana directory
-  ansible.builtin.file:
+  file:
     name: "/opt/grafana/provisioning/{{ item }}"
     state: directory
   loop:
@@ -7,19 +7,19 @@
     - datasources
 
 - name: Grafana configuration
-  ansible.builtin.template:
+  template:
     src: grafana.ini.j2
     dest: /opt/grafana/grafana.ini
   notify: Restart grafana-container
 
 - name: Add datasources
-  ansible.builtin.template:
+  template:
     src: datasources.yaml
     dest: /opt/grafana/provisioning/datasources/datasources.yaml
   notify: Restart grafana-container
 
 - name: dashboards files
-  ansible.builtin.copy:
+  copy:
     src: "{{ item }}"
     dest: "/opt/grafana/provisioning/dashboards/{{ item }}"
   loop:

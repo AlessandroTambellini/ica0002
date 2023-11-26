@@ -1,23 +1,23 @@
 - name: Install required packages
-  ansible.builtin.apt:
+  apt:
     name:
       - bind9
       - prometheus-bind-exporter
 
 - name: bind9 configuration
-  ansible.builtin.template:
+  template:
     src: named.conf.options.j2
     dest: /etc/bind/named.conf.options
   notify: Restart bind9
 
 - name: master-zone configuration
-  ansible.builtin.template:
+  template:
     src: db.rabix.io.j2
     dest: "/var/lib/bind/db.{{ domain_name }}"
   notify: Run rndc reload # command to update the DNS settings
 
 - name: Ensure services are started
-  ansible.builtin.service:
+  service:
     name: "{{ item }}"
     state: started
     enabled: true

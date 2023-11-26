@@ -1,9 +1,9 @@
 #- name: Add the user 'juri'
-#  ansible.builtin.user:
+#  user:
 #    name: juri
 
 #- name: Add the user 'roman'
-#  ansible.builtin.user:
+#  user:
 #    name: roman
 
 #- name: Set authorized SSH keys taken from url
@@ -19,14 +19,14 @@
 #    key: https://github.com/romankuchin.keys
 
 #- name: Update APT cache
-#  ansible.builtin.apt:
+#  apt:
 #    cache_valid_time: 86400
 
 #- debug:
 #    var: ansible_port
 
 - name: Install required packages and set caching time
-  ansible.builtin.apt:
+  apt:
     name:
       - ca-certificates=20230311ubuntu0.20.04.1
       - prometheus-node-exporter
@@ -34,19 +34,19 @@
     cache_valid_time: 86400
 
 - name: prometheus-node-exporter configuration
-  ansible.builtin.template:
+  template:
     src: prometheus_node_exporter.service.j2
     dest: /etc/systemd/system/prometheus_node_exporter.service
   notify: restart prometheus-node-exporter
 
 - name: rsyslog config for Telegraf
-  ansible.builtin.template:
+  template:
     src: 15-telegraf.conf.j2
     dest: /etc/rsyslog.d/15-telegraf.conf
   notify: restart rsyslog
 
 - name: Ensure services are running
-  ansible.builtin.service:
+  service:
     name: "{{ item }}"
     state: started
     enabled: yes
@@ -59,13 +59,13 @@
 #
 
 - name: Add the user 'backup'
-  ansible.builtin.user:
+  user:
     name: backup
     home: /home/backup
     generate_ssh_key: true
 
 - name: Add SSH key
-  ansible.builtin.template:
+  template:
     src: known_hosts.j2
     dest: /home/backup/.ssh/known_hosts
     owner: backup
@@ -73,7 +73,7 @@
     mode: 0644
 
 - name: create backup dir
-  ansible.builtin.file:
+  file:
     path: /home/backup/restore
     owner: backup
     state: directory

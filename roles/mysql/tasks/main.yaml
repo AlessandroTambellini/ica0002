@@ -1,5 +1,5 @@
 - name: prometheus-mysqld-exporter user configuration
-  ansible.builtin.template:
+  template:
     src: .exporter.cnf.j2
     dest: /var/lib/prometheus/.my.cnf
     mode: 0400
@@ -7,13 +7,13 @@
   no_log: true
 
 - name: prometheus-mysqld-exporter args
-  ansible.builtin.copy:
+  copy:
     src: prometheus-mysqld-exporter
     dest: /etc/default/prometheus-mysqld-exporter
   notify: Restart prometheus-mysqld-exporter
 
 - name: Install required packages
-  ansible.builtin.apt:
+  apt:
     name:
       - mysql-server
       - python3-pymysql
@@ -28,7 +28,7 @@
   no_log: true
 
 - name: Ensure MySQL services are started
-  ansible.builtin.service:
+  service:
     name: "{{ item }}"
     state: started
     enabled: true
@@ -55,7 +55,7 @@
   no_log: true
 
 - name: MySQL configuration
-  ansible.builtin.template:
+  template:
     src: override.cnf.j2
     dest: /etc/mysql/mysql.conf.d/override.cnf
   notify: Restart MySQL
@@ -65,7 +65,7 @@
 #
 
 - name: create backup dir
-  ansible.builtin.file:
+  file:
     path: /home/backup/mysql
     owner: backup
     state: directory
@@ -79,7 +79,7 @@
   no_log: true
 
 - name: Client config
-  ansible.builtin.template:
+  template:
     src: .backup.cnf.j2
     dest: /home/backup/.my.cnf
     owner: backup
@@ -87,7 +87,7 @@
   no_log: true
 
 - name: Cron config
-  ansible.builtin.template:
+  template:
     src: mysql-backup.j2
     dest: /etc/cron.d/mysql-backup
 

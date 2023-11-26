@@ -1,10 +1,10 @@
 - name: Create dir
-  ansible.builtin.file:
+  file:
     path: /opt/agama
     state: directory
 
 - name: Download agama and Dockerfile
-  ansible.builtin.get_url:
+  get_url:
     url: "{{ item }}"
     dest: /opt/agama/
   loop:

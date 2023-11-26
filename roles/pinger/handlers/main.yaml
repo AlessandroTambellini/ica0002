@@ -1,4 +1,4 @@
 - name: Restart pinger
-  ansible.builtin.systemd:
+  systemd:
     name: pinger
     state: restarted

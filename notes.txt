@@ -1,9 +1,6 @@
 1) The tasks in handler are executed in the order they're written in the file, even if you call them
 in a different order
 
-2) Every time you setup a new service verify it with the protocol explained here: 
-    https://github.com/romankuchin/ica0002-2023/tree/main/03-web-server#task-4-manage-uwsgi-service
-
 3) default mode in ubuntu is 0644, so no need to specify it
 
 4) rsyslog is installed in ubuntu by default, so no need to install it.

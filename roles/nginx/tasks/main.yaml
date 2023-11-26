@@ -1,11 +1,11 @@
 - name: Install nginx
-  ansible.builtin.apt:
+  apt:
     name:
       - nginx
       - prometheus-nginx-exporter
 
 - name: nginx configuration
-  ansible.builtin.template:
+  template:
     src: default.j2
     dest: /etc/nginx/sites-enabled/default
     #validate: /usr/sbin/nginx -t -c %s
@@ -14,7 +14,7 @@
 - meta: flush_handlers
 
 - name: Ensure services are started
-  ansible.builtin.service:
+  service:
     name: "{{ item }}"
     state: started
     enabled: true

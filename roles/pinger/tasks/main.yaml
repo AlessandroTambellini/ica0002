@@ -1,37 +1,37 @@
 - name: Install prerequisite pkgs
-  ansible.builtin.apt:
+  apt:
     name: fping
 
 - name: Add the user 'pinger'
-  ansible.builtin.user:
+  user:
     name: pinger
 
 - name: Create pinger dir
-  ansible.builtin.file:
+  file:
     path: /etc/pinger
     state: directory
 
 - name: pinger config
-  ansible.builtin.template:
+  template:
     src: pinger.conf.j2
     dest: /etc/pinger/pinger.conf
   notify: Restart pinger
 
 - name: pinger script
-  ansible.builtin.copy:
+  copy:
     src: pinger.sh
     dest: /usr/local/bin/pinger
     mode: 0755
   notify: Restart pinger
 
 - name: ping service config
-  ansible.builtin.template:
+  template:
     src: pinger.service.j2
     dest: /etc/systemd/system/pinger.service
   notify: Restart pinger
 
 - name: Ensure pinger is running
-  ansible.builtin.systemd:
+  systemd:
     daemon_reload: true
     name: pinger
     state: started

@@ -1,9 +1,9 @@
 - name: Restart nginx
-  ansible.builtin.service:
+  service:
     name: nginx
     state: restarted
 
 - name: Restart prometheus-nginx-exporter
-  ansible.builtin.service:
+  service:
     name: prometheus-nginx-exporter
     state: restarted
