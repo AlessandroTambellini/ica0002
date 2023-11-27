@@ -30,7 +30,7 @@
     name:
       - ca-certificates=20230311ubuntu0.20.04.1
       - prometheus-node-exporter
-      - duplicity # backup tool
+      - duplicity
     cache_valid_time: 86400
 
 - name: prometheus-node-exporter configuration

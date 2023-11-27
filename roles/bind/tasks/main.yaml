@@ -14,7 +14,7 @@
   template:
     src: db.rabix.io.j2
     dest: "/var/lib/bind/db.{{ domain_name }}"
-  notify: Run rndc reload # command to update the DNS settings
+  notify: Run rndc reload
 
 - name: Ensure services are started
   service:

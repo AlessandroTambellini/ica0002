@@ -1,0 +1,17 @@
+global
+
+
+
+
+defaults
+
+listen agama
+    bind *:80
+    stats enable
+    stats uri /stats
+    server c1 alessandrotambellini-1:10080 check
+    server c2 alessandrotambellini-1:10081 check
+    server c3 alessandrotambellini-1:10080 check
+    server c4 alessandrotambellini-1:10081 check
+
+// c1 is container name, alessandrotambellini-1 where the container is running

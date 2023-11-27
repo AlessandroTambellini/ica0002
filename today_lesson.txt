@@ -1,0 +1,9 @@
+check DNS server
+
+/etc/resolv.conf
+
+OR
+
+dig <ip address>
+
+search haproxy simple config to understand how to config it

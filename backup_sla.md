@@ -2,13 +2,13 @@
 
 ## Backup covereage
 
-The backup services covers the following services:
+The backup process covers the following services:
 
 - MySQL
 - InfluxDB
 - Ansible repository
 
-**explanation**: this document describes the backup processes for all the services containing data. This document doesn't cover the backup process for services like nginx or Bind, because they can be easily recreated from scratch via Ansible.
+**explanation**: this document describes the backup processes for all the services containing data and Ansible itself. This document doesn't cover the backup process for services like nginx or Bind, because they can be easily recreated from scratch via Ansible.
 
 ## RPO
 
@@ -21,8 +21,8 @@ The backup services covers the following services:
 
 **explanation**:
 Two types of backup can be produced: full and incremental.
-Full backup contains the whole backed up data and can be solely used to restore require data or service.
-Incremental backup stores only the difference in the data relative to the last incremental backup produced.
+Full backup contains the whole backed up data, while
+incremental backup stores only the difference in the data relative to the last incremental backup produced.
 As for the time was choosen 22:00 UTC because backups must be completed before 01:00 UTC when the virtual machines are destroyed
 
 ## Versioning and retention
@@ -33,7 +33,7 @@ MySQL and InfluxDB backups are retained for 28 days.
 
 ## Usability
 
-Usability of the last MySQL and InfluDB repository backup is regularly tested every week
+Usability of the last MySQL and InfluxDB repository backup is regularly tested every week
 
 ## Restoration criteria
 

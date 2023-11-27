@@ -19,12 +19,6 @@
     dest: /etc/influxdb/influx.conf
   notify: Restart InfluxDB
 
-- name: Ensure influxdb is running
-  service:
-    name: influxdb
-    state: started
-    enabled: true
-
 - name: Add GPG key
   apt_key:
     url: https://repos.influxdata.com/influxdata-archive_compat.key
@@ -46,11 +40,14 @@
     dest: /etc/telegraf/telegraf.conf
   notify: Restart Telegraf
 
-- name: Ensure Telegraf is running
+- name: Ensure InfluxDB and Telegram are running
   service:
-    name: telegraf
+    name: "{{ item }}"
     state: started
     enabled: true
+  loop:
+    - influxdb
+    - telegraf
 
 - name: Download Influxdb stats Exporter
   get_url:
