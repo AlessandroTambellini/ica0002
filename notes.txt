@@ -50,4 +50,9 @@ ResultSet resultSet = statement.executeQuery();
   curl -i -XPOST "${db_url}/write?db=$encoded_db_name" --data-binary "$encoded_result"
 
 
+logger=sqlstore.transactions t=2023-11-28T11:16:23.220087883Z level=info msg="Database locked, sleeping then retrying" error="database is locked" retry=0 code="database is locked"
+logger=provisioning.alerting t=2023-11-28T11:16:22.947957755Z level=error msg="can't read alerting provisioning files from directory" path=/etc/grafana/provisioning/alerting error="open /etc/grafana/provisioning/alerting: no such file or directory"
+
+
+
 

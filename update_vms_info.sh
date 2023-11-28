@@ -21,8 +21,6 @@ ansible_port="ansible_port=\w*"
 vm1_public_SSH_port=$(curl "http://193.40.156.67/students/AlessandroTambellini.csv" | cut -d "," -f 5 | head -n 1)
 vm2_public_SSH_port=$(curl "http://193.40.156.67/students/AlessandroTambellini.csv" | cut -d "," -f 5 | sed -n '2p')
 
-echo $vm2_public_SSH_port
-
 sed -e "1 s/$ansible_port/ansible_port=$vm1_public_SSH_port/1" -e "2 s/$ansible_port/ansible_port=$vm2_public_SSH_port/1" -i hosts
 
 echo "Done." >&2
@@ -54,3 +52,5 @@ iIP1=$vm1_internal_IP yq -i '
 
 #git diff -- ./group_vars/all.yaml
 echo "Done." >&2
+
+echo -e "ports: \nvm1: $vm1_public_SSH_port\nvm2: $vm2_public_SSH_port"

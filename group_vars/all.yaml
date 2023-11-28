@@ -36,7 +36,7 @@ pinger_user: pinger
 # DNS
 #
 dns_forwarders:
-  - "192.168.42.199" # vm1, where the webapp resides
+  - "192.168.43.61" # vm1, where the webapp resides
 allowed_queries:
   - 192.168.42.0/23
   - 127.0.0.0/8
@@ -45,11 +45,11 @@ backup_server_ip: 192.168.42.132 # it's hard-coded because doesn't change
 backup_server_ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
 vms:
   vm1:
-    public_SSH_port: "19922"
-    public_URL: "http://193.40.156.67:19980"
+    public_SSH_port: "31722"
+    public_URL: "http://193.40.156.67:31780"
   vm2:
-    public_SSH_port: "13422"
-    public_URL: "http://193.40.156.67:13480"
+    public_SSH_port: "36722"
+    public_URL: "http://193.40.156.67:36780"
 domain_name: rabix.io
 #
 #
