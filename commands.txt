@@ -75,3 +75,7 @@ unless you authorize requests from the container network ==> Bind access rules (
 - docker ps -a
 - docker logs grafana
 - docker exec -it <container_name_or_id> /bin/bash
+
+BACKUP COMMANDS
+// test influxdb dumps
+sudo -u backup influxd backup -portable /tmp; echo $?

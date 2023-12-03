@@ -82,3 +82,8 @@ rm -rf /etc/grafana
 rm -rf /var/lib/grafana
 rm /etc/apt/sources.list.d/grafana.list
 ```
+
+## Check DNS is working
+
+From any vm try to ping `<vm-name>-<domain>`, `<vm-name>`.
+The pinging should work with any "vm-name" of your vms

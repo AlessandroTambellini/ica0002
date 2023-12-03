@@ -1,77 +1,34 @@
 1) The tasks in handler are executed in the order they're written in the file, even if you call them
 in a different order
 
-3) default mode in ubuntu is 0644, so no need to specify it
+2) default mode in ubuntu is 0644, so no need to specify it
 
-4) rsyslog is installed in ubuntu by default, so no need to install it.
+3) logs -> rsyslog (collects and send over UDP) --> 
+    telegraf (collects in a nice format and send) --> 
+      influxdb (store) --> 
+        grafana (show nicely)
 
-5) logs -> rsyslog (collects and send over UDP) --> telegraf (nice format and send) --> influxdb (store) --> grafana (show nicely)
-
-6) telegraf behaves like an exporter and collects the data about the service 
-  specified in the config file and send to influxdb, inside the specified database
-
-7) 
+4) 
   Init is a prerequisite to install and configure Bind -->
-  Bind is prerequisite to install and configure resolver -->
-  Resolver is prerequisite for any further actions with your setup.
+    Bind is prerequisite to install and configure Resolver -->
+      Resolver is prerequisite for any further actions with your setup.
 
-8) WSGI stands for "Web Server Gateway Interface".
+5) WSGI stands for "Web Server Gateway Interface".
 It is used to forward requests from a web server (such as Apache or NGINX) 
 to a backend Python web application or framework. 
-Because nginx and python app do not speak a common language
-==> client --> nginx --> uwsgi --> python app
+Because nginx and python app do not speak a common language, we do: 
+client --> nginx --> uwsgi --> python app
 
-9) IPs are allowed just in bind and keepalived
-
-#
-#
-# LAB 13 QUESTIONS
-#
-
-- on which server do I need to install haproxy?
-- "server agama1 alessandrotambellini-1:8001 check" I think the name "agama1" can be random. 
-  It means I could write c1 (container1) instead of agama1
-- "Port should be 88 because our NAT is configured to forward all ..." What is NAT?
-
-    stats enable
-    stats uri /stats
-    stats refresh 5s
-
-- install keepalived on both vms. 1 active and 1 in stand-by
+6) IPs are allowed just in bind and keepalived
 
 QUESTIONS TO PROFESSOR:
-  - - name: Grafana Docker container: fails at first try
-  - probably I need to change DNS db.rabix.io --> ask to professor
-      
-BACKUP COMMANDS
-// test influxdb dumps
-sudo -u backup influxd backup -portable /tmp; echo $?
 
-// SQL INJECTION
-1) UNSAFE
-String query = "SELECT * FROM products WHERE category = '"+ input + "'";
-Statement statement = connection.createStatement();
-ResultSet resultSet = statement.executeQuery(query);
-
-2) SAFE
-PreparedStatement statement = connection.prepareStatement("SELECT * FROM products WHERE category = ?");
-statement.setString(1, input);
-ResultSet resultSet = statement.executeQuery();
-
-3) check this page to avoid SQL injections: https://docs.influxdata.com/influxdb/v1/guides/write_data/
-
-4) chatgpt solution
+4) chatgpt solution to SQL injection
   # Assuming db_url, db_name, and result are already defined properly
   encoded_db_name=$(printf %s "$db_name" | jq -s -R -r @uri)
   encoded_result=$(printf %s "$result" | jq -s -R -r @uri)
 
   curl -i -XPOST "${db_url}/write?db=$encoded_db_name" --data-binary "$encoded_result"
-
-
-logger=sqlstore.transactions t=2023-11-28T11:16:23.220087883Z level=info msg="Database locked, sleeping then retrying" error="database is locked" retry=0 code="database is locked"
-logger=provisioning.alerting t=2023-11-28T11:16:22.947957755Z level=error msg="can't read alerting provisioning files from directory" path=/etc/grafana/provisioning/alerting error="open /etc/grafana/provisioning/alerting: no such file or directory"
-
-
 
   // leave this in nginx as fallback
   {% if 'web_servers' in group_names %}
