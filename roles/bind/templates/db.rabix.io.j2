@@ -1,14 +1,22 @@
 $TTL 604800
-{{ domain_name }}. IN SOA AlessandroTambellini-1.{{ domain_name }}. alessandro.{{ domain_name }}. (
+
+{% for vm in groups['dns_servers'] %}
+{{ domain_name }}. IN SOA {{ vm }}.{{ domain_name }}. alessandro.{{ domain_name }}. (
 2 ; Serial
 604800 ; Refresh
 86400 ; Retry
 2419200 ; Expire
 604800 ) ; Negative Cache TTL
 ;
-{{ domain_name }}. IN NS AlessandroTambellini-1
+{% endfor %}
+
+{% for vm in groups['dns_servers'] %}
+{{ domain_name }}. IN NS {{ vm }}
+{% endfor %}
+
 {% for vm in groups['all'] %}
 {{ vm }} IN A {{ hostvars[vm]['ansible_default_ipv4']['address'] }};
 {% endfor %}
+
 backup                 IN A {{ backup_server_ip }};
 

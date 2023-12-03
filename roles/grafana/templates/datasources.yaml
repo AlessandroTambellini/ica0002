@@ -7,14 +7,14 @@ datasources:
   - name: Prometheus-1
     type: prometheus
     access: proxy
-    url: "http://{{ groups['prometheus_servers'][0] }}:9090/prometheus"
+    url: "http://{{ groups['prometheus_servers'][0] }}:{{ prometheus_port }}/prometheus"
   - name: influxdb:latency
     type: influxdb
     access: proxy
-    url: "http://{{ groups['influxdb_servers'][0] }}:8086"
+    url: "http://{{ groups['influxdb_servers'][0] }}:{{ influxdb_port }}"
     database: latency
   - name: influxdb:telegraf
     type: influxdb
     access: proxy
-    url: "http://{{ groups['influxdb_servers'][0] }}:8086"
+    url: "http://{{ groups['influxdb_servers'][0] }}:{{ influxdb_port }}"
     database: telegraf

@@ -18,11 +18,12 @@
     build:
       path: /opt/agama
 
-- name: Grafana Docker container
+- name: agama containers
   community.docker.docker_container:
-    name: agama
+    name: "agama-{{ item }}"
     image: agama
     env:
       AGAMA_DATABASE_URI: "mysql+pymysql://{{ mysql_user }}:{{ mysql_password }}@{{ mysql_host }}/{{ agama_db }}"
-    published_ports: "{{ agama_port }}:8000"
+    published_ports: "{{ item }}:8000"
   no_log: true
+  loop: "{{ agama_containers_ports }}"

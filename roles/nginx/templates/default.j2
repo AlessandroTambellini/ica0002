@@ -2,16 +2,9 @@ server {
     listen 80 default_server;
     server_name _;
 
-    {% if 'web_servers' in group_names %}
-    location / {
-        proxy_pass http://localhost:{{ agama_port }};
-        proxy_set_header Host $http_host;
-    }
-    {% endif %}
-
     {% if 'prometheus_servers' in group_names %}
     location /prometheus {
-        proxy_pass http://localhost:9090;
+        proxy_pass http://localhost:{{ prometheus_port }};
     }
     {% endif %}
 

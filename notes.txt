@@ -21,6 +21,24 @@ to a backend Python web application or framework.
 Because nginx and python app do not speak a common language
 ==> client --> nginx --> uwsgi --> python app
 
+9) IPs are allowed just in bind and keepalived
+
+#
+#
+# LAB 13 QUESTIONS
+#
+
+- on which server do I need to install haproxy?
+- "server agama1 alessandrotambellini-1:8001 check" I think the name "agama1" can be random. 
+  It means I could write c1 (container1) instead of agama1
+- "Port should be 88 because our NAT is configured to forward all ..." What is NAT?
+
+    stats enable
+    stats uri /stats
+    stats refresh 5s
+
+- install keepalived on both vms. 1 active and 1 in stand-by
+
 QUESTIONS TO PROFESSOR:
   - - name: Grafana Docker container: fails at first try
   - probably I need to change DNS db.rabix.io --> ask to professor
@@ -55,4 +73,14 @@ logger=provisioning.alerting t=2023-11-28T11:16:22.947957755Z level=error msg="c
 
 
 
+  // leave this in nginx as fallback
+  {% if 'web_servers' in group_names %}
+  location / {
+      proxy_pass http://localhost:{{  }};
+      proxy_set_header Host $http_host;
+  }
+  {% endif %}
 
+      {# timeout 5 #}
+    {# rise 3 #}
+    {# fall 3  #} 

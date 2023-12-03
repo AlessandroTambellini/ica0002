@@ -10,6 +10,9 @@ rate(node_cpu_seconds_total{mode="idle"}[1m])
 rate(mysql_global_status_commands_total[5m])
 rate(bind_resolver_queries_total[5m])
 node_memory_MemTotal_bytes - (node_memory_MemFree_bytes + node_memory_Buffers_bytes + node_memory_Cached_bytes)
+haproxy_up
+haproxy_server_up
+keepalived_vrrp_state
 
 
 mysql

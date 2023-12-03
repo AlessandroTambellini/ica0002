@@ -36,20 +36,20 @@ pinger_user: pinger
 # DNS
 #
 dns_forwarders:
-  - "192.168.43.61" # vm1, where the webapp resides
+  - "192.168.42.68" # vm1, where the webapp resides
 allowed_queries:
   - 192.168.42.0/23
   - 127.0.0.0/8
   - 172.17.0.0/16 # grafana container
-backup_server_ip: 192.168.42.132 # it's hard-coded because doesn't change
+backup_server_ip: 192.168.42.132
 backup_server_ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
 vms:
   vm1:
-    public_SSH_port: "31722"
-    public_URL: "http://193.40.156.67:31780"
+    public_SSH_port: "6822"
+    public_URL: "http://193.40.156.67:6880"
   vm2:
-    public_SSH_port: "36722"
-    public_URL: "http://193.40.156.67:36780"
+    public_SSH_port: "8222"
+    public_URL: "http://193.40.156.67:8280"
 domain_name: rabix.io
 #
 #
@@ -75,4 +75,19 @@ replication_password: !vault |
   62613837376237353162636432336463326431633031353830636665373631313965
 node_id: "{{ (ansible_port / 100) | int }}"
 grafana_port: 3001
+prometheus_port: 9090
 agama_port: 8001
+influxdb_port: 8086
+virtual_ipaddress_third_octet: 100
+virtual_ipaddress_forth_octet: 115 # it's hardcoded from vm1
+github_password: !vault |
+  $ANSIBLE_VAULT;1.1;AES256
+  63623335646331646430616136353436633530323631333132363438656638383531626430396432
+  3435383366663966613535363439316534396634653861330a383861313035366437356365626164
+  34626238366561373536356135326238306265396362643837623036383231643234623339373930
+  6537653134646663340a313830303137626462333131363166346233333662613138346339346465
+  3034
+agama_containers_ports:
+  - 8001
+  - 8002
+virtual_ipaddress: 192.168.100.68

@@ -1,0 +1,9 @@
+- name: Restart keepalived
+  service:
+    name: keepalived
+    state: restarted
+
+- name: Restart keepalived-exporter
+  service:
+    name: keepalived-exporter
+    state: restarted

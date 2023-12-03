@@ -1,14 +1,26 @@
-- apt:
-    name: 
+- name: Install required pkgs
+  apt:
+    name:
       - haproxy
-      - keepalived
+      - prometheus-haproxy-exporter
 
-- template:
+- name: HAProxy config
+  template:
     src: haproxy.cfg.j2
     dest: /etc/haproxy/haproxy.cfg
-  notify: restart haproxy
+  notify: Restart haproxy
 
-- template
-    src: keepalived.conf.j2
-    dest: 
-  notify: Restart keepalived
+- name: HAProxy exporter config
+  copy:
+    src: prometheus-haproxy-exporter
+    dest: /etc/default/prometheus-haproxy-exporter
+  notify: Restart prometheus-haproxy-exporter
+
+- name: Ensure services are running
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  loop:
+    - haproxy
+    - prometheus-haproxy-exporter

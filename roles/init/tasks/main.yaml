@@ -23,7 +23,15 @@
 #    cache_valid_time: 86400
 
 #- debug:
-#    var: ansible_port
+#    var: ansible_architecture
+
+#- name: Gather facts
+#  setup:
+#  tags: ct
+#- name: Display network interfaces
+#  debug:
+#    var: ansible_facts['interfaces']
+#  tags: ct
 
 - name: Install required packages and set caching time
   apt:

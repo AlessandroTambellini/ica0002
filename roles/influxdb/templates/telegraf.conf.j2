@@ -2,5 +2,5 @@
   server = "udp://:6514"
 
 [[outputs.influxdb]]
-  urls = ["http://localhost:8086"]
+  urls = ["http://localhost:{{ influxdb_port }}"]
   database = "telegraf"

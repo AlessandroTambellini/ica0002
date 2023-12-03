@@ -17,38 +17,30 @@
     - resolvers
   tags: dns
 
-- name: Prometheus server
-  hosts: prometheus_servers
-  roles:
-    - prometheus
-    - nginx
-  tags: p
-
-- name: Docker server
-  hosts: docker_servers
-  roles:
-    - docker
-  tags: d
-
-- name: Grafana server
-  hosts: grafana_servers
-  roles:
-    - grafana
-    - nginx
-  tags: g
-
 - name: Database server
   hosts: db_servers
   roles:
     - mysql
   tags: db
 
-- name: Web servers
-  hosts: web_servers
+- name: Docker server
+  hosts: docker_servers
   roles:
+    - docker
     - agama
-    - nginx
-  tags: ws
+  tags: d
+
+- name: haproxy
+  hosts: haproxy_servers
+  roles:
+    - haproxy
+  tags: ha
+
+- name: keepalived
+  hosts: keepalived_servers
+  roles:
+    - keepalived
+  tags: k
 
 - name: InfluxDB
   hosts: influxdb_servers
@@ -61,3 +53,17 @@
   roles:
     - pinger
   tags: pg
+
+- name: Prometheus server
+  hosts: prometheus_servers
+  roles:
+    - prometheus
+    - nginx
+  tags: p
+
+- name: Grafana server
+  hosts: grafana_servers
+  roles:
+    - grafana
+    - nginx
+  tags: g

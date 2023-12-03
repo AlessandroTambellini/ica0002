@@ -6,4 +6,9 @@ OR
 
 dig <ip address>
 
-search haproxy simple config to understand how to config it
+haproxy config: https://www.haproxy.com/blog/the-four-essential-sections-of-an-haproxy-configuration
+keepalied config: https://www.redhat.com/sysadmin/keepalived-basics
+
+with haproxy I do load-balancing among the agama containers.
+But, haproxy itself could be down. Therefore I use keepalived 2 have 2 instances of haproxy
+and if 1 is down, the other one is actived from a stand by state

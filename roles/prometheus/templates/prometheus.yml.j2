@@ -47,3 +47,20 @@ scrape_configs:
       - {{ server }}:9424
 {% endfor %}
     metrics_path: '/metrics'
+
+  - job_name: 'haproxy'
+    static_configs:
+    - targets:
+{% for server in groups['haproxy_servers'] %}
+      - {{ server }}:9101
+{% endfor %}
+    metrics_path: '/metrics'
+
+  - job_name: 'keepalived'
+    static_configs:
+    - targets:
+{% for server in groups['keepalived_servers'] %}
+      - {{ server }}:9165
+{% endfor %}
+    metrics_path: '/metrics'
+

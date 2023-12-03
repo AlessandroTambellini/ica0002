@@ -1,5 +1,5 @@
-AlessandroTambellini-1 ansible_host=193.40.156.67 ansible_port=31722 ansible_user=ubuntu
-AlessandroTambellini-2 ansible_host=193.40.156.67 ansible_port=36722 ansible_user=ubuntu
+AlessandroTambellini-1 ansible_host=193.40.156.67 ansible_port=6822 ansible_user=ubuntu
+AlessandroTambellini-2 ansible_host=193.40.156.67 ansible_port=8222 ansible_user=ubuntu
 
 [dns_servers]
 AlessandroTambellini-2
@@ -14,9 +14,6 @@ AlessandroTambellini-2
 AlessandroTambellini-2
 AlessandroTambellini-1
 
-[web_servers]
-AlessandroTambellini-1
-
 [influxdb_servers]
 AlessandroTambellini-2
 
@@ -24,5 +21,13 @@ AlessandroTambellini-2
 AlessandroTambellini-1
 
 [docker_servers]
+AlessandroTambellini-1
+AlessandroTambellini-2
+
+[haproxy_servers]
+AlessandroTambellini-1
+AlessandroTambellini-2
+
+[keepalived_servers]
 AlessandroTambellini-1
 AlessandroTambellini-2

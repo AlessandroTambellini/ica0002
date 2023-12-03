@@ -36,6 +36,15 @@ vm1_public_URL=$(curl "http://193.40.156.67/students/AlessandroTambellini.csv" |
 vm2_public_URL=$(curl "http://193.40.156.67/students/AlessandroTambellini.csv" | cut -d "," -f 6 | sed -n '2p')
 vm1_internal_IP=$(curl "http://193.40.156.67/students/AlessandroTambellini.csv" | cut -d "," -f 2 | head -n 1)
 
+third_octet=$(echo "$vm1_internal_IP" | awk -F'.' '{print $3}')
+if [[ $third_octet -eq 42 ]]; then
+    virtual_ipaddress="${vm1_internal_IP/42/100}"
+elif [[ $third_octet -eq 43 ]]; then
+    virtual_ipaddress="${vm1_internal_IP/43/101}"
+else
+    virtual_ipaddress=""
+fi
+
 URL1=$vm1_public_URL URL2=$vm2_public_URL yq -i '
     .vms.vm1.public_URL = strenv(URL1) |
     .vms.vm2.public_URL = strenv(URL2)
@@ -48,6 +57,10 @@ SSH1=$vm1_public_SSH_port SSH2=$vm2_public_SSH_port yq -i '
 
 iIP1=$vm1_internal_IP yq -i '
     .dns_forwarders[0] = strenv(iIP1)
+' ./group_vars/all.yaml
+
+vip=$virtual_ipaddress yq -i '
+    .virtual_ipaddress = strenv(vip)
 ' ./group_vars/all.yaml
 
 #git diff -- ./group_vars/all.yaml
