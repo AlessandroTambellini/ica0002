@@ -58,12 +58,16 @@
   hosts: prometheus_servers
   roles:
     - prometheus
-    - nginx
   tags: p
 
 - name: Grafana server
   hosts: grafana_servers
   roles:
     - grafana
-    - nginx
   tags: g
+
+- name: nginx server
+  hosts: nginx_servers
+  roles:
+    - nginx
+  tags: n

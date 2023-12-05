@@ -75,6 +75,8 @@ unless you authorize requests from the container network ==> Bind access rules (
 - docker ps -a
 - docker logs grafana
 - docker exec -it <container_name_or_id> /bin/bash
+- docker network ls 
+- docker network inspect bridge
 
 BACKUP COMMANDS
 // test influxdb dumps

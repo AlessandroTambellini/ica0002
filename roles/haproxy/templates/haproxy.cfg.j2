@@ -25,10 +25,10 @@ defaults
 
 listen agama
         bind *:88
-        {% for port in agama_containers_ports %}
+{% for port in agama_containers_ports %}
         server agama-{{ port }}-1 alessandrotambellini-1:{{ port }} check
         server agama-{{ port }}-2 alessandrotambellini-2:{{ port }} check
-        {% endfor %}
+{% endfor %}
 
 listen stats
         bind *:9188

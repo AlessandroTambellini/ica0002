@@ -4,7 +4,7 @@ influxdb_write_write_ok
 influxdb_exporter_stats_query_success
 rate(nginx_http_requests_total[5m])
 nginx_up
-mysql_up
+mysql_up    
 bind_up
 rate(node_cpu_seconds_total{mode="idle"}[1m])
 rate(mysql_global_status_commands_total[5m])

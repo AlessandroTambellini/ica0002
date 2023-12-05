@@ -3,22 +3,21 @@
     name:
       - keepalived
 
-- name: Add the user 'keepalived_script'
+- name: Create user 'keepalived_script'
   user:
     name: keepalived_script
 
-- name: create keepalived_script dir
+- name: Create dir 'keepalived_script'
   file:
     path: /home/keepalived_script
     state: directory
+    owner: keepalived_script
 
 - name: haproxy script
   copy:
     src: check_haproxy.sh
     dest: /home/keepalived_script/check_haproxy.sh
     mode: 0755
-    owner: keepalived_script
-    group: keepalived_script
   notify: Restart keepalived
 
 - name: Keepalived config
@@ -37,7 +36,6 @@
     remote_src: true
     src: /tmp/keepalived-exporter-1.2.0.linux-amd64.tar.gz
     dest: /tmp/
-  tags: ct
 
 - name: Move keepalived exporter executable
   copy:

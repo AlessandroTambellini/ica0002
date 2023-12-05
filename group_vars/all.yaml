@@ -36,7 +36,7 @@ pinger_user: pinger
 # DNS
 #
 dns_forwarders:
-  - "192.168.42.68" # vm1, where the webapp resides
+  - "192.168.42.107" # vm1, where the webapp resides
 allowed_queries:
   - 192.168.42.0/23
   - 127.0.0.0/8
@@ -45,11 +45,11 @@ backup_server_ip: 192.168.42.132
 backup_server_ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
 vms:
   vm1:
-    public_SSH_port: "6822"
-    public_URL: "http://193.40.156.67:6880"
+    public_SSH_port: "10722"
+    public_URL: "http://193.40.156.67:10780"
   vm2:
-    public_SSH_port: "8222"
-    public_URL: "http://193.40.156.67:8280"
+    public_SSH_port: "15822"
+    public_URL: "http://193.40.156.67:15880"
 domain_name: rabix.io
 #
 #
@@ -90,4 +90,5 @@ github_password: !vault |
 agama_containers_ports:
   - 8001
   - 8002
-virtual_ipaddress: 192.168.100.68
+agama_nonHA_port: 5000
+virtual_ipaddress: 192.168.100.107

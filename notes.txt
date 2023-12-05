@@ -18,7 +18,7 @@ It is used to forward requests from a web server (such as Apache or NGINX)
 to a backend Python web application or framework. 
 Because nginx and python app do not speak a common language, we do: 
 client --> nginx --> uwsgi --> python app
-
+  
 6) IPs are allowed just in bind and keepalived
 
 QUESTIONS TO PROFESSOR:
