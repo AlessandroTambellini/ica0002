@@ -22,6 +22,7 @@ client --> nginx --> uwsgi --> python app
 6) IPs are allowed just in bind and keepalived
 
 QUESTIONS TO PROFESSOR:
+- which keepalived-exporter to use? from github or from backup server?
 
 4) chatgpt solution to SQL injection
   # Assuming db_url, db_name, and result are already defined properly

@@ -36,7 +36,7 @@ pinger_user: pinger
 # DNS
 #
 dns_forwarders:
-  - "192.168.43.158" # vm1, where the webapp resides
+  - "192.168.42.70" # vm1, where the webapp resides
 allowed_queries:
   - 192.168.42.0/23
   - 127.0.0.0/8
@@ -45,11 +45,11 @@ backup_server_ip: 192.168.42.132
 backup_server_ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
 vms:
   vm1:
-    public_SSH_port: "41422"
-    public_URL: "http://193.40.156.67:41480"
+    public_SSH_port: "7022"
+    public_URL: "http://193.40.156.67:7080"
   vm2:
-    public_SSH_port: "30922"
-    public_URL: "http://193.40.156.67:30980"
+    public_SSH_port: "4422"
+    public_URL: "http://193.40.156.67:4480"
 domain_name: rabix.io
 #
 #
@@ -76,7 +76,6 @@ replication_password: !vault |
 node_id: "{{ (ansible_port / 100) | int }}"
 grafana_port: 3001
 prometheus_port: 9090
-agama_port: 8001
 influxdb_port: 8086
 virtual_ipaddress_third_octet: 100
 virtual_ipaddress_forth_octet: 115 # it's hardcoded from vm1
@@ -87,9 +86,7 @@ github_password: !vault |
   34626238366561373536356135326238306265396362643837623036383231643234623339373930
   6537653134646663340a313830303137626462333131363166346233333662613138346339346465
   3034
-agama_containers_ports:
-  - 8001
-  - 8002
-  - 8003
+agama_containers_number: 3
+agama_port: 8000
 agama_nonHA_port: 5000
-virtual_ipaddress: 192.168.101.158
+virtual_ipaddress: 192.168.100.70

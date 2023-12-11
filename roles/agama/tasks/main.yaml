@@ -18,12 +18,31 @@
     build:
       path: /opt/agama
 
+# Old solution, listing ports
+#- name: agama containers
+#  community.docker.docker_container:
+#    name: "agama-{{ item }}"
+#    image: agama
+#    env:
+#      AGAMA_DATABASE_URI: "mysql+pymysql://{{ mysql_user }}:{{ mysql_password }}@{{ mysql_host }}/{{ agama_db }}"
+#    published_ports: "{{ item }}:8000"
+#  no_log: true
+#  loop: "{{ agama_containers_ports }}"
 - name: agama containers
   community.docker.docker_container:
     name: "agama-{{ item }}"
     image: agama
+    volumes: /opt/agama:/etc/agama
+    published_ports: "{{ agama_port + item | int }}:{{ agama_port }}"
     env:
       AGAMA_DATABASE_URI: "mysql+pymysql://{{ mysql_user }}:{{ mysql_password }}@{{ mysql_host }}/{{ agama_db }}"
-    published_ports: "{{ item }}:8000"
+    restart_policy: "unless-stopped"
+  with_sequence: start=1 end="{{ agama_containers_number }}"
   no_log: true
-  loop: "{{ agama_containers_ports }}"
+
+- name: Delete unused containers
+  community.docker.docker_container:
+    name: "agama-{{ item }}"
+    state: absent
+    force_kill: yes
+  with_sequence: start="{{ agama_containers_number + 1 | int }}" end=10 # I set imply the max number of containers to be 10

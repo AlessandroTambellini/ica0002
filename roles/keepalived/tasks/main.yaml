@@ -26,6 +26,11 @@
     dest: /etc/keepalived/keepalived.conf
   notify: Restart keepalived
 
+#
+#
+#  exporter
+#
+
 - name: Download keepalived exporter
   get_url:
     url: http://backup/keepalived-exporter-1.2.0.linux-amd64.tar.gz
