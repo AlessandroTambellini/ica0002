@@ -1,12 +1,23 @@
-AlessandroTambellini-1 ansible_host=193.40.156.67 ansible_port=7022 ansible_user=ubuntu
-AlessandroTambellini-2 ansible_host=193.40.156.67 ansible_port=4422 ansible_user=ubuntu
+AlessandroTambellini-1 ansible_host=193.40.156.67 ansible_port=18222 ansible_user=ubuntu
+AlessandroTambellini-2 ansible_host=193.40.156.67 ansible_port=7622 ansible_user=ubuntu
 
 [dns_servers]
 AlessandroTambellini-2
 
+[dns_masters]
+AlessandroTambellini-1 # I do not think is important which one is master between the 2
+
+[dns_slaves]
+AlessandroTambellini-2
+
+[dns_masters:children]
+dns_masters
+dns_slaves
+
 [db_servers]
 AlessandroTambellini-2
 AlessandroTambellini-1
+
 
 [docker_servers]
 AlessandroTambellini-1

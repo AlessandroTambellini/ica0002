@@ -18,7 +18,7 @@
     build:
       path: /opt/agama
 
-# Old solution, listing ports
+# Old solution, by listing ports
 #- name: agama containers
 #  community.docker.docker_container:
 #    name: "agama-{{ item }}"

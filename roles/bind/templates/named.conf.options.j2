@@ -19,8 +19,18 @@ options {
 };
 
 zone "{{ domain_name }}" in {
-    type master;
-    file "/var/lib/bind/db.{{ domain_name }}";
+{% if inventory_hostname in groups['dns_masters'] %}
+    type primary;
+    allow-update { key dns_update_key; };
+{% else %}
+    type seconday;
+    masters {
+{% for master in groups['dns_masters'] %}
+    {{ hostvars[master]['ansible_default_ipv4']['address'] }};
+{% endfor %}
+    };
+{% endif %}
+    file "db.{{ domain_name }}";
 };
 
 statistics-channels {

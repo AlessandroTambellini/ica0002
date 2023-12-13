@@ -4,7 +4,7 @@ server {
 
 {% if 'docker_servers' in group_names %}
     location / {
-        proxy_pass http://localhost:{{ agama_containers_ports[0] }};
+        proxy_pass http://localhost:{{ agama_port + 1 | int }};
         proxy_set_header Host $http_host;
     }
 {% endif %}

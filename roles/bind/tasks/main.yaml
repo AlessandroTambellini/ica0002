@@ -9,12 +9,18 @@
     src: named.conf.options.j2
     dest: /etc/bind/named.conf.options
   notify: Restart bind9
+  no_log: true
 
+# do not need this task on slave because automatically taken from master
 - name: master-zone configuration
   template:
     src: db.rabix.io.j2
     dest: "/var/lib/bind/db.{{ domain_name }}"
+    # force: false
   notify: Run rndc reload
+  when: inventory_hostname in groups['dns_masters']
+
+# - meta: flush_handlers
 
 - name: Ensure services are started
   service:
@@ -24,3 +30,12 @@
   loop:
     - bind9
     - prometheus-bind-exporter
+
+- name: Set A records
+  nsupdate:
+    key_name: "dns_update_key"
+    key_algorithm: "hmac-sha256"
+    key_secret: "{{ dns_update_key }}"
+    server: "localhost"
+    zone: "{{ domain_name }}"
+    record: "{{ item.key }}"
