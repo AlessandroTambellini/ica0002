@@ -1,26 +1,37 @@
-- name: Install required packages
+- name: Install required pkgs
   apt:
     name:
       - bind9
       - prometheus-bind-exporter
+      - python3-dnspython
 
-- name: bind9 configuration
+- name: bind9 named.conf.options
   template:
     src: named.conf.options.j2
     dest: /etc/bind/named.conf.options
+    validate: /usr/sbin/named-checkconf %s
   notify: Restart bind9
   no_log: true
 
-# do not need this task on slave because automatically taken from master
-- name: master-zone configuration
+- name: bind9 named.conf.local
   template:
-    src: db.rabix.io.j2
-    dest: "/var/lib/bind/db.{{ domain_name }}"
-    # force: false
-  notify: Run rndc reload
-  when: inventory_hostname in groups['dns_masters']
+    src: named.conf.local.j2
+    dest: /etc/bind/named.conf.local
+  notify: Restart bind9
 
-# - meta: flush_handlers
+# do not need this task on secondary because automatically taken from master
+- name: primary zone config
+  template:
+    src: "{{ item }}"
+    dest: "/var/cache/bind/{{ item.replace('.j2', '') }}"
+    force: false # while testing/developing disable it
+  loop:
+    - db.rabix.io.j2
+    - db.rev.j2
+  notify: Run rndc reload
+  when: inventory_hostname in groups['dns_primary']
+
+- meta: flush_handlers # run handlers before continuing with the tasks
 
 - name: Ensure services are started
   service:
@@ -31,11 +42,29 @@
     - bind9
     - prometheus-bind-exporter
 
-- name: Set A records
-  nsupdate:
-    key_name: "dns_update_key"
+- name: Set A record for backup server
+  community.general.nsupdate:
+    key_name: "nsupdate.key"
     key_algorithm: "hmac-sha256"
-    key_secret: "{{ dns_update_key }}"
+    key_secret: "{{ dns_nsupdate_key }}"
     server: "localhost"
     zone: "{{ domain_name }}"
-    record: "{{ item.key }}"
+    record: backup
+    value: "{{ backup_server_ip }}"
+    type: "A"
+  when: inventory_hostname in groups['dns_primary']
+
+#- name: Add 1.1.168.192.in-addr.arpa. PTR for ansible.example.org
+#  community.general.nsupdate:
+#    key_name: "nsupdate"
+#    key_secret: "{{ dns_nsupdate_key }}"
+#    server: "10.1.1.1" # TODO
+#    record: "1.1.168.192.in-addr.arpa."
+#    type: "PTR"
+#    value: "{{ inventory_hostname }}.{{ domain_name }}."
+#    state: present
+
+- include_role:
+    name: dns_record
+  vars:
+    dns_record: "ns{{ inventory_hostname | replace('AlessandroTambellini', '') }}"

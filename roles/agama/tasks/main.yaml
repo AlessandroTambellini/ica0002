@@ -46,3 +46,13 @@
     state: absent
     force_kill: yes
   with_sequence: start="{{ agama_containers_number + 1 | int }}" end=10 # I set imply the max number of containers to be 10
+
+#
+#
+# CNAME
+#
+
+- include_role:
+    name: dns_record
+  vars:
+    dns_record: "www{{ inventory_hostname | replace('AlessandroTambellini', '') }}"

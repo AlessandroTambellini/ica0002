@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 1,
+  "id": 2,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -425,7 +425,7 @@
           "editorMode": "code",
           "expr": "influxdb_write_write_ok",
           "instant": false,
-          "legendFormat": "__auto",
+          "legendFormat": "{{ instance }}",
           "range": true,
           "refId": "A"
         }
@@ -555,7 +555,7 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 3,
+        "w": 6,
         "x": 3,
         "y": 6
       },
@@ -583,7 +583,7 @@
           "editorMode": "code",
           "expr": "haproxy_server_up",
           "instant": false,
-          "legendFormat": "__auto",
+          "legendFormat": "{{ instance }}",
           "range": true,
           "refId": "A"
         }
@@ -635,7 +635,7 @@
       "gridPos": {
         "h": 6,
         "w": 3,
-        "x": 6,
+        "x": 9,
         "y": 6
       },
       "id": 15,
@@ -661,8 +661,9 @@
           },
           "editorMode": "code",
           "expr": "keepalived_vrrp_state",
+          "format": "time_series",
           "instant": false,
-          "legendFormat": "__auto",
+          "legendFormat": "{{ instance }}",
           "range": true,
           "refId": "A"
         }
@@ -969,7 +970,7 @@
           "editorMode": "code",
           "expr": "rate(nginx_http_requests_total[5m])",
           "instant": false,
-          "legendFormat": "__auto",
+          "legendFormat": "{{ instance }} nginx",
           "range": true,
           "refId": "A"
         }

@@ -1,0 +1,10 @@
+- name: Set CNAME record for "{{ dns_record }}" server
+  community.general.nsupdate:
+    key_name: "nsupdate.key"
+    key_algorithm: "hmac-sha256"
+    key_secret: "{{ dns_nsupdate_key }}"
+    server: "localhost"
+    zone: "{{ domain_name }}"
+    record: "{{ dns_record }}"
+    value: "{{ inventory_hostname }}"
+    type: "CNAME"

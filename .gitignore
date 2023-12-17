@@ -1,6 +1,3 @@
 *.backup
-notes.txt
-commands.txt
-TODO.txt
 DEMO
-development_process.md
+/notes/

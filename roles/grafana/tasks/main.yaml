@@ -36,3 +36,8 @@
     volumes: /opt/grafana:/etc/grafana
     published_ports: "{{ grafana_port }}:3000"
     restart_policy: "unless-stopped"
+
+- include_role:
+    name: dns_record
+  vars:
+    dns_record: grafana

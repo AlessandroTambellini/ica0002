@@ -21,3 +21,13 @@
     name: prometheus
     state: started
     enabled: yes
+
+#
+#
+# CNAME
+#
+
+- include_role:
+    name: dns_record
+  vars:
+    dns_record: prometheus

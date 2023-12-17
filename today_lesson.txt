@@ -1,7 +1,0 @@
-check DNS server
-
-/etc/resolv.conf
-
-OR
-
-dig <ip address>

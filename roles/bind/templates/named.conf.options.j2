@@ -18,21 +18,16 @@ options {
     listen-on-v6 { any; };
 };
 
-zone "{{ domain_name }}" in {
-{% if inventory_hostname in groups['dns_masters'] %}
-    type primary;
-    allow-update { key dns_update_key; };
-{% else %}
-    type seconday;
-    masters {
-{% for master in groups['dns_masters'] %}
-    {{ hostvars[master]['ansible_default_ipv4']['address'] }};
-{% endfor %}
-    };
-{% endif %}
-    file "db.{{ domain_name }}";
-};
-
 statistics-channels {
     inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
+};
+
+key "transfer.key" {
+        algorithm hmac-sha256;
+        secret "{{ dns_transfer_key }}";
+};
+
+key "nsupdate.key" {
+        algorithm hmac-sha256;
+        secret "{{ dns_nsupdate_key }}";
 };

@@ -1,0 +1,55 @@
+zone "{{ domain_name }}" {
+{% if inventory_hostname in groups['dns_primary'] %}
+    type primary;
+    allow-update { 
+        key nsupdate.key; 
+    };
+    allow-transfer { 
+        127.0.0.1; 
+        key transfer.key; 
+    };
+{% else %}
+    type secondary;
+    masters {
+{% for master in groups['dns_primary'] %}
+    {{ hostvars[master]['ansible_default_ipv4']['address'] }};
+{% endfor %}
+    };
+{% endif %}
+    file "db.{{ domain_name }}";
+};
+
+{% if inventory_hostname in groups['dns_secondary'] %}
+{% for master in groups['dns_primary'] %}
+server {{ hostvars[master]['ansible_default_ipv4']['address'] }} {
+    keys { 
+        transfer.key; 
+    };
+};
+{% endfor %}
+{% endif %}
+
+zone 168.192.in-addr.arpa {
+{% if inventory_hostname in groups['dns_primary'] %}
+    type primary;
+    allow-update { 
+        key nsupdate.key; 
+    };
+    allow-transfer { 
+        127.0.0.1;
+{{ hostvars[groups['dns_secondary'][0]]['ansible_default_ipv4']['address'] }};
+        key transfer.key; 
+    }; 
+{% else %}
+    type secondary;
+    allow-transfer {
+        127.0.0.1;
+    }
+    masters {
+{% for master in groups['dns_primary'] %}
+    {{ hostvars[master]['ansible_default_ipv4']['address'] }};
+{% endfor %}
+    }
+{% endif %}
+    file "db.rev";
+}
