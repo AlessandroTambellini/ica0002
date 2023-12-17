@@ -19,19 +19,23 @@
     dest: /etc/bind/named.conf.local
   notify: Restart bind9
 
-# do not need this task on secondary because automatically taken from master
 - name: primary zone config
   template:
-    src: "{{ item }}"
-    dest: "/var/cache/bind/{{ item.replace('.j2', '') }}"
+    src: db.rabix.io.j2
+    dest: "/var/cache/bind/db.rabix.io"
     force: false # while testing/developing disable it
-  loop:
-    - db.rabix.io.j2
-    - db.rev.j2
-  notify: Run rndc reload
+  notify: Restart bind9
   when: inventory_hostname in groups['dns_primary']
 
-- meta: flush_handlers # run handlers before continuing with the tasks
+- name: rev zone config
+  template:
+    src: db.rev.j2
+    dest: "/var/cache/bind/db.rev"
+    force: false # while testing/developing disable it
+  notify: Restart bind9
+  when: inventory_hostname in groups['dns_primary']
+
+- meta: flush_handlers
 
 - name: Ensure services are started
   service:
@@ -47,22 +51,13 @@
     key_name: "nsupdate.key"
     key_algorithm: "hmac-sha256"
     key_secret: "{{ dns_nsupdate_key }}"
-    server: "localhost"
+    server: "{{ hostvars[groups['dns_primary'][0]]['ansible_default_ipv4']['address'] }}"
     zone: "{{ domain_name }}"
     record: backup
     value: "{{ backup_server_ip }}"
     type: "A"
-  when: inventory_hostname in groups['dns_primary']
 
-#- name: Add 1.1.168.192.in-addr.arpa. PTR for ansible.example.org
-#  community.general.nsupdate:
-#    key_name: "nsupdate"
-#    key_secret: "{{ dns_nsupdate_key }}"
-#    server: "10.1.1.1" # TODO
-#    record: "1.1.168.192.in-addr.arpa."
-#    type: "PTR"
-#    value: "{{ inventory_hostname }}.{{ domain_name }}."
-#    state: present
+#  when: inventory_hostname in groups['dns_primary']
 
 - include_role:
     name: dns_record

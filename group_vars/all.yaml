@@ -36,7 +36,8 @@ pinger_user: pinger
 # DNS
 #
 dns_forwarders:
-  - "192.168.42.140" # vm1, where the webapp resides
+  - 8.8.8.8
+  #- 192.168.42.140 # vm1, where the webapp resides
 allowed_queries:
   - 192.168.42.0/23
   - 127.0.0.0/8
@@ -108,7 +109,3 @@ dns_A_records:
   backup: x.x.x.x
   cf: 1.1.1.1
   google.com: 8.8.8.8
-# DNS records
-dns_CNAME_record_grafana:
-  name: grafana
-  value: "{{ groups['grafana_servers'][0] }}"

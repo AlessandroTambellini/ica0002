@@ -3,7 +3,7 @@
     key_name: "nsupdate.key"
     key_algorithm: "hmac-sha256"
     key_secret: "{{ dns_nsupdate_key }}"
-    server: "localhost"
+    server: "{{ hostvars[groups['dns_primary'][0]]['ansible_default_ipv4']['address'] }}"
     zone: "{{ domain_name }}"
     record: "{{ dns_record }}"
     value: "{{ inventory_hostname }}"
