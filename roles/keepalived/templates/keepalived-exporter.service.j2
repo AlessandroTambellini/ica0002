@@ -1,11 +1,11 @@
 [Unit]
-Description=exporter for keepalived service
+Description=keepalived-exporter service
 After=network-online.target
 
 [Service]
 User=root
-ExecStart=/usr/local/bin/keepalived-exporter
-
+ExecStart=/usr/bin/keepalived-exporter
+  
 [Install]
 WantedBy=multi-user.target
 

@@ -63,10 +63,10 @@
 
 - name: Ensure prometheus-influxdb-stats-exporter is running
   systemd:
-    daemon_reload: true
     name: prometheus-influxdb-stats-exporter
     state: started
     enabled: true
+    daemon_reload: true
 
 #
 # backup

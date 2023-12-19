@@ -4,7 +4,7 @@
 # but you cannot define them via varibles taken by running ansible with debug task
 
 # MySQL
-mysql_host: "{{ groups['db_servers'][0] }}"
+mysql_host: mysql-1
 mysql_backup_host: "{{ groups['db_servers'] | reject('eq', mysql_host) | first | default(mysql_host) }}"
 agama_db: agama
 mysql_user: agama
@@ -36,7 +36,7 @@ pinger_user: pinger
 # DNS
 #
 dns_forwarders:
-  - 8.8.8.8
+  - 192.168.42.29
   #- 192.168.42.140 # vm1, where the webapp resides
 allowed_queries:
   - 192.168.42.0/23
@@ -46,11 +46,11 @@ backup_server_ip: 192.168.42.132
 backup_server_ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
 vms:
   vm1:
-    public_SSH_port: "14022"
-    public_URL: "http://193.40.156.67:14080"
+    public_SSH_port: "2922"
+    public_URL: "http://193.40.156.67:2980"
   vm2:
-    public_SSH_port: "6022"
-    public_URL: "http://193.40.156.67:6080"
+    public_SSH_port: "16622"
+    public_URL: "http://193.40.156.67:16680"
 domain_name: rabix.io
 #
 #
@@ -87,7 +87,7 @@ github_password: !vault |
   3034
 agama_containers_number: 2
 agama_port: 8000
-virtual_ipaddress: 192.168.100.140
+virtual_ipaddress: 192.168.100.29
 dns_transfer_key: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   36346634373437336238313534643734303564376536616539623937313738333334633166616634
@@ -109,3 +109,13 @@ dns_A_records:
   backup: x.x.x.x
   cf: 1.1.1.1
   google.com: 8.8.8.8
+
+# many of these services are in more than one vm, therefore often the name is
+# service-1, service-2, etc. these below are just the root of the service name
+cname_grafana: grafana
+cname_influxdb: influxdb
+cname_haproxy: lb
+cname_mysql: mysql
+cname_bind9: ns
+cname_prometheus: prometheus
+cname_agama: www

@@ -20,7 +20,7 @@ scrape_configs:
     static_configs:
     - targets:
 {% for server in groups['dns_servers'] %}
-      - {{ server }}:9119
+      - {{ cname_bind9 }}{{ server | replace('AlessandroTambellini', '') }}:9119
 {% endfor %}
     metrics_path: '/metrics'
 
@@ -36,23 +36,21 @@ scrape_configs:
     static_configs:
     - targets:
 {% for server in groups['db_servers'] %}
-      - {{ server }}:9104
+      - {{ cname_mysql }}{{ server | replace('AlessandroTambellini', '') }}:9104
 {% endfor %}
     metrics_path: '/metrics'
 
   - job_name: 'influxdb'
     static_configs:
     - targets:
-{% for server in groups['influxdb_servers'] %}
-      - {{ server }}:9424
-{% endfor %}
+      - {{ cname_influxdb }}:9424 {# in case of more than one influxdb server, round robin technique is applied #}
     metrics_path: '/metrics'
 
   - job_name: 'haproxy'
     static_configs:
     - targets:
 {% for server in groups['haproxy_servers'] %}
-      - {{ server }}:9101
+      - {{ cname_haproxy }}{{ server | replace('AlessandroTambellini', '') }}:9101
 {% endfor %}
     metrics_path: '/metrics'
 

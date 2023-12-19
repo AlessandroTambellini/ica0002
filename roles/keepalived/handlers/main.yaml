@@ -4,6 +4,6 @@
     state: restarted
 
 - name: Restart keepalived-exporter
-  service:
+  systemd:
     name: keepalived-exporter
     state: restarted

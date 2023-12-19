@@ -13,9 +13,7 @@ options {
 {% endfor %}
     };
 
-
-
-    dnssec-validation no;
+    dnssec-validation no; {# setting to auto was giving problems #}
 
     listen-on-v6 { any; };
 };

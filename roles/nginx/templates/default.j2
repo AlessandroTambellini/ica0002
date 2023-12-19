@@ -5,7 +5,7 @@ server {
 {% if 'docker_servers' in group_names %}
     location / {
         proxy_pass http://localhost:{{ agama_port + 1 | int }};
-        proxy_set_header Host $http_host;
+        proxy_set_header Host $http_host; {# because nginx is acting as a reverse proxy server #}
     }
 {% endif %}
 
