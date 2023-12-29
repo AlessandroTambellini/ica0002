@@ -1,63 +1,63 @@
 - name: prometheus-mysqld-exporter user configuration
   template:
-    src: .exporter.cnf.j2
-    dest: /var/lib/prometheus/.my.cnf
-    mode: 0400
-    owner: prometheus
+      src: .exporter.cnf.j2
+      dest: /var/lib/prometheus/.my.cnf
+      mode: 0400
+      owner: prometheus
   no_log: true
 
 - name: prometheus-mysqld-exporter args
   copy:
-    src: prometheus-mysqld-exporter
-    dest: /etc/default/prometheus-mysqld-exporter
+      src: prometheus-mysqld-exporter
+      dest: /etc/default/prometheus-mysqld-exporter
   notify: Restart prometheus-mysqld-exporter
 
 - name: Install required packages
   apt:
-    name:
-      - mysql-server
-      - python3-pymysql
-      - prometheus-mysqld-exporter
+      name:
+          - mysql-server
+          - python3-pymysql
+          - prometheus-mysqld-exporter
 
 - name: MySQL exporter user
   community.mysql.mysql_user:
-    name: "{{ mysql_exporter_user }}"
-    password: "{{ mysql_exporter_password }}"
-    priv: "*.*:PROCESS, REPLICATION CLIENT, SELECT" # privileges
-    login_unix_socket: /var/run/mysqld/mysqld.sock
+      name: "{{ mysql_exporter_user }}"
+      password: "{{ mysql_exporter_password }}"
+      priv: "*.*:PROCESS, REPLICATION CLIENT, SELECT" # privileges
+      login_unix_socket: /var/run/mysqld/mysqld.sock
   no_log: true
 
 - name: Ensure MySQL services are started
   service:
-    name: "{{ item }}"
-    state: started
-    enabled: true
+      name: "{{ item }}"
+      state: started
+      enabled: true
   loop:
-    - mysql
-    - prometheus-mysqld-exporter
+      - mysql
+      - prometheus-mysqld-exporter
 
 # mysql db is after the mysql server is started because you cannot create a db if the server is down
 - name: MySQL database
   community.mysql.mysql_db:
-    name: "{{ agama_db }}"
-    login_unix_socket: /var/run/mysqld/mysqld.sock
+      name: "{{ agama_db }}"
+      login_unix_socket: /var/run/mysqld/mysqld.sock
   notify:
-    - Reset MySQL source
-    - Reset MySQL replica
+      - Reset MySQL source
+      - Reset MySQL replica
 
 - name: MySQL {{ mysql_user }} user
   community.mysql.mysql_user:
-    name: "{{ mysql_user }}"
-    password: "{{ mysql_password }}"
-    host: "%"
-    priv: "{{ agama_db }}.*:ALL"
-    login_unix_socket: /var/run/mysqld/mysqld.sock
+      name: "{{ mysql_user }}"
+      password: "{{ mysql_password }}"
+      host: "%"
+      priv: "{{ agama_db }}.*:ALL"
+      login_unix_socket: /var/run/mysqld/mysqld.sock
   no_log: true
 
 - name: MySQL configuration
   template:
-    src: override.cnf.j2
-    dest: /etc/mysql/mysql.conf.d/override.cnf
+      src: override.cnf.j2
+      dest: /etc/mysql/mysql.conf.d/override.cnf
   notify: Restart MySQL
 
 #
@@ -66,30 +66,30 @@
 
 - name: create backup dir
   file:
-    path: /home/backup/mysql
-    owner: backup
-    state: directory
+      path: /home/backup/mysql
+      owner: backup
+      state: directory
 
 - name: backup user
   community.mysql.mysql_user:
-    name: backup
-    password: "{{ backup_password }}"
-    priv: "{{ agama_db }}.*:LOCK TABLES,SELECT"
-    login_unix_socket: /var/run/mysqld/mysqld.sock
+      name: backup
+      password: "{{ backup_password }}"
+      priv: "{{ agama_db }}.*:LOCK TABLES,SELECT"
+      login_unix_socket: /var/run/mysqld/mysqld.sock
   no_log: true
 
 - name: Client config
   template:
-    src: .backup.cnf.j2
-    dest: /home/backup/.my.cnf
-    owner: backup
-    mode: 0400
+      src: .backup.cnf.j2
+      dest: /home/backup/.my.cnf
+      owner: backup
+      mode: 0400
   no_log: true
 
 - name: Cron config
   template:
-    src: mysql-backup.j2
-    dest: /etc/cron.d/mysql-backup
+      src: mysql-backup.j2
+      dest: /etc/cron.d/mysql-backup
 
 #
 #
@@ -98,22 +98,23 @@
 
 - name: MySQL replication user
   community.mysql.mysql_user:
-    name: replication
-    password: "{{ replication_password }}"
-    host: "%"
-    priv: "*.*:REPLICATION SLAVE"
-    login_unix_socket: /var/run/mysqld/mysqld.sock
+      name: replication
+      password: "{{ replication_password }}"
+      host: "%"
+      priv: "*.*:REPLICATION SLAVE"
+      login_unix_socket: /var/run/mysqld/mysqld.sock
   no_log: true
 
 - name: set read-only mode to db
   community.mysql.mysql_variables:
-    variable: read_only
-    value: "{{ 'OFF' if inventory_hostname == mysql_host else 'ON' }}"
-    mode: persist
-    login_unix_socket: /var/run/mysqld/mysqld.sock
+      variable: read_only
+      value:
+          "{{ 'OFF' if inventory_hostname in groups['db_primary'] else 'ON' }}"
+      mode: persist
+      login_unix_socket: /var/run/mysqld/mysqld.sock
   notify:
-    - Reset MySQL source
-    - Reset MySQL replica
+      - Reset MySQL source
+      - Reset MySQL replica
 
 #
 #
@@ -121,6 +122,7 @@
 #
 
 - include_role:
-    name: dns_record
+      name: dns_record
   vars:
-    dns_record: "mysql{{ inventory_hostname | replace('AlessandroTambellini', '') }}"
+      dns_record:
+          "mysql{{ inventory_hostname | replace('AlessandroTambellini', '') }}"

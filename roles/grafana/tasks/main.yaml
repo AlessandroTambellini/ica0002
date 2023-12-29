@@ -1,43 +1,43 @@
 - name: Grafana directory
   file:
-    name: "/opt/grafana/provisioning/{{ item }}"
-    state: directory
+      name: "/opt/grafana/provisioning/{{ item }}"
+      state: directory
   loop:
-    - dashboards
-    - datasources
+      - dashboards
+      - datasources
 
 - name: Grafana configuration
   template:
-    src: grafana.ini.j2
-    dest: /opt/grafana/grafana.ini
+      src: grafana.ini.j2
+      dest: /opt/grafana/grafana.ini
   notify: Restart grafana-container
 
 - name: Add datasources
   template:
-    src: datasources.yaml
-    dest: /opt/grafana/provisioning/datasources/datasources.yaml
+      src: datasources.yaml
+      dest: /opt/grafana/provisioning/datasources/datasources.yaml
   notify: Restart grafana-container
 
 - name: dashboards files
   copy:
-    src: "{{ item }}"
-    dest: "/opt/grafana/provisioning/dashboards/{{ item }}"
+      src: "{{ item }}"
+      dest: "/opt/grafana/provisioning/dashboards/{{ item }}"
   loop:
-    - datasources.conf.yaml
-    - main.json
-    - mysql.json
-    - syslog.json
+      - datasources.conf.yaml
+      - main.json
+      - mysql.json
+      - syslog.json
   notify: Restart grafana-container
 
 - name: Grafana Docker container
   community.docker.docker_container:
-    name: grafana
-    image: grafana/grafana
-    volumes: /opt/grafana:/etc/grafana
-    published_ports: "{{ grafana_port }}:3000"
-    restart_policy: "unless-stopped"
+      name: grafana
+      image: grafana/grafana
+      volumes: /opt/grafana:/etc/grafana
+      published_ports: "{{ grafana_port }}:3000"
+      restart_policy: "unless-stopped"
 
 - include_role:
-    name: dns_record
+      name: dns_record
   vars:
-    dns_record: grafana
+      dns_record: grafana

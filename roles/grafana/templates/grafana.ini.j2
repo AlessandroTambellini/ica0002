@@ -3,6 +3,6 @@ admin_user={{ grafana_user }}
 admin_password={{ grafana_password }}
 
 [server]
-root_url= {{ vms['vm2']['public_URL'] }}/grafana/
+root_url= {{ vm2_public_URL }}/grafana/ ; comment
 serve_from_sub_path = true
 updateIntervalSeconds: 5

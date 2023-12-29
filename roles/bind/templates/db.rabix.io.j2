@@ -5,12 +5,12 @@ $TTL 604800
       86400 ; Retry
     2419200 ; Expire
      604800 ; Negative Cache TTL
-);
+)
 {% for vm in groups['dns_servers'] %}
-{{ domain_name }}. IN NS {{ vm }};
+{{ domain_name }}. IN NS {{ vm }}
 {% endfor %}
 {% for vm in groups['all'] %}
-{{ vm }} IN A {{ hostvars[vm]['ansible_default_ipv4']['address'] }};
+{{ vm }} IN A {{ hostvars[vm]['ansible_default_ipv4']['address'] }}
 {% endfor %}
 
 

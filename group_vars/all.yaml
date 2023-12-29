@@ -4,10 +4,11 @@
 # but you cannot define them via varibles taken by running ansible with debug task
 
 # MySQL
-mysql_host: mysql-1
-mysql_backup_host:
-    "{{ groups['db_servers'] | reject('eq', mysql_host) | first |
-    default(mysql_host) }}"
+mysql_primary: mysql-2
+# mysql_backup_host:
+#     "{{ groups['db_servers'] | reject('eq', mysql_host) | first |
+#     default(mysql_host) }}"
+mysql_secondary: mysql-1
 agama_db: agama
 mysql_user: agama
 mysql_password: !vault |
@@ -38,7 +39,7 @@ pinger_user: pinger
 # DNS
 #
 dns_forwarders:
-    - 192.168.42.79
+    - 192.168.42.43
     #- 192.168.42.140 # vm1, where the webapp resides
 allowed_queries:
     - 192.168.42.0/23
@@ -50,11 +51,11 @@ backup_server_ssh_key:
     AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
 vms:
     vm1:
-        public_SSH_port: "7922"
-        public_URL: "http://193.40.156.67:7980"
+        public_URL: "http://193.40.156.67:44880"
     vm2:
-        public_SSH_port: "2422"
-        public_URL: "http://193.40.156.67:2480"
+        public_URL: "http://193.40.156.67:41780"
+vm1_public_URL: "http://193.40.156.67:4380"
+vm2_public_URL: http://193.40.156.67:8480
 domain_name: rabix.io
 #
 #
@@ -91,7 +92,7 @@ github_password: !vault |
     3034
 agama_containers_number: 2
 agama_port: 8000
-virtual_ipaddress: 192.168.100.79
+#virtual_ipaddress: 192.168.100.79
 dns_transfer_key: !vault |
     $ANSIBLE_VAULT;1.1;AES256
     36346634373437336238313534643734303564376536616539623937313738333334633166616634
@@ -108,11 +109,6 @@ dns_nsupdate_key: !vault |
     3831353735316462610a393932373631616465303539373462373830323938396561346233343735
     32313764633530623038333834356331343234653661333964333266616461633632366531323938
     3838383661313665383832623831616536616462646434623038
-# just for testing
-dns_A_records:
-    backup: x.x.x.x
-    cf: 1.1.1.1
-    google.com: 8.8.8.8
 # many of these services are in more than one vm, therefore often the name is
 # service-1, service-2, etc. these below are just the root of the service name
 cname_grafana: grafana
@@ -122,5 +118,5 @@ cname_mysql: mysql
 cname_bind9: ns
 cname_prometheus: prometheus
 cname_agama: www
-
 pinger_targets: "ns-1.{{ domain_name }},ns-2.{{ domain_name }}"
+virtual_ipaddress: 192.168.100.43

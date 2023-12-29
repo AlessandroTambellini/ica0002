@@ -1,72 +1,72 @@
 - name: Install prerequisite packages
   apt:
-    name:
-      - wget
+      name:
+          - wget
 
 - name: Download InfluxDB
   get_url:
-    url: https://dl.influxdata.com/influxdb/releases/influxdb_1.8.10_amd64.deb
-    dest: /tmp/influxdb_1.8.10_amd64.deb
+      url: https://dl.influxdata.com/influxdb/releases/influxdb_1.8.10_amd64.deb
+      dest: /tmp/influxdb_1.8.10_amd64.deb
 
 - name: Install InfluxDB
   apt:
-    deb: /tmp/influxdb_1.8.10_amd64.deb
-    state: present
+      deb: /tmp/influxdb_1.8.10_amd64.deb
+      state: present
 
 - name: InfluxDB config
   copy:
-    src: influxdb.conf
-    dest: /etc/influxdb/influx.conf
+      src: influxdb.conf
+      dest: /etc/influxdb/influx.conf
   notify: Restart InfluxDB
 
 - name: Add GPG key
   apt_key:
-    url: https://repos.influxdata.com/influxdata-archive_compat.key
-    state: present
+      url: https://repos.influxdata.com/influxdata-archive_compat.key
+      state: present
 
 - name: Add stable repository
   apt_repository:
-    repo: deb https://repos.influxdata.com/debian buster stable
-    state: present
+      repo: deb https://repos.influxdata.com/debian buster stable
+      state: present
 
 - name: Install telegraf
   apt:
-    name: telegraf=1.28.2-1
-    state: present
+      name: telegraf=1.28.2-1
+      state: present
 
 - name: Telegraf config
   template:
-    src: telegraf.conf.j2
-    dest: /etc/telegraf/telegraf.conf
+      src: telegraf.conf.j2
+      dest: /etc/telegraf/telegraf.conf
   notify: Restart Telegraf
 
 - name: Ensure InfluxDB and Telegram are running
   service:
-    name: "{{ item }}"
-    state: started
-    enabled: true
+      name: "{{ item }}"
+      state: started
+      enabled: true
   loop:
-    - influxdb
-    - telegraf
+      - influxdb
+      - telegraf
 
 - name: Download Influxdb stats Exporter
   get_url:
-    url: https://github.com/carlpett/influxdb_stats_exporter/releases/download/v0.1.1/influx_stats_exporter_linux_386
-    dest: /usr/local/bin/
-    mode: 0755
+      url: https://github.com/carlpett/influxdb_stats_exporter/releases/download/v0.1.1/influx_stats_exporter_linux_386
+      dest: /usr/local/bin/
+      mode: 0755
 
 - name: Exporter service config
   copy:
-    src: prometheus-influxdb-stats-exporter.service
-    dest: /etc/systemd/system/prometheus-influxdb-stats-exporter.service
+      src: prometheus-influxdb-stats-exporter.service
+      dest: /etc/systemd/system/prometheus-influxdb-stats-exporter.service
   notify: Restart prometheus-influxdb-stats-exporter
 
 - name: Ensure prometheus-influxdb-stats-exporter is running
   systemd:
-    name: prometheus-influxdb-stats-exporter
-    state: started
-    enabled: true
-    daemon_reload: true
+      name: prometheus-influxdb-stats-exporter
+      state: started
+      enabled: true
+      daemon_reload: true
 
 #
 # backup
@@ -74,14 +74,14 @@
 
 - name: create backup dir
   file:
-    path: /home/backup/influxdb
-    owner: backup
-    state: directory
+      path: /home/backup/influxdb
+      owner: backup
+      state: directory
 
 - name: Cron config
   template:
-    src: influxdb-backup.j2
-    dest: /etc/cron.d/influxdb-backup
+      src: influxdb-backup.j2
+      dest: /etc/cron.d/influxdb-backup
 
 #
 #
@@ -89,6 +89,6 @@
 #
 
 - include_role:
-    name: dns_record
+      name: dns_record
   vars:
-    dns_record: influxdb
+      dns_record: influxdb

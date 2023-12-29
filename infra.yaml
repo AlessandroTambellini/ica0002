@@ -2,74 +2,74 @@
 - name: Initial setup
   hosts: all
   roles:
-    - init
+      - init
   tags:
-    - always
-    - init
+      - always
+      - init
 
 - name: DNS servers
   hosts: dns_servers
   roles:
-    - bind
+      - bind
   tags: dns
 
 - name: Resolvers
   hosts: all
   roles:
-    - resolvers
+      - resolvers
   tags: dns
 
 - name: Database server
   hosts: db_servers
   roles:
-    - mysql
+      - mysql
   tags: db
 
 - name: Docker server
   hosts: docker_servers
   roles:
-    - docker
-    - agama
+      - docker
+      - agama
   tags: d
 
 - name: haproxy
   hosts: haproxy_servers
   roles:
-    - haproxy
+      - haproxy
   tags: ha
 
 - name: keepalived
   hosts: keepalived_servers
   roles:
-    - keepalived
+      - keepalived
   tags: k
 
 - name: InfluxDB
   hosts: influxdb_servers
   roles:
-    - influxdb
+      - influxdb
   tags: i
 
 - name: pinger
   hosts: pinger_servers
   roles:
-    - pinger
+      - pinger
   tags: pg
 
 - name: Prometheus server
   hosts: prometheus_servers
   roles:
-    - prometheus
+      - prometheus
   tags: p
 
 - name: Grafana server
   hosts: grafana_servers
   roles:
-    - grafana
+      - grafana
   tags: g
 
 - name: nginx server
   hosts: nginx_servers
   roles:
-    - nginx
+      - nginx
   tags: n

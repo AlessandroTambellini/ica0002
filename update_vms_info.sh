@@ -46,13 +46,8 @@ else
 fi
 
 URL1=$vm1_public_URL URL2=$vm2_public_URL yq -i '
-    .vms.vm1.public_URL = strenv(URL1) |
-    .vms.vm2.public_URL = strenv(URL2)
-' ./group_vars/all.yaml
-
-SSH1=$vm1_public_SSH_port SSH2=$vm2_public_SSH_port yq -i '
-    .vms.vm1.public_SSH_port = strenv(SSH1) |
-    .vms.vm2.public_SSH_port = strenv(SSH2)
+    .vm1_public_URL = strenv(URL1) |
+    .vm2_public_URL = strenv(URL2)
 ' ./group_vars/all.yaml
 
 iIP1=$vm1_internal_IP yq -i '

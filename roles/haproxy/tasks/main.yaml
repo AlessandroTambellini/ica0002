@@ -1,31 +1,32 @@
 - name: Install required pkgs
   apt:
-    name:
-      - haproxy
-      - prometheus-haproxy-exporter
+      name:
+          - haproxy
+          - prometheus-haproxy-exporter
 
 - name: HAProxy config
   template:
-    src: haproxy.cfg.j2
-    dest: /etc/haproxy/haproxy.cfg
+      src: haproxy.cfg.j2
+      dest: /etc/haproxy/haproxy.cfg
   notify: Restart haproxy
 
 - name: HAProxy exporter config
   copy:
-    src: prometheus-haproxy-exporter
-    dest: /etc/default/prometheus-haproxy-exporter
+      src: prometheus-haproxy-exporter
+      dest: /etc/default/prometheus-haproxy-exporter
   notify: Restart prometheus-haproxy-exporter
 
 - name: Ensure services are running
   service:
-    name: "{{ item }}"
-    state: started
-    enabled: true
+      name: "{{ item }}"
+      state: started
+      enabled: true
   loop:
-    - haproxy
-    - prometheus-haproxy-exporter
+      - haproxy
+      - prometheus-haproxy-exporter
 
 - include_role:
-    name: dns_record
+      name: dns_record
   vars:
-    dns_record: "lb{{ inventory_hostname | replace('AlessandroTambellini', '') }}"
+      dns_record:
+          "lb{{ inventory_hostname | replace('AlessandroTambellini', '') }}"

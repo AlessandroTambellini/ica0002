@@ -1,26 +1,26 @@
 - name: Install Prometheus
   apt:
-    name: prometheus
+      name: prometheus
 
 - name: Prometheus args
   template:
-    src: prometheus.j2
-    dest: /etc/default/prometheus
+      src: prometheus.j2
+      dest: /etc/default/prometheus
   notify: restart_prometheus
 
 - name: Configure Prometheus
   template:
-    src: prometheus.yml.j2
-    dest: "/etc/prometheus/prometheus.yml"
-    mode: 0755
-    owner: prometheus
+      src: prometheus.yml.j2
+      dest: "/etc/prometheus/prometheus.yml"
+      mode: 0755
+      owner: prometheus
   notify: restart_prometheus
 
 - name: Ensure Prometheus service is started
   service:
-    name: prometheus
-    state: started
-    enabled: yes
+      name: prometheus
+      state: started
+      enabled: yes
 
 #
 #
@@ -28,6 +28,6 @@
 #
 
 - include_role:
-    name: dns_record
+      name: dns_record
   vars:
-    dns_record: prometheus
+      dns_record: prometheus

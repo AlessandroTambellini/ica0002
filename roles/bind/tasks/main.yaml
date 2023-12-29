@@ -1,37 +1,37 @@
 - name: Install required pkgs
   apt:
-    name:
-      - bind9
-      - prometheus-bind-exporter
-      - python3-dnspython
+      name:
+          - bind9
+          - prometheus-bind-exporter
+          - python3-dnspython
 
 - name: bind9 named.conf.options
   template:
-    src: named.conf.options.j2
-    dest: /etc/bind/named.conf.options
-    validate: /usr/sbin/named-checkconf %s
-  notify: Restart bind9
+      src: named.conf.options.j2
+      dest: /etc/bind/named.conf.options
+      validate: /usr/sbin/named-checkconf %s
+  notify: Run rndc reload
   no_log: true
 
 - name: bind9 named.conf.local
   template:
-    src: named.conf.local.j2
-    dest: /etc/bind/named.conf.local
-  notify: Restart bind9
+      src: named.conf.local.j2
+      dest: /etc/bind/named.conf.local
+  notify: Run rndc reload # update .conf file without restarting the service
 
 - name: primary zone config
   template:
-    src: db.rabix.io.j2
-    dest: "/var/cache/bind/db.rabix.io"
-    force: false # while testing/developing disable it
+      src: db.rabix.io.j2
+      dest: "/var/cache/bind/db.rabix.io"
+      force: false # set to true to modify the file
   notify: Restart bind9
   when: inventory_hostname in groups['dns_primary']
 
 - name: rev zone config
   template:
-    src: db.rev.j2
-    dest: "/var/cache/bind/db.rev"
-    force: false # while testing/developing disable it
+      src: db.rev.j2
+      dest: "/var/cache/bind/db.rev"
+      force: false
   notify: Restart bind9
   when: inventory_hostname in groups['dns_primary']
 
@@ -39,27 +39,30 @@
 
 - name: Ensure services are started
   service:
-    name: "{{ item }}"
-    state: started
-    enabled: true
+      name: "{{ item }}"
+      state: started
+      enabled: true
   loop:
-    - bind9
-    - prometheus-bind-exporter
+      - bind9
+      - prometheus-bind-exporter
 
 - name: Set A record for backup server
   community.general.nsupdate:
-    key_name: "nsupdate.key"
-    key_algorithm: "hmac-sha256"
-    key_secret: "{{ dns_nsupdate_key }}"
-    server: "{{ hostvars[groups['dns_primary'][0]]['ansible_default_ipv4']['address'] }}"
-    zone: "{{ domain_name }}"
-    record: backup
-    value: "{{ backup_server_ip }}"
-    type: "A"
-
-#  when: inventory_hostname in groups['dns_primary']
+      key_name: "nsupdate.key"
+      key_algorithm: "hmac-sha256"
+      key_secret: "{{ dns_nsupdate_key }}"
+      server:
+          "{{
+          hostvars[groups['dns_primary'][0]]['ansible_default_ipv4']['address']
+          }}"
+      zone: "{{ domain_name }}"
+      record: backup
+      value: "{{ backup_server_ip }}"
+      type: "A"
+  when: inventory_hostname in groups['dns_primary']
 
 - include_role:
-    name: dns_record
+      name: dns_record
   vars:
-    dns_record: "ns{{ inventory_hostname | replace('AlessandroTambellini', '') }}"
+      dns_record:
+          "ns{{ inventory_hostname | replace('AlessandroTambellini', '') }}"

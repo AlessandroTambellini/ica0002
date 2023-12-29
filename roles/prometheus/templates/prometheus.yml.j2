@@ -43,7 +43,7 @@ scrape_configs:
   - job_name: 'influxdb'
     static_configs:
     - targets:
-      - {{ cname_influxdb }}:9424 {# in case of more than one influxdb server, round robin technique is applied #}
+      - {{ cname_influxdb }}:9424 # in case of more than one influxdb server, round robin technique is applied
     metrics_path: '/metrics'
 
   - job_name: 'haproxy'
