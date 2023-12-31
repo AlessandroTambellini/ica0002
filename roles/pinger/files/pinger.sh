@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Script contains several (more than 1) security issues.
-# Find them and fix them to get bonus on exam.
-# Problem example: SQL injection.
-
 for t in database_url database_name targets; do
   if ! grep -q "^${t}=" /etc/pinger/pinger.conf; then
     logger "$0 Failed to get $t from config"
@@ -17,12 +13,14 @@ db_url=$(grep "^database_url=" /etc/pinger/pinger.conf | sed 's/^.*=//')
 db_name=$(grep "^database_name=" /etc/pinger/pinger.conf | sed 's/^.*=//')
 targets=$(grep "^targets=" /etc/pinger/pinger.conf | sed 's/^.*=//' | sed 's/\(,\|;\)/ /g')
 
-# issue 1
-curl -i -XPOST "${db_url}/query" --data-urlencode "q=CREATE DATABASE $db_name" 1>/dev/null 2>/dev/null
+encoded_db_url=$(printf %s "$db_url" | jq -s -R -r @uri)
+encoded_db_name=$(printf %s "$db_name" | jq -s -R -r @uri)
+encoded_targets=$(printf %s "$targets" | jq -s -R -r @uri)
+
+curl -i -XPOST "${encoded_db_url}/query" --data-urlencode "q=CREATE DATABASE $encoded_db_name" 1>/dev/null 2>/dev/null
 
 while true; do
   result=$(fping -C1 -q $targets 2>&1 | awk '{print "rtt,dst="$1" rtt="$3}')
-  # issue 2
-  curl -i -XPOST "${db_url}/write?db=$db_name" --data-binary "$result" 1>/dev/null 2>/dev/null
+  curl -i -XPOST "${encoded_db_url}/write?db=$encoded_db_name" --data-binary "$result" 1>/dev/null 2>/dev/null
  sleep 1
 done
