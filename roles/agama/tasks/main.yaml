@@ -41,9 +41,8 @@
       name: "agama-{{ item }}"
       state: absent
       force_kill: yes
-  with_sequence:
-      start="{{ agama_containers_number + 1 | int }}" end="{{
-      agama_containers_number + 1 + (n_containers.stdout_lines | length) }}"
+  with_sequence: start="{{ agama_containers_number + 1 | int }}" end="{{
+      agama_containers_number + 1 + (n_containers.stdout_lines | length) }}" # this method checks more containers than necessary
 
 #
 #

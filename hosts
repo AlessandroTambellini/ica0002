@@ -37,9 +37,15 @@ AlessandroTambellini-2
 AlessandroTambellini-1
 AlessandroTambellini-2
 
-[keepalived_servers]
+[keepalived_master]
 AlessandroTambellini-1
+
+[keepalived_backup]
 AlessandroTambellini-2
+
+[keepalived_servers:children]
+keepalived_master
+keepalived_backup
 
 [influxdb_servers]
 AlessandroTambellini-2

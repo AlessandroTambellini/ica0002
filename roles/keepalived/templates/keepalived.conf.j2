@@ -10,14 +10,14 @@ vrrp_script check_haproxy {
 }
 
 vrrp_instance VI_1 {
-{% if inventory_hostname == groups['keepalived_servers'][0] %}
+{% if inventory_hostname in groups['keepalived_master'] %}
     state MASTER
 {% else %}
     state BACKUP
 {% endif %}             
     interface ens3
     virtual_router_id 51
-{% if inventory_hostname == groups['keepalived_servers'][0] %}
+{% if inventory_hostname in groups['keepalived_master'] %}
     priority 100
 {% else %}
     priority 99
@@ -31,7 +31,7 @@ vrrp_instance VI_1 {
     virtual_ipaddress {
 {% set third_octet = ansible_default_ipv4.address.split('.')[2] %}
 {% set fourth_octet = hostvars['AlessandroTambellini-1']['ansible_default_ipv4']['address'].split('.')[3] %}
-        192.168.{{ third_octet|int + 58 }}.{{ fourth_octet }}/24
+        192.168.{{ third_octet | int + 58 }}.{{ fourth_octet }}/24
     }
     unicast_peer {
 {% for vm in groups['keepalived_servers'] %}
