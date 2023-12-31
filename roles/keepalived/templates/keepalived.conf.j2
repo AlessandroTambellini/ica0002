@@ -32,12 +32,11 @@ vrrp_instance VI_1 {
 {% set third_octet = ansible_default_ipv4.address.split('.')[2] %}
 {% set fourth_octet = hostvars['AlessandroTambellini-1']['ansible_default_ipv4']['address'].split('.')[3] %}
         192.168.{{ third_octet|int + 58 }}.{{ fourth_octet }}/24
-        {# {{ virtual_ipaddress }}/24 #}  
     }
     unicast_peer {
 {% for vm in groups['keepalived_servers'] %}
 {% if vm != inventory_hostname %}
-    {{ hostvars[vm]['ansible_default_ipv4']['address'] }}
+        {{ hostvars[vm]['ansible_default_ipv4']['address'] }}
 {% endif %}
 {% endfor %}                          
     }

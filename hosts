@@ -1,5 +1,5 @@
-AlessandroTambellini-1 ansible_host=193.40.156.67 ansible_ssh_user=ubuntu ansible_port=4322 ansible_user=ubuntu
-AlessandroTambellini-2 ansible_host=193.40.156.67 ansible_ssh_user=ubuntu ansible_port=8422 ansible_user=ubuntu
+AlessandroTambellini-1 ansible_host=193.40.156.67 ansible_ssh_user=ubuntu ansible_port=11222 ansible_user=ubuntu
+AlessandroTambellini-2 ansible_host=193.40.156.67 ansible_ssh_user=ubuntu ansible_port=14322 ansible_user=ubuntu
 
 [dns_primary]
 AlessandroTambellini-1
@@ -26,6 +26,10 @@ db_primary
 db_secondary
 
 [docker_servers]
+AlessandroTambellini-1
+AlessandroTambellini-2
+
+[agama_servers]
 AlessandroTambellini-1
 AlessandroTambellini-2
 

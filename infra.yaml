@@ -4,7 +4,7 @@
   roles:
       - init
   tags:
-      - always
+      #- always
       - init
 
 - name: DNS servers
@@ -25,12 +25,17 @@
       - mysql
   tags: db
 
-- name: Docker server
+- name: Docker servers
   hosts: docker_servers
   roles:
       - docker
-      - agama
   tags: d
+
+- name: agama servers
+  hosts: agama_servers
+  roles:
+      - agama
+  tags: a
 
 - name: haproxy
   hosts: haproxy_servers
