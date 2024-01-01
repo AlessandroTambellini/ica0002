@@ -1,0 +1,34 @@
+1) The tasks in handler are executed in the order they're written in the file, even if you call them
+in a different order
+
+2) default mode in ubuntu is 0644, so no need to specify it
+
+3) logs -> rsyslog (collects and send over UDP) --> 
+    telegraf (collects in a nice format and send) --> 
+      influxdb (store) --> 
+        grafana (show nicely)
+
+4) 
+  Init is a prerequisite to install and configure Bind -->
+    Bind is prerequisite to install and configure Resolver -->
+      Resolver is prerequisite for any further actions with your setup.
+
+5) WSGI stands for "Web Server Gateway Interface".
+It is used to forward requests from a web server (such as Apache or NGINX) 
+to a backend Python web application or framework. 
+Because nginx and python app do not speak a common language, we do: 
+client --> nginx --> uwsgi --> python app
+  
+6) IPs are allowed just in bind and keepalived
+
+7) when modifing unit file, they have to be reloaded: systemctl daemon-reload
+
+8) If haproxy is DOWN on master and keepalived is DOWN on slave. agama is not shown in ha url
+
+9) - SQL injection
+    - https://stackoverflow.com/questions/4450747/how-to-prevent-sql-injection-in-mysqls-command-line-shell-interface
+    - https://relentlesscoding.com/posts/sql-injection-in-bash-scripts/
+
+10) agama is also served via nginx for testing purpose. If the app is not shown via HAProxy, could be HAProxy problem or docker problem. But if the app is shown via nginx, you know for sure it's not a Docker problem
+
+11) apt.yaml files and uwsgi role are not used. They were just part of the evolution of the project
