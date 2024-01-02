@@ -13,7 +13,7 @@ zone "{{ domain_name }}" {
     type secondary;
     masters {
 {% for master in groups['dns_primary'] %}
-    {{ hostvars[master]['ansible_default_ipv4']['address'] }};
+        {{ hostvars[master]['ansible_default_ipv4']['address'] }};
 {% endfor %}
     };
 {% endif %}
@@ -21,8 +21,8 @@ zone "{{ domain_name }}" {
 };
 
 {% if inventory_hostname in groups['dns_secondary'] %}
-{% for primary in groups['dns_primary'] %}
-server {{ hostvars[primary]['ansible_default_ipv4']['address'] }} {
+{% for server in groups['dns_primary'] %}
+server {{ hostvars[server]['ansible_default_ipv4']['address'] }} {
     keys { 
         transfer.key; 
     };
@@ -38,9 +38,9 @@ zone 168.192.in-addr.arpa {
     };
     allow-transfer { 
         127.0.0.1;
-{{ hostvars[groups['dns_secondary'][0]]['ansible_default_ipv4']['address'] }};
-        key transfer.key; 
-    }; 
+        {{ hostvars[groups['dns_secondary'][0]]['ansible_default_ipv4']['address'] }};
+        key transfer.key;
+    };
 {% else %}
     type secondary;
     allow-transfer {

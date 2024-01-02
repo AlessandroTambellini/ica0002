@@ -32,6 +32,8 @@
     8.8.8.8 to at least download the stuff you need
 -   you could have conflicting services runnning on the same port. So you need
     to first manually stop these services
+-   cat /var/log/syslog | grep named
+-   host & dig commands
 
 ## JINJA
 

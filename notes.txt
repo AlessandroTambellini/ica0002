@@ -32,3 +32,5 @@ client --> nginx --> uwsgi --> python app
 10) agama is also served via nginx for testing purpose. If the app is not shown via HAProxy, could be HAProxy problem or docker problem. But if the app is shown via nginx, you know for sure it's not a Docker problem
 
 11) apt.yaml files and uwsgi role are not used. They were just part of the evolution of the project
+
+12) bind does not care about uppercase letters in dns records
