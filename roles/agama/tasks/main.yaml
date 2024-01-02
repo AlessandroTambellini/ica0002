@@ -35,6 +35,7 @@
 - name: Get number of containers
   command: docker ps -a -q
   register: n_containers
+  changed_when: false
 
 - name: Delete unused containers
   community.docker.docker_container:
