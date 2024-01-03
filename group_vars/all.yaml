@@ -1,9 +1,9 @@
 # MySQL
-mysql_primary: mysql-2
+mysql_primary: mysql-1
 # mysql_backup_host:
 #     "{{ groups['db_servers'] | reject('eq', mysql_host) | first |
 #     default(mysql_host) }}"
-mysql_secondary: mysql-1
+mysql_secondary: mysql-2
 agama_db: agama
 mysql_user: agama
 mysql_password: !vault |
@@ -34,7 +34,7 @@ pinger_user: pinger
 # DNS
 #
 dns_forwarders:
-    - 192.168.43.84
+    - 192.168.42.99
     #- 192.168.42.140 # vm1, where the webapp resides
 allowed_queries:
     - 192.168.42.0/23
@@ -49,8 +49,8 @@ vms:
         public_URL: "http://193.40.156.67:44880"
     vm2:
         public_URL: "http://193.40.156.67:41780"
-vm1_public_URL: "http://193.40.156.67:34080"
-vm2_public_URL: http://193.40.156.67:36080
+vm1_public_URL: "http://193.40.156.67:9980"
+vm2_public_URL: http://193.40.156.67:9080
 domain_name: rabix.io
 #
 #
@@ -114,4 +114,4 @@ cname_bind9: ns
 cname_prometheus: prometheus
 cname_agama: www
 pinger_targets: "ns-1.{{ domain_name }},ns-2.{{ domain_name }}"
-virtual_ipaddress: 192.168.101.84
+virtual_ipaddress: 192.168.100.99
