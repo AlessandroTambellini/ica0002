@@ -1,7 +1,4 @@
 search {{ domain_name }}
-{% for server in groups['dns_primary'] %}
-nameserver {{ hostvars[server]['ansible_default_ipv4']['address'] }}
-{% endfor %}
 {% for server in groups['dns_secondary'] %}
 nameserver {{ hostvars[server]['ansible_default_ipv4']['address'] }}
 {% endfor %}

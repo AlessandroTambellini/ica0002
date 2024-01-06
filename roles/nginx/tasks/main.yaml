@@ -1,22 +1,33 @@
 - name: Install nginx
   apt:
-    name:
-      - nginx
-      - prometheus-nginx-exporter
+      name:
+          - nginx
+          - prometheus-nginx-exporter
 
 - name: nginx configuration
   template:
-    src: default.j2
-    dest: /etc/nginx/sites-enabled/default
+      src: default.j2
+      dest: /etc/nginx/sites-enabled/default
   notify: Restart nginx
 
 - meta: flush_handlers
 
 - name: Ensure services are started
   service:
-    name: "{{ item }}"
-    state: started
-    enabled: true
+      name: "{{ item }}"
+      state: started
+      enabled: true
   loop:
-    - nginx
-    - prometheus-nginx-exporter
+      - nginx
+      - prometheus-nginx-exporter
+
+#
+#
+# CNAME
+#
+
+- include_role:
+      name: dns_record
+  vars:
+      dns_record:
+          "nginx{{ inventory_hostname | replace('AlessandroTambellini', '') }}"

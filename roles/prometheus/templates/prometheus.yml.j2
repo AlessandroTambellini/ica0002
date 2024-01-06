@@ -27,8 +27,8 @@ scrape_configs:
   - job_name: 'nginx'
     static_configs:
     - targets:
-{% for server in groups['all'] %}
-      - {{ server }}:9113
+{% for server in groups['nginx_servers'] %}
+      - {{ cname_nginx }}{{ server | replace('AlessandroTambellini', '') }}:9113
 {% endfor %}
     metrics_path: '/metrics'
 
@@ -58,7 +58,8 @@ scrape_configs:
     static_configs:
     - targets:
 {% for server in groups['keepalived_servers'] %}
-      - {{ server }}:9165
+      - {{ cname_keepalived }}{{ server | replace('AlessandroTambellini', '') }}:9165
 {% endfor %}
     metrics_path: '/metrics'
+
 

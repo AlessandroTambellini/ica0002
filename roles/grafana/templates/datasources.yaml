@@ -4,18 +4,17 @@ apiVersion: 1
 # List of data sources to insert/update depending on what's
 # available in the database.
 datasources:
-  - name: Prometheus-1
-    type: prometheus
-    access: proxy
-    url: "http://prometheus:{{ prometheus_port }}/prometheus"
-  - name: influxdb:latency
-    type: influxdb
-    access: proxy
-    url: "http://influxdb:{{ influxdb_port }}"
-    database: latency
-  - name: influxdb:telegraf
-    type: influxdb
-    access: proxy
-    url: "http://grafana:{{ influxdb_port }}"
-    database: telegraf
-# http://{{ groups['prometheus_servers'][0] }}:{{ prometheus_port }}/prometheus
+    - name: Prometheus-1
+      type: prometheus
+      access: proxy
+      url: "http://prometheus:{{ prometheus_port }}/prometheus"
+    - name: influxdb:latency
+      type: influxdb
+      access: proxy
+      url: "http://influxdb:{{ influxdb_port }}"
+      database: latency
+    - name: influxdb:telegraf
+      type: influxdb
+      access: proxy
+      url: "http://grafana:{{ influxdb_port }}"
+      database: telegraf

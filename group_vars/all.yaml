@@ -34,8 +34,7 @@ pinger_user: pinger
 # DNS
 #
 dns_forwarders:
-    - 192.168.42.99
-    #- 192.168.42.140 # vm1, where the webapp resides
+    - 192.168.43.54
 allowed_queries:
     - 192.168.42.0/23
     - 127.0.0.0/8
@@ -44,13 +43,8 @@ backup_server_ip: 192.168.42.132
 backup_server_ssh_key:
     ssh-ed25519
     AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
-vms:
-    vm1:
-        public_URL: "http://193.40.156.67:44880"
-    vm2:
-        public_URL: "http://193.40.156.67:41780"
-vm1_public_URL: "http://193.40.156.67:9980"
-vm2_public_URL: http://193.40.156.67:9080
+vm1_public_URL: "http://193.40.156.67:31080"
+vm2_public_URL: http://193.40.156.67:35380
 domain_name: rabix.io
 #
 #
@@ -113,5 +107,7 @@ cname_mysql: mysql
 cname_bind9: ns
 cname_prometheus: prometheus
 cname_agama: www
+cname_keepalived: ka
+cname_nginx: nginx
 pinger_targets: "ns-1.{{ domain_name }},ns-2.{{ domain_name }}"
-virtual_ipaddress: 192.168.100.99
+virtual_ipaddress: 192.168.101.54

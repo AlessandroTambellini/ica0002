@@ -59,6 +59,17 @@
       state: started
       enabled: true
       daemon_reload: true
+
+#
+#
+# CNAME
+#
+
+- include_role:
+      name: dns_record
+  vars:
+      dns_record:
+          "ka{{ inventory_hostname | replace('AlessandroTambellini', '') }}"
 #
 #
 # download and install keepalived-exporter from backup server

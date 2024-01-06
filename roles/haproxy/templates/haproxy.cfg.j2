@@ -26,7 +26,7 @@ defaults
 listen agama
         bind *:88
 {% for item in range(1, agama_containers_number + 1) %}
-{% for vm in groups["docker_servers"]%}
+{% for vm in groups["agama_servers"] %}
         server agama-{{ item }}-{{ vm }} {{ vm }}:{{ agama_port + item }} check
 {% endfor %}
 {% endfor %}
