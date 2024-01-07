@@ -1,11 +1,26 @@
 ---
+- name: Gather facts
+  gather_facts: yes
+  hosts: all
+  tags:
+      - init
+      - dns
+      - db
+      - d
+      - a
+      - ha
+      - k
+      - i
+      - pg
+      - p
+      - g
+      - nx
+
 - name: Initial setup
   hosts: all
   roles:
       - init
-  tags:
-      #- always
-      - init
+  tags: init
 
 - name: DNS servers
   hosts: dns_servers
@@ -77,4 +92,4 @@
   hosts: nginx_servers
   roles:
       - nginx
-  tags: n
+  tags: nx
