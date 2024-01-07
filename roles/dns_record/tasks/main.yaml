@@ -1,4 +1,4 @@
-- name: Set CNAME record for "{{ dns_record }}" server
+- name: "Set CNAME record for {{ dns_record }} server"
   community.general.nsupdate:
       key_name: "nsupdate.key"
       key_algorithm: "hmac-sha256"
