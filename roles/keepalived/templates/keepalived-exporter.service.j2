@@ -1,11 +1,11 @@
 [Unit]
 Description=keepalived-exporter service
+Documentation=https://github.com/mehdy/keepalived-exporter
 After=network-online.target
 
 [Service]
 User=root
-ExecStart=/usr/bin/keepalived-exporter
+ExecStart=/usr/local/bin/keepalived-exporter
   
 [Install]
 WantedBy=multi-user.target
-
