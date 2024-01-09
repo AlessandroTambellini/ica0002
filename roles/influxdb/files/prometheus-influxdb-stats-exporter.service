@@ -5,7 +5,7 @@ After=network-online.target
 
 [Service]
 User=prometheus
-ExecStart=/usr/local/bin/influx_stats_exporter_linux_386
+ExecStart=/usr/local/bin/influx_stats_exporter_linux_amd64
 
 [Install]
 WantedBy=multi-user.target
