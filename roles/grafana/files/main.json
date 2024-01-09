@@ -983,7 +983,7 @@
                     "tags": []
                 }
             ],
-            "title": "latency",
+            "title": "latency (pinger)",
             "type": "timeseries"
         },
         {
@@ -1286,6 +1286,6 @@
     "timezone": "",
     "title": "Main",
     "uid": "fbef49f8-789c-49a0-82fc-913c1725e385",
-    "version": 2,
+    "version": 3,
     "weekStart": ""
 }

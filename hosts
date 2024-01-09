@@ -1,6 +1,6 @@
-AlessandroTambellini-1 ansible_host=193.40.156.67 ansible_ssh_user=ubuntu ansible_port=31022 ansible_user=ubuntu
-AlessandroTambellini-2 ansible_host=193.40.156.67 ansible_ssh_user=ubuntu ansible_port=35322 ansible_user=ubuntu
-AlessandroTambellini-3 ansible_host=193.40.156.67 ansible_ssh_user=ubuntu ansible_port=44322 ansible_user=ubuntu
+AlessandroTambellini-1 ansible_host=193.40.156.67 ansible_ssh_user=ubuntu ansible_port=10222 ansible_user=ubuntu
+AlessandroTambellini-2 ansible_host=193.40.156.67 ansible_ssh_user=ubuntu ansible_port=6222 ansible_user=ubuntu
+AlessandroTambellini-3 ansible_host=193.40.156.67 ansible_ssh_user=ubuntu ansible_port=15022 ansible_user=ubuntu
 
 [dns_primary]
 AlessandroTambellini-3

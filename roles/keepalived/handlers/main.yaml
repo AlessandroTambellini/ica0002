@@ -1,9 +1,9 @@
 - name: Restart keepalived
   service:
-    name: keepalived
-    state: restarted
+      name: keepalived
+      state: restarted
 
 - name: Restart keepalived-exporter
   systemd:
-    name: keepalived-exporter
-    state: restarted
+      name: keepalived-exporter
+      state: restarted

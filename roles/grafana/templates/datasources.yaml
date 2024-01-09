@@ -16,5 +16,5 @@ datasources:
     - name: influxdb:telegraf
       type: influxdb
       access: proxy
-      url: "http://grafana:{{ influxdb_port }}"
+      url: "http://influxdb:{{ influxdb_port }}"
       database: telegraf
