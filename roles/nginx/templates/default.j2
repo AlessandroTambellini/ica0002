@@ -2,6 +2,13 @@ server {
     listen 80 default_server;
     server_name _;
 
+{% if 'docker_servers' in group_names %}
+    location / {
+        proxy_pass http://{{ cname_agama }}{{ groups['agama_servers'][0] | replace('AlessandroTambellini', '') }}:{{ agama_port + 1 | int }};
+        proxy_set_header Host $http_host; {# because nginx is acting as a reverse proxy #}
+    }
+{% endif %}
+
 {% if 'prometheus_servers' in group_names %}
     location /prometheus {
         proxy_pass http://localhost:{{ prometheus_port }};
