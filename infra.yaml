@@ -4,7 +4,8 @@
   hosts: all
   tags:
       - init
-      - dns
+      - b
+      - r
       - db
       - d
       - a
@@ -26,13 +27,13 @@
   hosts: dns_servers
   roles:
       - bind
-  tags: dns
+  tags: b
 
 - name: Resolvers
   hosts: all
   roles:
       - resolvers
-  tags: dns
+  tags: r
 
 - name: Database server
   hosts: db_servers
