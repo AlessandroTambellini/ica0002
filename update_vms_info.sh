@@ -28,7 +28,6 @@ sed -e "1 s/$ansible_port/ansible_port=$vm1_public_SSH_port/1" \
     -i hosts
 
 echo "Done." >&2
-#git diff -- hosts
 
 #
 #   update YAML variables
@@ -36,20 +35,17 @@ echo "Done." >&2
 
 echo "Updating variables..." >&2
 
-vm1_public_URL=$(curl "http://193.40.156.67/students/AlessandroTambellini.csv" | cut -d "," -f 6 | head -n 1)
-vm2_public_URL=$(curl "http://193.40.156.67/students/AlessandroTambellini.csv" | cut -d "," -f 6 | sed -n '2p')
-vm1_internal_IP=$(curl "http://193.40.156.67/students/AlessandroTambellini.csv" | cut -d "," -f 2 | head -n 1)
+vm1_internal_IP=$(curl "http://193.40.156.67/students/AlessandroTambellini.csv" | awk -F ',' 'NR==1 {print $2}')
+vm3_public_URL=$(curl "http://193.40.156.67/students/AlessandroTambellini.csv" | awk -F ',' 'NR==3 {print $6}')
 
-URL1=$vm1_public_URL URL2=$vm2_public_URL yq -i '
-    .vm1_public_URL = strenv(URL1) |
-    .vm2_public_URL = strenv(URL2)
+URL2=$vm3_public_URL yq -i '
+    .vm3_public_URL = strenv(URL2)
 ' ./group_vars/all.yaml
 
 iIP1=$vm1_internal_IP yq -i '
     .dns_forwarders[0] = strenv(iIP1)
 ' ./group_vars/all.yaml
 
-#git diff -- ./group_vars/all.yaml
 echo "Done." >&2
 
 echo -e "ports: \n \

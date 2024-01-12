@@ -1,4 +1,4 @@
-- name: Install required pkgs
+- name: Install keepalived
   apt:
       name:
           - keepalived

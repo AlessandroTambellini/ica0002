@@ -19,7 +19,7 @@ to a backend Python web application or framework.
 Because nginx and python app do not speak a common language, we do: 
 client --> nginx --> uwsgi --> python app
   
-6) IPs are allowed just in bind and keepalived
+6) IPs are allowed just in bind, keepalived, `/home/backup/.ssh/known_hosts`
 
 7) when modifing unit file, they have to be reloaded: systemctl daemon-reload
 

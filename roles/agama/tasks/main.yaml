@@ -26,8 +26,9 @@
       published_ports: "{{ agama_port + item | int }}:{{ agama_port }}"
       env:
           AGAMA_DATABASE_URI:
-              "mysql+pymysql://{{ mysql_user }}:{{ mysql_password }}@{{
-              mysql_primary }}/{{ agama_db }}"
+              "mysql+pymysql://{{ agama_user }}:{{ mysql_password }}@{{
+              cname_mysql }}{{ groups['db_primary'][0] |
+              replace('AlessandroTambellini', '') }}/{{ agama_db }}"
       restart_policy: "unless-stopped"
   with_sequence: start=1 end="{{ agama_containers_number }}"
   no_log: true
@@ -42,8 +43,10 @@
       name: "agama-{{ item }}"
       state: absent
       force_kill: yes
-  with_sequence: start="{{ agama_containers_number + 1 | int }}" end="{{
-      agama_containers_number + 1 + (n_containers.stdout_lines | length) }}" # this method checks more containers than necessary
+  with_sequence:
+      start="{{ agama_containers_number + 1 | int }}" end="{{
+      agama_containers_number + 1 + (n_containers.stdout_lines | length) }}"
+      # this method checks more containers than necessary, but I didn't come up with a better solution
 
 #
 #

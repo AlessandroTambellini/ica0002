@@ -1,20 +1,20 @@
-- name: Add the user 'agama'
+- name: Add the user {{ agama_user }}
   user:
-    name: agama
+      name: "{{ agama_user }}"
 
-- name: Set directory ownership to 'agama'
+- name: Set directory ownership to {{ agama_user }}
   file:
-    path: /opt/agama
-    owner: agama
-    state: directory
+      path: /opt/agama
+      owner: "{{ agama_user }}"
+      state: directory
 
 - name: Install required packages
   apt:
-    name:
-      - python3-flask-sqlalchemy
-      - python3-pymysql
+      name:
+          - python3-flask-sqlalchemy
+          - python3-pymysql
 
 - name: Download agama webapp
   get_url:
-    url: https://raw.githubusercontent.com/hudolejev/agama/master/agama.py
-    dest: /opt/agama/
+      url: https://raw.githubusercontent.com/hudolejev/agama/master/agama.py
+      dest: /opt/agama/

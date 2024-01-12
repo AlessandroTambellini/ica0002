@@ -1,11 +1,12 @@
 [Unit]
 Description=Prometheus Node Exporter
+Documentation=https://prometheus.io/docs/guides/node-exporter/
 Wants=network-online.target
 After=network-online.target
 
 [Service]
 Type=simple
-{# Set node_exporter_host to localhost if you wish to expose node_exporter on localhost only. #}
+{# Set node_exporter_host to localhost if you wish to expose node_exporter on localhost only #}
 ExecStart=/usr/bin/prometheus-node-exporter --web.listen-address={{ node_exporter_host }}:{{ node_exporter_port }} {{ node_exporter_options }}
 Restart=always
 RestartSec=3

@@ -1,4 +1,4 @@
-- name: Install required pkgs
+- name: Install bind9, prometheus-bind-exporter and python3-dnspython
   apt:
       name:
           - bind9

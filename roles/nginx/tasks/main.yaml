@@ -1,4 +1,4 @@
-- name: Install nginx
+- name: Install nginx and prometheus-nginx-exporter
   apt:
       name:
           - nginx

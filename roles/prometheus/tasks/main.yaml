@@ -6,15 +6,15 @@
   template:
       src: prometheus.j2
       dest: /etc/default/prometheus
-  notify: restart_prometheus
+  notify: Restart prometheus
 
 - name: Configure Prometheus
   template:
       src: prometheus.yml.j2
       dest: "/etc/prometheus/prometheus.yml"
       mode: 0755
-      owner: prometheus
-  notify: restart_prometheus
+      owner: "{{ prometheus_user }}"
+  notify: Restart prometheus
 
 - name: Ensure Prometheus service is started
   service:

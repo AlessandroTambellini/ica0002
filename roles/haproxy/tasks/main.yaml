@@ -1,4 +1,4 @@
-- name: Install required pkgs
+- name: Install haproxy and prometheus-haproxy-exporter
   apt:
       name:
           - haproxy

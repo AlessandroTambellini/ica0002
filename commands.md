@@ -23,9 +23,9 @@
 
 ## DNS
 
--   named-checkzone rabix.io /var/lib/bind/db.rabix.io --> Check the dns zone is
-    syntattically configured correctly. If the output is OK, the syntax is
-    correct
+-   named-checkzone rabix.io /var/cache/bind/db.rabix.io --> Check the dns zone
+    is syntattically configured correctly. If the output is OK, the syntax is
+    correct (it works just on vm where the file is not binary)
 -   named-checkconf /etc/bind/named.conf.options // If no output, the syntax is
     correct
 -   if I have problems with the dns, just set /etc/resolv.conf nameserver to
@@ -55,7 +55,9 @@
 -   less /etc/apt/sources.list.d/"something".list --> to check keys
 -   git diff file --> diff from last commit
 -   less /var/log/syslog | grep named --> dns logs
--   docker logs container-name
+-   docker logs <container-name>
+-   nc -vz <IP> <port> --> check if service is listening on specified ip and
+    port
 
 ## SEARCHING/FILTERING
 
@@ -78,3 +80,12 @@
 2. ansible-vault encrypt ansible-vault-test.txt
 3. ansible-vault view ansible-vault-test.txt
 4. rm ansible-vault-test.txt
+
+### Check syntax
+
+-   nginx -t
+-   named-checkzone rabix.io /var/cache/bind/db.rabix.io --> Check the dns zone
+    is syntattically configured correctly. If the output is OK, the syntax is
+    correct (it works just on vm where the file is not binary)
+-   named-checkconf /etc/bind/named.conf.options // If no output, the syntax is
+    correct

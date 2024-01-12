@@ -1,47 +1,56 @@
-- Restore MySQL data from the backup:
+-   Restore MySQL data from the backup:
 
-  1. `sudo -u backup duplicity --no-encryption restore rsync://AlessandroTambellini@backup.rabix.io/mysql /home/backup/restore/mysql`
-  2. enter privileged mode: `sudo su -`
-  3. `mysql agama < /home/backup/restore/mysql/agama.sql`
+    Go to vm where MySQL is located --> AlessandroTambellini-1 or
+    AlessandroTambellini-2
 
-  To make sure the result of the backup restore is correct follow the following instructions:
+    1. `sudo -u backup duplicity --no-encryption restore rsync://AlessandroTambellini@backup.rabix.io/mysql /home/backup/restore/mysql`
+    2. enter privileged mode: `sudo su -`
+    3. `mysql agama < /home/backup/restore/mysql/agama.sql`
 
-  - verify the last date of modification of /home/backup/restore/mysql/agama.sql correspond to when you executed the command\n
-  - type the following commands:
+    To make sure the result of the backup restore is correct follow the
+    following instructions:
 
-  ```sql
-  mysql
-  USE agama;
-  SELECT * FROM item;
-  ```
+    -   verify the last date of modification of
+        /home/backup/restore/mysql/agama.sql correspond to when you executed the
+        command
+    -   type the following commands:
 
-  and check the data is right there
+    ```sql
+    mysql
+    USE agama;
+    SELECT * FROM item;
+    ```
 
-- Restore InfluxDB data from the backup:
+    and check the data is right there
 
-  First, download the data from backup server to vm:
-  `sudo -u backup duplicity --no-encryption restore rsync://AlessandroTambellini@backup.rabix.io/influxdb /home/backup/restore/influxdb`
+-   Restore InfluxDB data from the backup:
 
-  Then, To restore the backup you will need to delete existing telegraf database first. It also makes sense to stop the Telegraf service so that it doesn't recreate the database before you could restore it. So, execute the following commands:
+    First, download the data from backup server to AlessandroTambellini-3 (where
+    InfluxDB is located):
+    `sudo -u backup duplicity --no-encryption restore rsync://AlessandroTambellini@backup.rabix.io/influxdb /home/backup/restore/influxdb`
 
-  ```bash
-  service telegraf stop
-  influx -execute 'DROP DATABASE telegraf'
-  influxd restore -portable -database telegraf /home/backup/restore/influxdb
-  ```
+    Then, To restore the backup you will need to delete existing telegraf
+    database first. It also makes sense to stop the Telegraf service so that it
+    doesn't recreate the database before you could restore it. So, execute the
+    following commands:
 
-  You may get these errors if restoring the database:
+    ```bash
+    service telegraf stop
+    influx -execute 'DROP DATABASE telegraf'
+    influxd restore -portable -database telegraf /home/backup/restore/influxdb
+    ```
 
-  ```bash
-  error updating meta: DB metadata not changed. database may already exist
-  restore: DB metadata not changed. database may already exist
-  ```
+    You may get these errors if restoring the database:
 
-  It's a known issue with InfluxDB restore, you can ignore these.
+    ```bash
+    error updating meta: DB metadata not changed. database may already exist
+    restore: DB metadata not changed. database may already exist
+    ```
 
-  The data should now be restored. To check it type:
+    It's a known issue with InfluxDB restore, you can ignore these.
 
-  1. `influx`
-  2. `show databases`
-     and telegraf should be in the list
-  3. `show measurements` and check syslog is there
+    The data should now be restored. To check it type:
+
+    1. `influx`
+    2. `show databases` and telegraf should be in the list
+    3. `show measurements` and check syslog is there

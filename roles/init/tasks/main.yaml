@@ -66,22 +66,22 @@
 # backup
 #
 
-- name: Add the user 'backup'
+- name: Add the user {{ backup_user }}
   user:
-      name: backup
-      home: /home/backup
+      name: "{{ backup_user }}"
+      home: "/home/{{ backup_user }}"
       generate_ssh_key: true
 
 - name: Add SSH key
   template:
       src: known_hosts.j2
       dest: /home/backup/.ssh/known_hosts
-      owner: backup
+      owner: "{{ backup_user }}"
       group: backup
       mode: 0644
 
-- name: create backup dir
+- name: create {{ backup_user }} dir
   file:
-      path: /home/backup/restore
-      owner: backup
+      path: "/home/{{ backup_user }}/restore"
+      owner: "{{ backup_user }}"
       state: directory

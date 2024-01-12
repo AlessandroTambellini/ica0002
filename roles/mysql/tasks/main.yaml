@@ -3,7 +3,7 @@
       src: .exporter.cnf.j2
       dest: /var/lib/prometheus/.my.cnf
       mode: 0400
-      owner: prometheus
+      owner: "{{ prometheus_user }}"
   no_log: true
 
 - name: prometheus-mysqld-exporter args
@@ -36,7 +36,7 @@
       - mysql
       - prometheus-mysqld-exporter
 
-# mysql db is after the mysql server is started because you cannot create a db if the server is down
+# mysql db is after the mysql server is started because you cannot create a db if there's no DBMS active
 - name: MySQL database
   community.mysql.mysql_db:
       name: "{{ agama_db }}"
@@ -45,9 +45,9 @@
       - Reset MySQL source
       - Reset MySQL replica
 
-- name: MySQL {{ mysql_user }} user
+- name: "MySQL {{ agama_user }} user"
   community.mysql.mysql_user:
-      name: "{{ mysql_user }}"
+      name: "{{ agama_user }}"
       password: "{{ mysql_password }}"
       host: "%"
       priv: "{{ agama_db }}.*:ALL"
@@ -64,15 +64,15 @@
 # backup
 #
 
-- name: create backup dir
+- name: create {{ backup_user }} dir
   file:
-      path: /home/backup/mysql
-      owner: backup
+      path: "/home/{{ backup_user }}/mysql"
+      owner: "{{ backup_user }}"
       state: directory
 
 - name: backup user
   community.mysql.mysql_user:
-      name: backup
+      name: "{{ backup_user }}"
       password: "{{ backup_password }}"
       priv: "{{ agama_db }}.*:LOCK TABLES,SELECT"
       login_unix_socket: /var/run/mysqld/mysqld.sock
@@ -81,8 +81,8 @@
 - name: Client config
   template:
       src: .backup.cnf.j2
-      dest: /home/backup/.my.cnf
-      owner: backup
+      dest: "/home/{{ backup_user }}/.my.cnf"
+      owner: "{{ backup_user }}"
       mode: 0400
   no_log: true
 
@@ -96,9 +96,9 @@
 # replication
 #
 
-- name: MySQL replication user
+- name: MySQL {{ replication_user }} user
   community.mysql.mysql_user:
-      name: replication
+      name: "{{ replication_user }}"
       password: "{{ replication_password }}"
       host: "%"
       priv: "*.*:REPLICATION SLAVE"

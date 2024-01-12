@@ -1,11 +1,11 @@
-- name: Install required pkgs
+- name: Install python3-docker and docker.io
   apt:
-    name:
-      - python3-docker
-      - docker.io
+      name:
+          - python3-docker
+          - docker.io
 
 - name: Ensure service is running
   service:
-    name: docker
-    state: started
-    enabled: true
+      name: docker
+      state: started
+      enabled: true

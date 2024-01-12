@@ -21,8 +21,10 @@
   community.mysql.mysql_replication:
       mode: "{{ item }}"
       login_unix_socket: /var/run/mysqld/mysqld.sock
-      primary_host: "{{ mysql_primary }}"
-      primary_user: replication
+      primary_host:
+          "{{ cname_mysql }}{{ groups['db_primary'][0] |
+          replace('AlessandroTambellini', '') }}"
+      primary_user: "{{ replication_user }}"
       primary_password: "{{ replication_password }}"
   loop:
       - stopreplica
