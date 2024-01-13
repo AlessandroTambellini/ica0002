@@ -1,16 +1,16 @@
 # Backup procedure
 
-## Backup covereage
+## Backup coverage
 
 The backup process covers the following services:
 
--   MySQL
--   InfluxDB
+-   MySQL, precisely only for **agama** database
+-   InfluxDB, precisely only for **telegraf** database
 
 **explanation**: this document describes the backup processes for all the
-services containing data and Ansible itself. This document doesn't cover the
-backup process for services like nginx or Bind, because they can be easily
-recreated from scratch via Ansible.
+services containing data. This document doesn't cover the backup process for
+services like nginx or Bind, because they can be easily recreated from scratch
+via Ansible.
 
 ## RPO
 
@@ -55,3 +55,8 @@ Backup service is expected to take maximum 2 hours to fully recover all the
 data. **explanation**: Our infrastructure is small and its recovery with Ansible
 should be swift. The only potential slowing factors we're aware of are bandwidth
 and storage limitations.
+
+## IT staff
+
+-   Roman Kuchin: https://github.com/romankuchin
+-   Juri Hudolejev: https://github.com/hudolejev

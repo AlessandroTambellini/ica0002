@@ -17,6 +17,7 @@
       - resetprimary
   when: inventory_hostname in groups['db_primary']
 
+# this is the task that allows the transport of data from primary to secondary
 - name: Reset MySQL replica
   community.mysql.mysql_replication:
       mode: "{{ item }}"

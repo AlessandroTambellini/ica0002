@@ -72,10 +72,10 @@
 # backup
 #
 
-- name: create backup dir
+- name: create {{ backup_user }} dir
   file:
-      path: /home/backup/influxdb
-      owner: backup
+      path: "/home/{{ backup_user }}/influxdb"
+      owner: "{{ backup_user }}"
       state: directory
 
 - name: Cron config

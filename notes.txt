@@ -34,3 +34,7 @@ client --> nginx --> uwsgi --> python app
 11) apt.yaml files and uwsgi role are not used. They were just part of the evolution of the project
 
 12) bind does not care about uppercase letters in dns records
+
+13) configure a new replication with empty database, after the agama database is created but before the Agama app is deployed
+
+14) DUMPS: statements used to recreate the database

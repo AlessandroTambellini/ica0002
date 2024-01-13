@@ -80,7 +80,7 @@
       group: backup
       mode: 0644
 
-- name: create {{ backup_user }} dir
+- name: create "restore" dir
   file:
       path: "/home/{{ backup_user }}/restore"
       owner: "{{ backup_user }}"

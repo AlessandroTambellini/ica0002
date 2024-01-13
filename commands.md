@@ -58,6 +58,8 @@
 -   docker logs <container-name>
 -   nc -vz <IP> <port> --> check if service is listening on specified ip and
     port
+-   curl -L http://<exporter hostname>:<exporter_port>/metrics --> check exposed
+    exporter metrics
 
 ## SEARCHING/FILTERING
 
@@ -68,8 +70,8 @@
 
 ## NETWORKING
 
--   ss -ntlp ==> to check the port usage
--   ss -nul ==> info about UDP sockets, " " "
+-   ss -ntlp ==> check TCP ports
+-   ss -nulp ==> check UDP ports
 -   curl localhost:9113 | grep -v ^# ==> view page content without the comments
 -   dig google.com --> dns info about google.com
 -   ping 1.1.1.1 --> test the network is reachable

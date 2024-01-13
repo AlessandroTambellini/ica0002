@@ -36,8 +36,8 @@
       - mysql
       - prometheus-mysqld-exporter
 
-# mysql db is after the mysql server is started because you cannot create a db if there's no DBMS active
-- name: MySQL database
+# db is created after the mysql server is started because you cannot create a db if there's no DBMS active
+- name: Create {{ agama_db }} database
   community.mysql.mysql_db:
       name: "{{ agama_db }}"
       login_unix_socket: /var/run/mysqld/mysqld.sock
@@ -70,7 +70,7 @@
       owner: "{{ backup_user }}"
       state: directory
 
-- name: backup user
+- name: "{{ backup_user }} user"
   community.mysql.mysql_user:
       name: "{{ backup_user }}"
       password: "{{ backup_password }}"
@@ -110,7 +110,7 @@
       variable: read_only
       value:
           "{{ 'OFF' if inventory_hostname in groups['db_primary'] else 'ON' }}"
-      mode: persist
+      mode: persist # preserve the read only mode after MySQL restart
       login_unix_socket: /var/run/mysqld/mysqld.sock
   notify:
       - Reset MySQL source
