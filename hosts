@@ -18,10 +18,10 @@ AlessandroTambellini-1
 AlessandroTambellini-2
 
 [db_primary]
-AlessandroTambellini-2
+AlessandroTambellini-1
 
 [db_secondary]
-AlessandroTambellini-1
+AlessandroTambellini-2
 
 [db_servers:children]
 db_primary

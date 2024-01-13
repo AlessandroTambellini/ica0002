@@ -1,7 +1,11 @@
+Install and configure infrastructure with Ansible:
+
+    `ansible-playbook infra.yaml`
+
 -   Restore MySQL data from the backup:
 
-    Go to vm where MySQL is located --> AlessandroTambellini-1 or
-    AlessandroTambellini-2
+    Go to vm where MySQL replica is located. Therefore open ./hosts file and
+    search for "db_secondary" Then, run the following commands on vm:
 
     1. `sudo -u backup duplicity --no-encryption restore rsync://AlessandroTambellini@backup.rabix.io/mysql /home/backup/restore/mysql`
     2. enter privileged mode: `sudo su -`
