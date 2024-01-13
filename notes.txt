@@ -38,3 +38,5 @@ client --> nginx --> uwsgi --> python app
 13) configure a new replication with empty database, after the agama database is created but before the Agama app is deployed
 
 14) DUMPS: statements used to recreate the database
+
+15) Use parameter `no_log: true` anywhere you handle passwords or files with inside password

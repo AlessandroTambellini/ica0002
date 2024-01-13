@@ -60,6 +60,7 @@
       value: "{{ backup_server_ip }}"
       type: "A"
   when: inventory_hostname in groups['dns_primary']
+  no_log: true
 
 - include_role:
       name: dns_record

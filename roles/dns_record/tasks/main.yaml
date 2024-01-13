@@ -11,3 +11,4 @@
       record: "{{ dns_record }}"
       value: "{{ inventory_hostname }}"
       type: "CNAME"
+  no_log: true

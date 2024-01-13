@@ -10,6 +10,7 @@
   template:
       src: grafana.ini.j2
       dest: /opt/grafana/grafana.ini
+  no_log: true
   notify: Restart grafana-container
 
 - name: Add datasources

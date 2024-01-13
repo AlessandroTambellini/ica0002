@@ -33,3 +33,4 @@
       - resetreplica
       - startreplica
   when: inventory_hostname not in groups['db_primary']
+  no_log: true
