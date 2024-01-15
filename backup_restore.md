@@ -2,7 +2,8 @@
 
     1. Get the right ports. Therefore execute the command `./update_vms_info.sh`
        in the root of the project folder
-    2. Run Ansible: `ansible-playbook infra.yaml`
+    2. Run Ansible still from the root of the project folder:
+       `ansible-playbook infra.yaml`
 
 -   Restore MySQL data from the backup:
 
@@ -11,9 +12,9 @@
        then open a terminal and type the following command:
        `ssh -p <vm_port> ubuntu@193.40.156.67`
     2. Enter privileged mode: `sudo su -`
-    3. If the folder mysql is already present, delete it. Therefore navigate to
-       restore location `cd /home/backup/restore` and type `ll`, if mysql folder
-       is there, delete it --> `rm -rf mysql`.
+    3. If the folder **mysql** is already present, delete it. Therefore navigate
+       to restore location `cd /home/backup/restore` and type `ll`, if mysql
+       folder is there, delete it --> `rm -rf mysql`.
     4. Then, type the following command to download data from backup server:
        `sudo -u backup duplicity --no-encryption restore rsync://AlessandroTambellini@backup.rabix.io/mysql /home/backup/restore/mysql`.
        After executing this command you may get
@@ -39,9 +40,9 @@
        open a terminal and type the following command:
        `ssh -p <vm_port> ubuntu@193.40.156.67`
     2. Enter privileged mode: `sudo su -`
-    3. If the folder influxdb is already present, delete it. Therefore navigate
-       to restore location `cd /home/backup/restore` and type `ll`, if influxdb
-       folder is there, delete it --> `rm -rf influxdb`.
+    3. If the folder **influxdb** is already present, delete it. Therefore
+       navigate to restore location `cd /home/backup/restore` and type `ll`, if
+       influxdb folder is there, delete it --> `rm -rf influxdb`.
     4. Then, download the data from backup server to the vm:
        `sudo -u backup duplicity --no-encryption restore rsync://AlessandroTambellini@backup.rabix.io/influxdb /home/backup/restore/influxdb`
 
