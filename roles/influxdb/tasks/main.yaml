@@ -72,11 +72,12 @@
 # backup
 #
 
-- name: create {{ backup_user }} dir
+- name: create {{ backup_user }} dir for influxdb
   file:
       path: "/home/{{ backup_user }}/influxdb"
       owner: "{{ backup_user }}"
       state: directory
+      mode: 0755
 
 - name: Cron config
   template:

@@ -71,6 +71,10 @@
       name: "{{ backup_user }}"
       home: "/home/{{ backup_user }}"
       generate_ssh_key: true
+      state: present
+      system: true
+      create_home: true
+      shell: /bin/bash
 
 - name: Add SSH key
   template:
@@ -78,10 +82,11 @@
       dest: /home/backup/.ssh/known_hosts
       owner: "{{ backup_user }}"
       group: backup
-      mode: 0644
+  no_log: true
 
 - name: create "restore" dir
   file:
       path: "/home/{{ backup_user }}/restore"
       owner: "{{ backup_user }}"
       state: directory
+      mode: 0755

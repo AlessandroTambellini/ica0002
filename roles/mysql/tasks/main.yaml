@@ -64,11 +64,12 @@
 # backup
 #
 
-- name: create {{ backup_user }} dir
+- name: create {{ backup_user }} dir for mysql
   file:
       path: "/home/{{ backup_user }}/mysql"
       owner: "{{ backup_user }}"
       state: directory
+      mode: 0755
 
 - name: "{{ backup_user }} user"
   community.mysql.mysql_user:
