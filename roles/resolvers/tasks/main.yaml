@@ -1,10 +1,11 @@
 # it's necessary to stop systemd-resolved before updating the DNS settings
 - name: Stop service systemd-resolved, if started
   service:
-    name: systemd-resolved
-    state: stopped
+      name: systemd-resolved
+      state: stopped
+      enabled: false
 
 - name: Update VM DNS settings
   template:
-    src: DNS_settings.j2
-    dest: /etc/resolv.conf
+      src: DNS_settings.j2
+      dest: /etc/resolv.conf
