@@ -32,8 +32,23 @@
     8.8.8.8 to at least download the stuff you need
 -   you could have conflicting services runnning on the same port. So you need
     to first manually stop these services
--   cat /var/log/syslog | grep named
--   host & dig commands
+
+-   dig <domain> @<DNS_host> +short
+-   dig SOA rabix.io @192.168.42.91 +short
+-   dig SOA rabix.io
+-   dig AlessandroTambellini-1.rabix.io @192.168.43.104 +short
+-   dig AXFR rabix.io @192.168.42.91 +short
+
+-   host <ip_address> --> output: domain
+-   host <vm>.<domain_name>. --> ip address
+-   host <ip_address> <ip_address>
+
+-   rndc flush : clears DNS cache
+-   rndc reload : reload config like zone file
+
+-   cat /var/log/syslog | grep named : **troubleshooting**
+
+-   rm /var/cache/bind/\*
 
 ## JINJA
 
@@ -91,3 +106,16 @@
     correct (it works just on vm where the file is not binary)
 -   named-checkconf /etc/bind/named.conf.options // If no output, the syntax is
     correct
+
+### Backup
+
+-   mysql -u replication -p : verify replication user can login
+-   sudo -u backup mysqldump agama >/dev/null; echo $? : ensure backup user can
+    create mysql dumps
+
+### MySQL
+
+-   select user, host from mysql.user;
+-   show grants for '<user>'@'<hostname>';
+-   delete everything related to mysql: `systemctl stop mysql`
+    `apt-get purge mysql-\*` `rm -rf /etc/mysql /var/lib/mysql`
