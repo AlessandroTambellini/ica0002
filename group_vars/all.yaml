@@ -76,7 +76,7 @@ mysql_exporter_user: prometheus
 #   DNS
 #
 dns_forwarders:
-  - 192.168.43.76
+  - 192.168.42.167
 allowed_queries:
   - 192.168.42.0/23
   - 127.0.0.0/8
@@ -115,7 +115,7 @@ pinger_targets: "ns-1.{{ domain_name }},ns-2.{{ domain_name }}"
 #
 agama_db: agama
 agama_containers_number: 2
-vm3_public_URL: http://193.40.156.67:39480 # to server grafana from Public URL with nginx
+vm3_public_URL: http://193.40.156.67:15180 # to server grafana from Public URL with nginx
 domain_name: rabix.io
 node_exporter_host: ""
 node_exporter_port: 9100
