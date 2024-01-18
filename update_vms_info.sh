@@ -7,7 +7,7 @@ echo "Updating hosts port..." >&2
 #
 
 public_ip="193.40.156.67"
-host_info=$(curl "http://193.40.156.67/students/AlessandroTambellini.csv")
+host_info=$(curl "http://<your_URL>")
 
 for port in $(echo "$host_info" | cut -d, -f2); do
     echo ssh-keygen -f "$HOME/.ssh/known_hosts" -R "[$public_ip]:$port"
@@ -18,9 +18,9 @@ done
 #
 
 ansible_port="ansible_port=\w*"
-vm1_public_SSH_port=$(curl "http://193.40.156.67/students/AlessandroTambellini.csv" | awk -F ',' 'NR==1 {print $5}')
-vm2_public_SSH_port=$(curl "http://193.40.156.67/students/AlessandroTambellini.csv" | awk -F ',' 'NR==2 {print $5}')
-vm3_public_SSH_port=$(curl "http://193.40.156.67/students/AlessandroTambellini.csv" | awk -F ',' 'NR==3 {print $5}')
+vm1_public_SSH_port=$(curl "http://<your_URL>" | awk -F ',' 'NR==1 {print $5}')
+vm2_public_SSH_port=$(curl "http://<your_URL>" | awk -F ',' 'NR==2 {print $5}')
+vm3_public_SSH_port=$(curl "http://<your_URL>" | awk -F ',' 'NR==3 {print $5}')
 
 sed -e "1 s/$ansible_port/ansible_port=$vm1_public_SSH_port/1" \
     -e "2 s/$ansible_port/ansible_port=$vm2_public_SSH_port/1" \
@@ -35,8 +35,8 @@ echo "Done." >&2
 
 echo "Updating variables..." >&2
 
-vm1_internal_IP=$(curl "http://193.40.156.67/students/AlessandroTambellini.csv" | awk -F ',' 'NR==1 {print $2}')
-vm3_public_URL=$(curl "http://193.40.156.67/students/AlessandroTambellini.csv" | awk -F ',' 'NR==3 {print $6}')
+vm1_internal_IP=$(curl "http://<your_URL>" | awk -F ',' 'NR==1 {print $2}')
+vm3_public_URL=$(curl "http://<your_URL>" | awk -F ',' 'NR==3 {print $6}')
 
 URL2=$vm3_public_URL yq -i '
     .vm3_public_URL = strenv(URL2)
